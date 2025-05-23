@@ -1,280 +1,275 @@
+/* style.css */
+
 body {
-  font-family: Arial, sans-serif;
-  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
-  background: #f7f7f7;
+  padding: 0 15px 30px;
+  background-color: #f8f9fa;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .top-bar {
+  width: 100%;
+  max-width: 600px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #333;
-  color: white;
-  padding: 0.5em 1em;
-  flex-wrap: wrap;
-  gap: 0.5em;
-}
-
-.nav-controls select,
-.nav-controls button {
-  font-size: 1rem;
-  margin-left: 0.25em;
-}
-
-.daily-best-score {
-  font-weight: bold;
-  font-size: 1.2em;
-  min-width: 160px;
-}
-
-#clearBtn {
-  background: none;
-  border: 1px solid white;
-  color: white;
-  padding: 0.3em 0.8em;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.qu0x-locked {
-  color: red;
-  font-weight: bold;
-  margin-left: 1em;
-  white-space: nowrap;
-}
-
-.instructions ul {
-  list-style: none;
-  padding: 0;
-  margin: 1em auto;
-  width: fit-content;
-  text-align: left;
-  max-width: 450px;
-}
-
-.instructions ul li {
-  white-space: nowrap;
-  margin-bottom: 0.4em;
+  margin-top: 10px;
+  margin-bottom: 8px;
+  font-weight: 600;
   font-size: 1rem;
 }
 
-.target-box {
-  background-color: pink;
-  color: black;
-  font-weight: bold;
-  padding: 0.5em 1em;
-  font-size: 2.5em;
-  display: inline-block;
-  margin: 1em auto;
-  border-radius: 5px;
-  border: 2px solid black;
-}
-
-.dice-container {
+.left-info, .right-info {
   display: flex;
-  justify-content: center;
-  margin: 1em 0;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 10px;
 }
 
-.die {
-  width: 60px;
-  height: 60px;
-  font-size: 2em;
-  font-weight: bold;
-  border: 3px solid black;
-  border-radius: 8px;
-  margin: 0 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-  user-select: none;
+.target-box {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0b5ed7;
 }
 
-.die.faded {
-  opacity: 0.2;
-  pointer-events: none;
-}
-
-.expression-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1em;
-  font-size: 1.5em;
-  gap: 0.5em;
-  flex-wrap: wrap;
-}
-
-#expressionBox {
-  background: white;
-  border: 2px solid #000;
-  min-width: 240px;
-  min-height: 2em;
-  padding: 0.3em 0.8em;
-  text-align: left;
-  white-space: nowrap;
-  overflow-x: auto;
-  font-size: 1.5em;
-  font-weight: normal;
-}
-
-#evaluationBox {
-  background: white;
-  border: 2px solid #000;
-  min-width: 160px;
-  min-height: 2em;
-  padding: 0.3em 0.8em;
-  font-size: 1.5em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-}
-
-#equalsSign {
-  padding: 0 0.5em;
-  font-weight: bold;
-  font-size: 1.5em;
-}
-
-#shareBtn {
-  font-size: 1rem;
-  padding: 0.3em 0.8em;
-  cursor: pointer;
-  background-color: #3a86ff;
-  color: white;
+.clear-btn {
+  background-color: #dc3545;
   border: none;
-  border-radius: 5px;
-  user-select: none;
-}
-
-#buttonGrid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 0.5em;
-  margin: 1em auto;
-  max-width: 500px;
-}
-
-#buttonGrid button {
-  padding: 0.6em;
-  font-size: 1.4em;
-  border-radius: 5px;
+  padding: 6px 14px;
+  font-size: 1rem;
+  color: white;
   cursor: pointer;
+  border-radius: 4px;
   user-select: none;
 }
 
-#buttonGrid button.operator {
-  font-size: 2em;
-  font-weight: bold;
+.clear-btn:hover {
+  background-color: #b02a37;
 }
 
-#submitArea {
-  margin: 1em;
-  font-size: 1.3em;
-  font-weight: bold;
-  min-height: 1.4em;
-}
-
-.scoreboard {
-  margin-top: 1em;
-  font-size: 1.1em;
-  font-weight: bold;
-}
-
-.best-attempt {
-  margin-top: 1em;
-  font-size: 1em;
-  font-style: italic;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
-  word-wrap: break-word;
-}
-
-#qu0xAnimation {
-  font-size: 4.5em;
-  color: #ff00ff;
-  animation: pop 3s ease-in-out;
-  margin-top: 0.5em;
+.qu0x-locked {
+  color: #b02a37;
+  font-weight: 700;
+  margin-left: 10px;
 }
 
 .hidden {
-  display: none !important;
+  display: none;
 }
 
-@keyframes pop {
-  0% { transform: scale(0); opacity: 0; }
-  25% { transform: scale(1.2); opacity: 1; }
-  50% { transform: scale(1); }
-  100% { opacity: 0; }
+.instructions {
+  max-width: 600px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #333;
 }
 
-/* Dice colors */
-.die[data-value="1"] {
-  background-color: red;
+.dice-container {
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.die {
+  width: 55px;
+  height: 55px;
+  border-radius: 10px;
+  font-size: 2.1rem;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  border: 2.5px solid black;
+  cursor: default;
   color: white;
-  border-color: black;
 }
 
-.die[data-value="2"] {
+/* Dice colors by value */
+.die-1 {
+  background-color: #dc3545; /* red background */
+  color: white;
+}
+
+.die-2 {
   background-color: white;
   color: black;
   border-color: black;
 }
 
-.die[data-value="3"] {
-  background-color: blue;
+.die-3 {
+  background-color: #0d6efd; /* blue */
   color: white;
-  border-color: black;
 }
 
-.die[data-value="4"] {
-  background-color: yellow;
+.die-4 {
+  background-color: #ffc107; /* yellow */
   color: black;
-  border-color: black;
 }
 
-.die[data-value="5"] {
-  background-color: green;
+.die-5 {
+  background-color: #198754; /* green */
   color: white;
-  border-color: black;
 }
 
-.die[data-value="6"] {
+.die-6 {
   background-color: black;
-  color: yellow;
-  border-color: black;
+  color: #ffc107; /* yellow */
 }
 
-/* Responsive for smaller/mobile */
-@media (max-width: 600px) {
-  .dice-container {
-    width: 100%;
-    justify-content: space-around;
+.expression-section {
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.expression-box {
+  min-width: 240px;
+  min-height: 40px;
+  background-color: white;
+  border: 2px solid #ced4da;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 1.4rem;
+  overflow-x: auto;
+  white-space: nowrap;
+  user-select: none;
+}
+
+#equalsSign {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #0b5ed7;
+  user-select: none;
+}
+
+.evaluation-box {
+  min-width: 60px;
+  min-height: 40px;
+  background-color: white;
+  border: 2px solid #ced4da;
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-size: 1.4rem;
+  text-align: center;
+  user-select: none;
+  color: #222;
+}
+
+.button-grid {
+  max-width: 600px;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 10px;
+  margin-bottom: 12px;
+  justify-items: center;
+}
+
+.operator-btn, .control-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 1.8rem;
+  border-radius: 6px;
+  border: 2px solid #0b5ed7;
+  background-color: white;
+  color: #0b5ed7;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  transition: background-color 0.2s ease;
+}
+
+.operator-btn:hover, .control-btn:hover {
+  background-color: #0b5ed7;
+  color: white;
+}
+
+.submit-btn {
+  max-width: 600px;
+  width: 100%;
+  padding: 10px 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  background-color: #198754;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #146c43;
+}
+
+.scoreboard {
+  max-width: 600px;
+  margin-top: 15px;
+  font-size: 1.1rem;
+  color: #222;
+  text-align: center;
+  user-select: none;
+}
+
+.scoreboard p {
+  margin: 5px 0;
+}
+
+/* Responsive adjustments */
+
+@media (max-width: 480px) {
+  body {
+    padding: 0 10px 20px;
   }
 
-  #expressionBox, #evaluationBox {
-    min-width: 150px;
-    font-size: 1.2em;
+  .die {
+    width: 45px;
+    height: 45px;
+    font-size: 1.7rem;
   }
 
-  #buttonGrid {
-    max-width: 100%;
-    grid-template-columns: repeat(4, 1fr);
+  .button-grid {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 8px;
   }
 
-  .instructions ul li {
-    white-space: normal;
+  .operator-btn, .control-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1.5rem;
   }
 
-  .top-bar {
-    flex-direction: column;
-    gap: 0.5em;
+  .expression-box {
+    min-width: 180px;
+    min-height: 36px;
+    font-size: 1.2rem;
+  }
+
+  .evaluation-box {
+    min-width: 50px;
+    min-height: 36px;
+    font-size: 1.2rem;
+  }
+
+  .submit-btn {
+    font-size: 1.1rem;
   }
 }
