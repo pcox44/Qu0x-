@@ -6,51 +6,40 @@
   <title>Qu0x!</title>
   <link rel="stylesheet" href="style.css"/>
   <style>
-    /* Inline CSS for the changes you requested */
-    .bullet-list {
-      list-style-type: disc; /* normal bullet points */
-      padding-left: 20px;    /* indent for bullets */
-    }
-
-    .bullet-list li {
-      margin-bottom: 0.5em; /* spacing between items */
-    }
-
+    /* Added styles for the top bar layout */
     .top-bar {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      position: relative;
-      padding: 0.5em 1em;
-      background-color: #222;
-      color: white;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid #ccc;
     }
 
     .top-bar h1 {
       margin: 0;
-      font-size: 1.5rem;
+      flex: 1;
+      text-align: left;
     }
 
-    #dateCenter {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
+    #gameNumberDate {
+      flex: 1;
+      text-align: center;
       font-weight: bold;
-      font-size: 1.2rem;
+      font-size: 1.2em;
       user-select: none;
-      pointer-events: none;
     }
 
     .nav-controls {
-      display: flex;
-      gap: 0.5em;
+      flex: 1;
+      text-align: right;
     }
   </style>
 </head>
 <body>
   <div class="top-bar">
     <h1>Qu0x!</h1>
-    <div id="dateCenter"></div>
+    <div id="gameNumberDate"><!-- JS will populate this --></div>
     <div class="nav-controls">
       <button id="prevDay">◀</button>
       <select id="gameDropdown"></select>
@@ -59,12 +48,17 @@
   </div>
 
   <div class="instructions">
-    <ul class="bullet-list">
+    <ul>
       <li>Use each of the 5 dice values exactly once to build a math expression.</li>
       <li>Allowed operations: +, -, ×, ÷, ^ (exponent), ! (factorial)</li>
       <li>Submit an expression to get as close as possible to the target number.</li>
-      <li>Score = |Target − Result|. A score of 0 earns a Qu0x!</li>
+      <li> Score = |Target − Result|. A score of 0 earns a Qu0x!</li>
     </ul>
+  </div>
+
+  <div id="gameHeader">
+    <!-- Removed gameNumberDate from here -->
+    <div class="target-box" id="targetBox">Target: ???</div>
   </div>
 
   <div class="dice-container" id="diceContainer"></div>
