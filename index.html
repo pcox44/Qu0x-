@@ -2,68 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Qu0x!</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-  </script>
 </head>
 <body>
-  <div class="top-bar">
-    <div class="left-info">
-      <span id="bestScoreTodayLabel">Best Score Today: </span><span id="bestScoreToday">N/A</span>
+  <div class="container">
+    <h1 class="title">Qu0x!</h1>
+    <div class="instructions">
+      <p>Use each of the 5 dice values exactly once to build a math expression.</p>
+      <p>Submit an expression to get as close as possible to the target number.</p>
+      <p>Your score is the distance your result is from the target. A score of 0 earns a Qu0x!</p>
+      <p>You can keep submitting for a day until you get a Qu0x! at which point that day will lock.</p>
     </div>
-    <div class="target-box" id="targetBox">
-      Target: <span id="targetNumber"></span>
+
+    <div class="header-row">
+      <div id="best-score">Best Score Today: N/A</div>
+      <div class="month-select">
+        <select id="monthDropdown"></select>
+      </div>
     </div>
-    <div class="right-info">
-      <button id="clearButton" class="clear-btn">Clear</button>
-      <span id="qu0xLocked" class="qu0x-locked hidden">Qu0x!-Locked</span>
+
+    <div id="target" class="target-box">Target: <span id="target-number"></span></div>
+    <div id="dice-container"></div>
+
+    <div id="expression-section">
+      <div id="expression-display"></div>
+      <div id="result-display">= ?</div>
+    </div>
+
+    <div class="button-grid">
+      <button class="btn" data-value="+">+</button>
+      <button class="btn" data-value="-">-</button>
+      <button class="btn" data-value="*">*</button>
+      <button class="btn" data-value="/">/</button>
+      <button class="btn" data-value="^">^</button>
+      <button class="btn" data-value="!">!</button>
+      <button class="btn" data-value="(">(</button>
+      <button class="btn" data-value=")">)</button>
+      <button id="backspace">⌫</button>
+      <button id="clear">Clear</button>
+    </div>
+
+    <button id="submit">Submit</button>
+
+    <div id="last-expression"></div>
+
+    <div id="qu0x-status"></div>
+    <div id="share-container">
+      <button id="share-button" style="display:none">Share</button>
+    </div>
+
+    <div class="score-summary">
+      <div id="qu0x-count">Qu0x! Completion: 0</div>
+      <div id="monthly-score">Monthly Score: 0</div>
+      <div id="ultimate-score">Ultimate Score: 0</div>
+    </div>
+
+    <div class="nav-buttons">
+      <button id="prev-day">◀ Prev</button>
+      <button id="next-day">Next ▶</button>
     </div>
   </div>
 
-  <div class="instructions">
-    <p>Use each of the 5 dice values exactly once to build a math expression.</p>
-    <p>Submit an expression to get as close as possible to the target number.</p>
-    <p>Your score is the distance your result is from the target. A score of 0 earns a Qu0x!</p>
-    <p>You can keep submitting for a day until you get a Qu0x! at which point that day will lock.</p>
-  </div>
-
-  <div class="dice-container" id="diceContainer">
-    <!-- Dice will be generated here dynamically -->
-  </div>
-
-  <div class="expression-section">
-    <div id="expressionBox" class="expression-box"></div>
-    <div id="equalsSign">=</div>
-    <div id="evaluationBox" class="evaluation-box">?</div>
-  </div>
-
-  <div id="buttonGrid" class="button-grid">
-    <button class="operator-btn" data-value="+">+</button>
-    <button class="operator-btn" data-value="-">−</button>
-    <button class="operator-btn" data-value="*">×</button>
-    <button class="operator-btn" data-value="/">÷</button>
-    <button class="operator-btn" data-value="^">^</button>
-    <button class="operator-btn" data-value="!">!</button>
-    <button class="operator-btn" data-value="(">(</button>
-    <button class="operator-btn" data-value=")">)</button>
-    <button id="backspaceBtn" class="control-btn">⌫</button>
-  </div>
-
-  <div id="submitArea">
-    <button id="submitBtn" class="submit-btn">Submit</button>
-  </div>
-
-  <div class="scoreboard" id="scoreboard">
-    <p id="lastAttemptDisplay"></p>
-    <p id="qu0xCompletionDisplay"></p>
-    <p id="qu0xMonthlyScoreDisplay"></p>
-    <p id="qu0xUltimateScoreDisplay"></p>
-  </div>
-
-  <script src="script.js" defer></script>
+  <script src="script.js"></script>
 </body>
 </html>
