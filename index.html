@@ -1,75 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Daily Dice Game</title>
-<link rel="stylesheet" href="style.css" />
-<script src="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.7/dist/katex.min.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Daily Dice Game - Qu0x</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="top-bar">
-    <div class="nav-controls">
-      <select id="monthYearDropdown"></select>
-      <select id="gameDropdown"></select>
-      <button id="prevBtn" aria-label="Previous Day">Prev</button>
-      <button id="nextBtn" aria-label="Next Day">Next</button>
+  <div class="container">
+    <h1>Daily Dice Game - Qu0x</h1>
+    <div class="target-container">
+      Target: <span id="targetNumber">?</span>
     </div>
-    <div id="dailyBestScoreDisplay" class="daily-best-score">Best Score Today: N/A</div>
-    <button id="clearBtn">Clear</button>
-    <div id="qu0xLocked" class="qu0x-locked hidden" title="Day is locked after Qu0x!">Qu0x Locked</div>
+    <div class="dice-container" role="list" aria-label="Dice">
+      <!-- Dice will appear here -->
+    </div>
+
+    <div class="expression-container" aria-live="polite" aria-atomic="true">
+      <div id="expressionBox" aria-label="Current expression"></div>
+      <div id="evaluationBox" aria-label="Expression evaluation result">?</div>
+    </div>
+
+    <div class="button-grid" id="buttonGrid" aria-label="Calculator buttons">
+      <button data-val="1">1</button>
+      <button data-val="2">2</button>
+      <button data-val="3">3</button>
+      <button data-val="4">4</button>
+      <button data-val="5">5</button>
+      <button data-val="6">6</button>
+      <button data-val="+">+</button>
+      <button data-val="-">-</button>
+      <button data-val="*">&times;</button>
+      <button data-val="/">&#247;</button>
+      <button data-val="^">^</button>
+      <button data-val="!">!</button>
+      <button data-val="(">(</button>
+      <button data-val=")">)</button>
+      <button data-val="backspace">⌫</button>
+      <button data-val="clear">Clear</button>
+      <button data-val="submit">Submit</button>
+    </div>
+
+    <div id="submitArea" aria-live="polite" aria-atomic="true"></div>
+    <div id="bestAttempt"></div>
+    <div id="qu0xLocked" class="hidden">Day locked after Qu0x!</div>
+    <button id="shareBtn" aria-label="Share your Qu0x result" class="hidden">Share</button>
+    <div id="qu0xAnimation" class="hidden">Qu0x!</div>
   </div>
-
-  <div class="instructions">
-    <ul>
-      <li>Use each of the 5 dice values exactly once to build a math expression.</li>
-      <li>Submit an expression to get as close as possible to the target number.</li>
-      <li>Your score is the distance your result is from the target. A score of 0 earns a Qu0x!</li>
-      <li>You can keep submitting for a day until you get a Qu0x! at which point that day will lock.</li>
-    </ul>
-  </div>
-
-  <div class="target-box" aria-label="Target Number">
-    Target: <span id="targetNumber"></span>
-  </div>
-
-  <div class="dice-container" role="list" aria-label="Dice values">
-    <!-- Dice generated dynamically -->
-  </div>
-
-  <div class="expression-section" aria-label="Expression input and evaluation">
-    <div id="expressionBox" aria-live="polite" aria-atomic="true" aria-label="Expression input"></div>
-    <div id="equalsSign">=</div>
-    <div id="evaluationBox" aria-live="polite" aria-atomic="true" aria-label="Evaluated result">?</div>
-    <button id="shareBtn" class="hidden" aria-label="Share your Qu0x expression">Share</button>
-  </div>
-
-  <div id="buttonGrid" aria-label="Calculator buttons">
-    <button data-val="+" class="operator">+</button>
-    <button data-val="-" class="operator">−</button>
-    <button data-val="*" class="operator">×</button>
-    <button data-val="/" class="operator">÷</button>
-    <button data-val="^" class="operator">^</button>
-    <button data-val="!" class="operator">!</button>
-    <button data-val="(">(</button>
-    <button data-val=")">)</button>
-    <button data-val="backspace" id="backspaceBtn">⌫</button>
-    <button data-val="clear" id="clearBtnGrid">Clear</button>
-    <button data-val="submit" id="submitBtn" class="submit">Submit</button>
-  </div>
-
-  <div id="submitArea" aria-live="polite" aria-atomic="true"></div>
-
-  <div class="scoreboard">
-    <p id="qu0xCompletion">Qu0x! Completion: 0 / 0</p>
-    <p id="qu0xMonthlyScore">Qu0x! Monthly Score: N/A</p>
-    <p id="qu0xUltimateScore">Qu0x Ultimate Score: N/A</p>
-  </div>
-
-  <div id="bestAttempt" class="best-attempt hidden" aria-live="polite" aria-atomic="true"></div>
-
-  <div id="qu0xAnimation" class="hidden" aria-hidden="true">Qu0x!</div>
 
   <script src="script.js"></script>
 </body>
