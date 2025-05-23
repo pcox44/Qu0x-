@@ -3,79 +3,67 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Qu0x!</title>
+<title>Qu0x! - Daily Math Challenge</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>Qu0x!</h1>
-    <p id="instructions">
-      Use each of the 5 dice values exactly once to build a math expression.<br />
-      Submit an expression to get as close as possible to the target number.<br />
-      Your score is the distance your result is from the target. A score of 0 earns a Qu0x!<br />
-      You can keep submitting for a day until you get a Qu0x! at which point that day will lock.
-    </p>
-  </header>
+  <div class="container">
+    <!-- Target Number -->
+    <div id="target-container">
+      Target Number: <span id="target-number">?</span>
+    </div>
 
-  <main>
-    <section id="target-container" class="pink-box">
-      <span id="target-label">Target Number:</span>
-      <span id="target-number"></span>
-    </section>
+    <!-- Dice -->
+    <div id="dice-container" aria-label="Dice values" role="list"></div>
 
-    <section id="dice-container" aria-label="Dice values" role="group" aria-live="polite">
-      <!-- Dice will be dynamically inserted here -->
-    </section>
+    <!-- Expression Input and Output -->
+    <div id="expression-container">
+      <div id="expression" aria-live="polite" aria-label="Expression input" tabindex="0"></div>
+      <div id="equal-sign" aria-hidden="true">=</div>
+      <div id="result" aria-live="polite" aria-label="Expression result">?</div>
+    </div>
 
-    <section id="input-section">
-      <div id="expression-input-container">
-        <div id="expression-box" aria-live="polite" aria-label="Expression input"></div>
-        <span>=</span>
-        <div id="result-box" aria-live="polite" aria-label="Result output">?</div>
+    <!-- Buttons -->
+    <div id="buttons-container">
+      <div class="button-row" role="group" aria-label="Math operators">
+        <button class="button" data-value="+">+</button>
+        <button class="button" data-value="-">−</button>
+        <button class="button" data-value="*">×</button>
+        <button class="button" data-value="/">÷</button>
+        <button class="button" data-value="^">^</button>
+        <button class="button" data-value="!">!</button>
       </div>
-
-      <div id="buttons-row-1" class="buttons-row">
-        <button class="input-btn" data-value="+">+</button>
-        <button class="input-btn" data-value="-">−</button>
-        <button class="input-btn" data-value="*">×</button>
-        <button class="input-btn" data-value="/">÷</button>
-        <button class="input-btn" data-value="^">^</button>
-        <button class="input-btn" data-value="!">!</button>
+      <div class="button-row" role="group" aria-label="Parentheses and editing">
+        <button class="button" data-value="(">(</button>
+        <button class="button" data-value=")">)</button>
+        <button class="button" id="backspace-button" aria-label="Backspace">⌫</button>
+        <button class="button" id="clear-button" aria-label="Clear expression">Clear</button>
       </div>
+    </div>
 
-      <div id="buttons-row-2" class="buttons-row">
-        <button class="input-btn" data-value="(">(</button>
-        <button class="input-btn" data-value=")">)</button>
-        <button id="backspace-btn">Backspace</button>
-        <button id="clear-btn">Clear</button>
-      </div>
+    <!-- Submit button row -->
+    <div id="submit-row">
+      <button id="submit-button" aria-label="Submit expression">Submit</button>
+    </div>
 
-      <div id="submit-row" class="buttons-row">
-        <button id="submit-btn" class="submit-btn">Submit</button>
-      </div>
-    </section>
-
-    <section id="navigation" class="top-right">
+    <!-- Controls below main game -->
+    <div id="controls-container" role="region" aria-label="Game navigation and options">
+      <button id="prev-button" aria-label="Previous day">Prev</button>
       <select id="month-year-select" aria-label="Select month and year"></select>
-      <select id="day-select" aria-label="Select day"></select>
-      <button id="prev-day-btn">Prev</button>
-      <button id="next-day-btn">Next</button>
-    </section>
+      <select id="game-select" aria-label="Select game day"></select>
+      <button id="next-button" aria-label="Next day">Next</button>
+      <button id="share-button" aria-label="Share game link">Share</button>
+      <span id="qu0x-locked" hidden>Qu0x!-Locked</span>
+    </div>
 
-    <section id="score-section">
-      <p id="daily-best-score">Best Score Today: N/A</p>
-      <p id="qu0x-completion">Qu0x! Completion: 0/0</p>
-      <p id="monthly-score">Qu0x! Monthly Score: N/A</p>
-      <p id="ultimate-score">Qu0x! Ultimate Score: N/A</p>
-    </section>
+    <!-- Scores -->
+    <div id="scores-container" aria-live="polite" aria-label="Game scores summary">
+      <div id="qu0x-completion">Qu0x! Completion: 0/0</div>
+      <div id="qu0x-monthly">Monthly Score: 0</div>
+      <div id="qu0x-ultimate">Ultimate Score: 0</div>
+    </div>
+  </div>
 
-    <section id="share-section" hidden>
-      <button id="share-btn" aria-label="Share your Qu0x! result">Share</button>
-      <span id="qu0x-locked" class="locked-text" hidden>Qu0x!-Locked</span>
-    </section>
-
-  </main>
-
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
