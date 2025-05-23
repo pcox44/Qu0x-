@@ -5,10 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Qu0x!</title>
   <link rel="stylesheet" href="style.css"/>
+  <style>
+    /* Added styles for the top bar layout */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .top-bar h1 {
+      margin: 0;
+      flex: 1;
+      text-align: left;
+    }
+
+    #gameNumberDate {
+      flex: 1;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.2em;
+      user-select: none;
+    }
+
+    .nav-controls {
+      flex: 1;
+      text-align: right;
+    }
+  </style>
 </head>
 <body>
   <div class="top-bar">
     <h1>Qu0x!</h1>
+    <div id="gameNumberDate"><!-- JS will populate this --></div>
     <div class="nav-controls">
       <button id="prevDay">◀</button>
       <select id="gameDropdown"></select>
@@ -18,15 +49,15 @@
 
   <div class="instructions">
     <ul>
-      <li>🎯 Use each of the 5 dice values exactly once to build a math expression.</li>
-      <li>➕ Allowed operations: +, -, ×, ÷, ^ (exponent), ! (factorial)</li>
-      <li>🏆 Submit an expression to get as close as possible to the target number.</li>
-      <li>💥 Score = |Target − Result|. A score of 0 earns a Qu0x!</li>
+      <li>Use each of the 5 dice values exactly once to build a math expression.</li>
+      <li>Allowed operations: +, -, ×, ÷, ^ (exponent), ! (factorial)</li>
+      <li>Submit an expression to get as close as possible to the target number.</li>
+      <li> Score = |Target − Result|. A score of 0 earns a Qu0x!</li>
     </ul>
   </div>
 
   <div id="gameHeader">
-    <div id="gameNumberDate"></div>
+    <!-- Removed gameNumberDate from here -->
     <div class="target-box" id="targetBox">Target: ???</div>
   </div>
 
