@@ -1,69 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Qu0x! - Daily Math Challenge</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Qu0x! - Daily Puzzle</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <!-- Target Number -->
-    <div id="target-container">
-      Target Number: <span id="target-number">?</span>
+  <header>
+    <div id="headerRightControls">
+      <select id="monthYearDropdown" title="Select Month and Year"></select>
+      <button id="prevDayBtn" title="Previous Day">Prev</button>
+      <button id="nextDayBtn" title="Next Day">Next</button>
+    </div>
+    <h1>Qu0x!</h1>
+  </header>
+
+  <main>
+    <div id="instructions" style="text-align:center; max-width: 600px; margin: 0 auto; font-size: 1.1rem; line-height: 1.5;">
+      <p>Use each of the 5 dice values exactly once to build a math expression.<br />
+      Submit an expression to get as close as possible to the target number.<br />
+      Your score is the distance your result is from the target. A score of 0 earns a Qu0x!<br />
+      You can keep submitting for a day until you get a Qu0x! at which point that day will lock.</p>
     </div>
 
-    <!-- Dice -->
-    <div id="dice-container" aria-label="Dice values" role="list"></div>
-
-    <!-- Expression Input and Output -->
-    <div id="expression-container">
-      <div id="expression" aria-live="polite" aria-label="Expression input" tabindex="0"></div>
-      <div id="equal-sign" aria-hidden="true">=</div>
-      <div id="result" aria-live="polite" aria-label="Expression result">?</div>
+    <div id="targetBox" style="margin: 20px auto; width: fit-content; padding: 10px 20px; background-color: pink; border: 2px solid black; border-radius: 6px; font-size: 1.5rem; font-weight: bold; text-align:center;">
+      Target: <span id="targetNumber">0</span>
     </div>
 
-    <!-- Buttons -->
-    <div id="buttons-container">
-      <div class="button-row" role="group" aria-label="Math operators">
-        <button class="button" data-value="+">+</button>
-        <button class="button" data-value="-">−</button>
-        <button class="button" data-value="*">×</button>
-        <button class="button" data-value="/">÷</button>
-        <button class="button" data-value="^">^</button>
-        <button class="button" data-value="!">!</button>
+    <div id="diceContainer" style="display: flex; justify-content: center; gap: 12px; margin-bottom: 20px;">
+      <!-- Dice will be generated here dynamically -->
+    </div>
+
+    <div id="expressionContainer" style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 1.25rem; font-family: monospace;">
+      <div id="expressionBox" aria-label="Expression input" role="textbox" tabindex="0" style="min-width: 220px; padding: 8px 12px; border: 1px solid black; background-color: white; border-radius: 4px; user-select:none;"></div>
+      <div>=</div>
+      <div id="outputBox" aria-live="polite" style="min-width: 80px; padding: 8px 12px; border: 1px solid black; background-color: #eee; border-radius: 4px; text-align: center;"></div>
+    </div>
+
+    <div id="buttonRows" style="text-align: center; margin-bottom: 12px;">
+      <div id="firstRowButtons" style="margin-bottom: 8px;">
+        <button class="opBtn">+</button>
+        <button class="opBtn">-</button>
+        <button class="opBtn">*</button>
+        <button class="opBtn">/</button>
+        <button class="opBtn">^</button>
+        <button class="opBtn">!</button>
       </div>
-      <div class="button-row" role="group" aria-label="Parentheses and editing">
-        <button class="button" data-value="(">(</button>
-        <button class="button" data-value=")">)</button>
-        <button class="button" id="backspace-button" aria-label="Backspace">⌫</button>
-        <button class="button" id="clear-button" aria-label="Clear expression">Clear</button>
+      <div id="secondRowButtons" style="margin-bottom: 12px;">
+        <button class="opBtn">(</button>
+        <button class="opBtn">)</button>
+        <button class="numBtn">1</button>
+        <button class="numBtn">2</button>
+        <button class="numBtn">3</button>
       </div>
     </div>
 
-    <!-- Submit button row -->
-    <div id="submit-row">
-      <button id="submit-button" aria-label="Submit expression">Submit</button>
+    <div id="backClearContainer" style="display: flex; justify-content: center; gap: 15px; margin-bottom: 20px;">
+      <button id="backspaceBtn">Backspace</button>
+      <button id="clearBtn">Clear</button>
     </div>
 
-    <!-- Controls below main game -->
-    <div id="controls-container" role="region" aria-label="Game navigation and options">
-      <button id="prev-button" aria-label="Previous day">Prev</button>
-      <select id="month-year-select" aria-label="Select month and year"></select>
-      <select id="game-select" aria-label="Select game day"></select>
-      <button id="next-button" aria-label="Next day">Next</button>
-      <button id="share-button" aria-label="Share game link">Share</button>
-      <span id="qu0x-locked" hidden>Qu0x!-Locked</span>
+    <div style="text-align:center;">
+      <button id="submitBtn" style="font-size: 1.3rem; background-color: #28a745; color: white; padding: 12px 28px; border:none; border-radius: 6px; cursor: pointer;">Submit</button>
     </div>
 
-    <!-- Scores -->
-    <div id="scores-container" aria-live="polite" aria-label="Game scores summary">
-      <div id="qu0x-completion">Qu0x! Completion: 0/0</div>
-      <div id="qu0x-monthly">Monthly Score: 0</div>
-      <div id="qu0x-ultimate">Ultimate Score: 0</div>
+    <div id="scores" style="margin-top: 30px; text-align: center; font-size: 1.1rem;">
+      <p id="qu0xCompletion">Qu0x! Completion: 0/0</p>
+      <p id="monthlyScore">Monthly Score: 0</p>
+      <p id="ultimateScore">Ultimate Score: 0</p>
     </div>
-  </div>
+  </main>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
