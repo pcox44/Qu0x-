@@ -126,19 +126,6 @@ function buildButtons() {
   const ops = ["+", "-", "*", "/", "^", "!", "(", ")", "Back", "Clear"];
   buttonGrid.innerHTML = "";
 
-  [...new Set(diceValues)].forEach(v => {
-    const btn = document.createElement("button");
-    btn.innerText = v;
-    btn.onclick = () => {
-      const idx = diceValues.findIndex((d, i) => !usedDice.includes(i) && d === v);
-      if (idx !== -1 && !isLocked(currentDay)) {
-        usedDice.push(idx);
-        document.querySelector(`.die[data-index="${idx}"]`).classList.add("faded");
-        addToExpression(v.toString());
-      }
-    };
-    buttonGrid.appendChild(btn);
-  });
 
   ops.forEach(op => {
     const btn = document.createElement("button");
