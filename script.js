@@ -89,9 +89,27 @@ function addToExpression(char) {
 function evaluateExpression() {
   const expr = expressionBox.innerText;
   try {
-    let replaced = expr.replace(/(\d+)!/g, (_, num) => factorial(Number(num)))
-                       .replace(/\^/g, "**");
+    // Replace factorial for parenthesized expressions first, e.g. (2+1)!
+    let replaced = expr.replace(/\(([^()]+)\)!/g, (_, inner) => {
+      // Evaluate the inner expression safely
+      let val = eval(inner);
+      if (!Number.isInteger(val) || val < 0) throw "Invalid factorial";
+      return factorial(val);
+    });
+
+    // Then replace factorial for standalone numbers, e.g. 3!
+    replaced = replaced.replace(/(\d+)!/g, (_, num) => {
+      let n = Number(num);
+      if (!Number.isInteger(n) || n < 0) throw "Invalid factorial";
+      return factorial(n);
+    });
+
+    // Replace exponentiation symbol ^ with **
+    replaced = replaced.replace(/\^/g, "**");
+
+    // Evaluate final expression
     let result = eval(replaced);
+
     if (!Number.isInteger(result)) throw "Non-integer";
     evaluationBox.innerText = result;
   } catch {
@@ -212,13 +230,13 @@ function renderGame(day) {
 
   dailyBestScoreBox.innerText = bestScores[day] ?? "N/A";
 
-  const solvedCount = Object.keys(bestScores).length;
   const total = maxDay + 1;
-  completionRatioBox.innerText = `${solvedCount}/${total}`;
+const qu0xCount = Object.values(lockedDays).filter(d => d.score === 0).length;
+completionRatioBox.innerText = `${qu0xCount}/${total}`;
 
-  masterScoreBox.innerText = solvedCount === total
-    ? Object.values(bestScores).reduce((a, b) => a + b, 0)
-    : "N/A";
+masterScoreBox.innerText = qu0xCount === total
+  ? Object.values(bestScores).reduce((a, b) => a + b, 0)
+  : "N/A";
 
   if (isLocked(day)) {
     expressionBox.innerText = lockedDays[day].expression;
