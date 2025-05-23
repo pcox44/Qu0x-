@@ -33,7 +33,7 @@ body {
   color: black;
   font-weight: bold;
   padding: 1em 2em; /* increased padding */
-  font-size: 1.8em;  /* bigger text */
+  font-size: 2.5em;  /* bigger text */
   display: inline-block;
   margin: 1em auto;
   border-radius: 5px;
@@ -79,7 +79,7 @@ body {
   background: white;
   border: 2px solid #000;
   min-width: 240px;      /* slightly wider */
-  min-height: 2.5em;     /* match height */
+  min-height: 1.7em;     /* match height */
 }
 
 #evaluationBox {
@@ -87,7 +87,7 @@ body {
   background: white;
   border: 2px solid #000;
   min-width: 160px;      /* narrower */
-  min-height: 2.5em;     /* match height */
+  min-height: 1.7em;     /* match height */
 }
 
 #equalsSign {
