@@ -5,15 +5,22 @@ body {
     margin: 0;
     padding: 0;
     color: #333;
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: flex-start;
+    min-height: 100vh;
 }
 
 .container {
     max-width: 600px;
-    margin: 30px auto;
+    width: 100%;
+    margin: 30px 20px;
     background-color: #fff;
-    padding: 20px;
+    padding: 20px 25px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: center; /* center all text and inline content */
+    position: relative;
 }
 
 /* Target number pink box */
@@ -22,7 +29,6 @@ body {
     color: #000;
     font-weight: bold;
     font-size: 1.5em;
-    text-align: center;
     padding: 10px;
     border-radius: 6px;
     margin-bottom: 15px;
@@ -31,7 +37,8 @@ body {
 /* Dice container and dice styles */
 #dice-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* center dice horizontally */
+    gap: 10px;
     margin-bottom: 15px;
 }
 
@@ -78,13 +85,15 @@ body {
 /* Expression and result container */
 #expression-container {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     margin-bottom: 10px;
+    gap: 10px;
 }
 
 #expression {
     flex-grow: 1;
+    max-width: 350px;
     height: 35px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -93,11 +102,11 @@ body {
     background-color: white;
     user-select: none;
     overflow-x: auto;
+    text-align: left;
 }
 
 #equal-sign {
     font-size: 1.5em;
-    margin: 0 10px;
 }
 
 #result {
@@ -116,16 +125,16 @@ body {
     margin-top: 10px;
 }
 
-/* Two rows of buttons */
+/* Two rows of buttons centered */
 .button-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 10px;
     margin-bottom: 8px;
 }
 
 .button {
-    flex: 1;
-    margin: 0 5px;
+    width: 50px;
     height: 40px;
     font-size: 1.4em;
     font-weight: bold;
@@ -134,17 +143,10 @@ body {
     background-color: #eee;
     cursor: pointer;
     user-select: none;
-    transition: background-color 0.2s ease;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.button:first-child {
-    margin-left: 0;
-}
-.button:last-child {
-    margin-right: 0;
+    transition: background-color 0.2s ease;
 }
 
 .button:hover {
@@ -182,13 +184,11 @@ body {
     background-color: #3b8e41;
 }
 
-/* Dropdowns and prev/next container */
+/* Controls container (dropdowns, prev/next) centered below main content */
 #controls-container {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    margin-top: 15px;
     display: flex;
-    align-items: center;
+    justify-content: center;
     gap: 8px;
 }
 
@@ -216,7 +216,7 @@ body {
     background-color: #ddd;
 }
 
-/* Scores area at bottom */
+/* Scores area at bottom, centered */
 #scores-container {
     margin-top: 20px;
     font-size: 1em;
@@ -227,7 +227,6 @@ body {
     margin: 6px 0;
 }
 
-/* Qu0x! Completion as a fraction */
 #qu0x-completion {
     font-weight: bold;
 }
@@ -237,6 +236,7 @@ body {
     color: red;
     font-weight: bold;
     margin-left: 15px;
+    display: inline-block;
 }
 
 /* Clipboard Share Button */
