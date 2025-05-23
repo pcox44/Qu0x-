@@ -13,33 +13,24 @@ body {
   color: white;
   padding: 0.5em 1em;
   flex-wrap: wrap;
-  gap: 0.5em;
 }
 
 .nav-controls select,
 .nav-controls button {
   font-size: 1rem;
   margin-left: 0.25em;
-  min-width: 90px;
 }
 
-.best-score-today {
-  font-weight: bold;
-  font-size: 1.25em;
-  white-space: nowrap;
-}
-
-.qu0x-locked {
-  color: red;
-  font-weight: bold;
-  margin-left: 0.5em;
+.instructions {
+  margin: 1em auto;
+  max-width: 480px;
+  text-align: left;
+  font-size: 1.05rem;
+  line-height: 1.4em;
 }
 
 .instructions p {
-  margin: 0.3em auto;
-  max-width: 600px;
-  font-size: 1.1em;
-  line-height: 1.3em;
+  margin: 0.3em 0;
 }
 
 .target-box {
@@ -52,14 +43,12 @@ body {
   margin: 1em auto;
   border-radius: 5px;
   border: 2px solid black;
-  min-width: 140px;
 }
 
 .dice-container {
   display: flex;
   justify-content: center;
   margin: 1em 0;
-  gap: 10px;
 }
 
 .die {
@@ -69,6 +58,7 @@ body {
   font-weight: bold;
   border: 3px solid black;
   border-radius: 8px;
+  margin: 0 6px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,6 +70,14 @@ body {
   opacity: 0.2;
   pointer-events: none;
 }
+
+/* Dice colors with black trim */
+.die.die-1 { background: red; color: white; border-color: black; }
+.die.die-2 { background: white; color: black; border-color: black; }
+.die.die-3 { background: blue; color: white; border-color: black; }
+.die.die-4 { background: yellow; color: black; border-color: black; }
+.die.die-5 { background: green; color: white; border-color: black; }
+.die.die-6 { background: black; color: yellow; border-color: black; }
 
 .expression-section {
   display: flex;
@@ -96,9 +94,18 @@ body {
   background: white;
   border: 2px solid #000;
   min-width: 240px;
-  min-height: 1.6em;
+  min-height: 1.2em;
+  /* LaTeX rendered expression container */
+  font-family: "Times New Roman", serif;
+  text-align: left;
   overflow-x: auto;
-  white-space: nowrap;
+}
+
+#equalsSign {
+  padding: 0 0.5em;
+  font-weight: bold;
+  font-size: 1.6em;
+  user-select: none;
 }
 
 #evaluationBox {
@@ -106,13 +113,10 @@ body {
   background: white;
   border: 2px solid #000;
   min-width: 160px;
-  min-height: 1.6em;
-  font-weight: bold;
-}
-
-#equalsSign {
-  padding: 0 0.5em;
-  font-weight: bold;
+  min-height: 1.2em;
+  font-family: monospace, monospace;
+  text-align: right;
+  user-select: none;
 }
 
 #buttonGrid {
@@ -129,16 +133,20 @@ body {
   border-radius: 5px;
   cursor: pointer;
   user-select: none;
-  transition: background-color 0.2s ease;
 }
 
+/* Make operator symbols bigger inside buttons without changing button size */
 #buttonGrid button.operator {
-  font-size: 1.6em; /* bigger operators */
+  font-size: 1.8em;
   font-weight: bold;
 }
 
 #submitArea {
   margin: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6em;
 }
 
 .submit {
@@ -149,30 +157,76 @@ body {
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  user-select: none;
+}
+
+/* Qu0x Locked red text to right of Clear button */
+#clearArea {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 1em;
+  margin-top: 0.5em;
+}
+
+#qu0xLocked {
+  color: red;
+  font-weight: bold;
+  user-select: none;
+}
+
+/* Clipboard share button styling */
+#shareArea {
+  display: inline-block;
+  cursor: pointer;
+  background: #007bff;
+  color: white;
+  padding: 0.35em 0.8em;
+  border-radius: 5px;
+  font-weight: bold;
+  user-select: none;
+  margin-right: 1em;
+  font-size: 1.1em;
+  transition: background-color 0.3s ease;
+}
+
+#shareArea:hover {
+  background-color: #0056b3;
+}
+
+.scoreboard {
+  margin: 1em auto;
+  max-width: 480px;
+  font-size: 1.1em;
+  line-height: 1.3em;
+  text-align: left;
 }
 
 .scoreboard p {
-  margin: 0.5em;
-  font-weight: bold;
+  margin: 0.5em 0;
+  user-select: none;
+}
+
+#bestAttemptDisplay {
+  margin-top: 0.6em;
+  font-style: italic;
+  color: #444;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+  user-select: none;
 }
 
 #qu0xAnimation {
   font-size: 4.5em;
   color: #ff00ff;
   animation: pop 3s ease-in-out;
-  margin-top: 0.8em;
+  user-select: none;
+  margin: 0.4em 0;
 }
 
 .hidden {
   display: none;
-}
-
-.share-btn {
-  font-size: 1em;
-  padding: 0.4em 0.8em;
-  border-radius: 5px;
-  cursor: pointer;
-  user-select: none;
 }
 
 @keyframes pop {
@@ -182,39 +236,42 @@ body {
   100% { opacity: 0; }
 }
 
-/* Mobile Friendly */
+/* Responsive / Mobile-friendly tweaks */
 @media (max-width: 600px) {
   .top-bar {
     flex-direction: column;
-    gap: 0.4em;
-  }
-
-  .nav-controls {
-    display: flex;
     gap: 0.5em;
-    justify-content: center;
-  }
-
-  .dice-container {
-    gap: 6px;
-  }
-
-  .die {
-    width: 50px;
-    height: 50px;
-    font-size: 1.6em;
-  }
-
-  #expressionBox {
-    min-width: 180px;
-  }
-
-  #evaluationBox {
-    min-width: 120px;
   }
 
   #buttonGrid {
     max-width: 100%;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4em;
+  }
+
+  .die {
+    width: 48px;
+    height: 48px;
+    font-size: 1.7em;
+    margin: 0 3px;
+  }
+
+  .instructions {
+    max-width: 90vw;
+    font-size: 1rem;
+  }
+
+  .scoreboard {
+    max-width: 90vw;
+    font-size: 1rem;
+  }
+
+  #expressionBox, #evaluationBox {
+    min-width: 180px;
+    font-size: 1.3em;
+  }
+
+  #buttonGrid button.operator {
+    font-size: 1.5em;
   }
 }
