@@ -1,59 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Qu0x!</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Qu0x!</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <header>
+  <div class="top-bar">
     <h1>Qu0x!</h1>
-    <div id="game-number-date"></div>
-    <div id="top-right-controls">
-      <select id="day-select" aria-label="Select day"></select>
-      <button id="prev-btn" aria-label="Previous day">Prev</button>
-      <button id="next-btn" aria-label="Next day">Next</button>
+    <div class="nav-controls">
+      <button id="prevDay">◀</button>
+      <select id="gameDropdown"></select>
+      <button id="nextDay">▶</button>
     </div>
-  </header>
+  </div>
 
-  <section id="instructions">
-    <h2>Instructions</h2>
+  <div class="instructions">
     <ul>
-      <li>Use each of the five dice exactly once by clicking them to add numbers to your expression.</li>
-      <li>Use operation buttons (+, -, *, /, ^, !, (, ), Clear, Backspace) to build your expression.</li>
-      <li>The target number is shown in the pink box above the dice.</li>
-      <li>Submit your expression to see your score. Perfect matches are called Qu0x!</li>
-      <li>Qu0x Completion and Master Score update as you solve daily puzzles.</li>
+      <li>🎯 Use each of the 5 dice values exactly once to build a math expression.</li>
+      <li>➕ Allowed operations: +, -, ×, ÷, ^ (exponent), ! (factorial)</li>
+      <li>📅 Daily target changes every day (Game #1 = 5/15/2025).</li>
+      <li>🏆 Submit an expression to get as close as possible to the target number.</li>
+      <li>💥 Score = |Target − Result|. A score of 0 earns a Qu0x!</li>
     </ul>
-  </section>
+  </div>
 
-  <main>
-    <div id="target-box" aria-live="polite">Target: 25</div>
+  <div id="gameHeader">
+    <div id="gameNumberDate"></div>
+    <div class="target-box" id="targetBox">Target: ???</div>
+  </div>
 
-    <div id="dice-container" aria-label="Dice container"></div>
+  <div class="dice-container" id="diceContainer"></div>
 
-    <div id="expression-container">
-      <div id="expression-box" aria-label="Expression input" tabindex="0"></div>
-      <div id="equals">=</div>
-      <div id="output-box" aria-live="polite"></div>
-    </div>
+  <div class="expression-section">
+    <div id="expressionBox"></div>
+    <div id="equalsSign">=</div>
+    <div id="evaluationBox">?</div>
+  </div>
 
-    <div id="operator-row" aria-label="Operation buttons"></div>
+  <div class="buttons" id="buttonGrid"></div>
 
-    <div id="controls">
-      <button id="submit-btn" aria-label="Submit expression">Submit</button>
-    </div>
+  <div id="submitArea">
+    <button id="submitBtn" class="submit">Submit</button>
+  </div>
 
-    <div id="score-info">
-      <div id="daily-best-score">Daily Best Score:</div>
-      <div id="qu0x-completion">Qu0x Completion: 0/0</div>
-      <div id="qu0x-master">Qu0x Master Score: N/A</div>
-    </div>
+  <div class="scoreboard">
+    <p><strong>Daily Best Score:</strong> <span id="dailyBestScore">N/A</span></p>
+    <p><strong>Qu0x! Completion:</strong> <span id="completionRatio">0/0</span></p>
+    <p><strong>Qu0x! Master Score:</strong> <span id="masterScore">N/A</span></p>
+  </div>
 
-    <div id="qu0x-popup" style="display:none;"></div>
-  </main>
+  <div id="qu0xAnimation" class="hidden">🎉🎉 Qu0x! 🎉🎉</div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
