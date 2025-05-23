@@ -7,62 +7,68 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Qu0x! Daily Dice Game</h1>
+  <div id="game-container">
+    <header>
+      <h1>Qu0x! Daily Dice Game</h1>
+    </header>
 
-    <div id="instructions" class="instructions">
+    <section id="instructions">
       <p>Use each of the 5 dice values exactly once to build a math expression.</p>
       <p>Submit an expression to get as close as possible to the target number.</p>
       <p>Your score is the distance your result is from the target. A score of 0 earns a Qu0x!</p>
       <p>You can keep submitting for a day until you get a Qu0x! at which point that day will lock.</p>
-    </div>
+    </section>
 
-    <div id="target-box" class="target-box pink-box">
-      Target Number: <span id="target-number"></span>
-    </div>
+    <section id="game-info">
+      <div id="target-box" class="pink-box">
+        Target Number: <span id="target-number"></span>
+      </div>
 
-    <div id="dice-container" class="dice-container">
-      <!-- Dice will be dynamically generated here -->
-    </div>
+      <div id="dice-container">
+        <!-- Dice squares will be generated dynamically here -->
+      </div>
 
-    <div class="expression-row">
-      <input type="text" id="expression-input" readonly />
-      <button id="share-btn" class="share-btn" title="Share your Qu0x!"></button>
-      <span id="qu0x-locked" class="qu0x-locked"></span>
-    </div>
+      <div id="input-container">
+        <div id="expression-box-container">
+          <div id="expression-box" contenteditable="false"></div>
+          <span id="equal-sign">=</span>
+          <div id="result-box">?</div>
+        </div>
 
-    <div class="buttons-row">
-      <!-- First row of operation buttons -->
-      <button class="btn op-btn" data-op="+">+</button>
-      <button class="btn op-btn" data-op="-">−</button>
-      <button class="btn op-btn" data-op="*">×</button>
-      <button class="btn op-btn" data-op="/">÷</button>
-      <button class="btn op-btn" data-op="^">^</button>
-      <button class="btn op-btn" data-op="!">!</button>
-    </div>
+        <div id="button-row-1" class="button-row">
+          <button class="input-btn" data-value="+">+</button>
+          <button class="input-btn" data-value="-">-</button>
+          <button class="input-btn" data-value="*">*</button>
+          <button class="input-btn" data-value="/">/</button>
+        </div>
 
-    <div class="buttons-row">
-      <button id="backspace-btn" class="btn control-btn">Backspace</button>
-      <button id="clear-btn" class="btn control-btn">Clear</button>
-    </div>
+        <div id="button-row-2" class="button-row">
+          <button class="input-btn" data-value="(">(</button>
+          <button class="input-btn" data-value=")">)</button>
+          <button class="input-btn" data-value="^">^</button>
+          <button class="input-btn" data-value="!">!</button>
+          <button id="backspace-btn">Backspace</button>
+          <button id="clear-btn">Clear</button>
+          <button id="submit-btn" class="submit-btn">Submit</button>
+        </div>
+      </div>
+    </section>
 
-    <div class="submit-row">
-      <button id="submit-btn" class="btn submit-green">Submit</button>
-    </div>
+    <section id="navigation" class="top-right">
+      <select id="month-year-select"></select>
+      <select id="day-select"></select>
+      <button id="prev-day-btn">Prev</button>
+      <button id="next-day-btn">Next</button>
+    </section>
 
-    <div class="score-info">
-      <div id="best-attempt" class="best-attempt"></div>
-      <div id="qu0x-completion">Qu0x! Completion: 0%</div>
+    <section id="status">
+      <div id="best-score-today">Best Score Today: N/A</div>
+      <div id="qu0x-completion">Qu0x! Completion: 0/0</div>
       <div id="qu0x-monthly-score">Qu0x! Monthly Score: N/A</div>
       <div id="qu0x-ultimate-score">Qu0x! Ultimate Score: N/A</div>
-    </div>
+    </section>
 
-    <div class="navigation">
-      <select id="month-year-dropdown"></select>
-      <select id="day-dropdown"></select>
-      <button id="prev-btn" class="nav-btn">Prev</button>
-      <button id="next-btn" class="nav-btn">Next</button>
-    </div>
+    <section id="messages"></section>
   </div>
 
   <script src="script.js"></script>
