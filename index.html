@@ -3,70 +3,68 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Qu0x! - Daily Math Challenge</title>
+<title>Qu0x! Game</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <h1 id="game-title">Qu0x!</h1>
+    <div id="header-left">Qu0x!</div>
     <div id="header-right">
-      <select id="month-year-select" aria-label="Select month and year"></select>
-      <button id="prev-button" aria-label="Previous day">Prev</button>
-      <button id="next-button" aria-label="Next day">Next</button>
+      <select id="monthYearDropdown" aria-label="Select month and year"></select>
+      <select id="gameSelectorDropdown" aria-label="Select game day"></select>
+      <button id="prevDayBtn" title="Previous Day" aria-label="Previous Day">&#8592;</button>
+      <button id="nextDayBtn" title="Next Day" aria-label="Next Day">&#8594;</button>
     </div>
   </header>
 
   <main>
-    <section id="instructions" class="centered-text">
+    <section id="instructions" class="centered-text" aria-label="Game instructions">
       <p>Use each of the 5 dice values exactly once to build a math expression.</p>
       <p>Submit an expression to get as close as possible to the target number.</p>
       <p>Your score is the distance your result is from the target. A score of 0 earns a Qu0x!</p>
       <p>You can keep submitting for a day until you get a Qu0x! at which point that day will lock.</p>
     </section>
 
-    <section id="target-container" class="centered-text">
-      <div id="target-box">Target: <span id="target-number">?</span></div>
+    <section id="target-container" class="centered-text" aria-label="Target number">
+      <div id="targetBox">Target: <span id="targetNumber">?</span></div>
     </section>
 
     <section id="dice-container" class="centered-text" aria-label="Dice values" role="list">
-      <!-- Dice go here -->
+      <!-- Dice dynamically inserted here -->
     </section>
 
-    <section id="expression-container" class="centered-text" role="region" aria-label="Expression input and result">
-      <div id="expression" aria-live="polite" aria-label="Expression input" tabindex="0"></div>
-      <div id="equal-sign" aria-hidden="true">=</div>
-      <div id="result" aria-live="polite" aria-label="Expression result">?</div>
+    <section id="expression-area" class="centered-text" aria-label="Expression input and result">
+      <div id="expressionBox" tabindex="0" aria-live="polite" aria-label="Expression input"></div>
+      <span>=</span>
+      <div id="resultBox" aria-live="polite" aria-label="Expression result">?</div>
     </section>
 
-    <section id="buttons-container" class="centered-text" role="group" aria-label="Math input buttons">
-      <div class="button-row">
-        <button class="button" data-value="+">+</button>
-        <button class="button" data-value="-">−</button>
-        <button class="button" data-value="*">×</button>
-        <button class="button" data-value="/">÷</button>
-        <button class="button" data-value="^">^</button>
-        <button class="button" data-value="!">!</button>
+    <section id="buttons-area" class="centered-text" aria-label="Input buttons">
+      <div class="button-row" id="row1" role="group" aria-label="Math operators">
+        <button class="op-btn" data-value="+">+</button>
+        <button class="op-btn" data-value="-">−</button>
+        <button class="op-btn" data-value="*">×</button>
+        <button class="op-btn" data-value="/">÷</button>
+        <button class="op-btn" data-value="^">^</button>
+        <button class="op-btn" data-value="!">!</button>
       </div>
-      <div class="button-row">
-        <button class="button" data-value="(">(</button>
-        <button class="button" data-value=")">)</button>
-        <button class="button" id="backspace-button" aria-label="Backspace">←</button>
-        <button class="button" id="clear-button" aria-label="Clear expression">Clear</button>
+      <div class="button-row" id="row2" role="group" aria-label="Parentheses and editing">
+        <button class="op-btn" data-value="(">(</button>
+        <button class="op-btn" data-value=")">)</button>
+        <button id="backspaceBtn" aria-label="Backspace">←</button>
+        <button id="clearBtn" aria-label="Clear">Clear</button>
       </div>
+      <button id="submitBtn" aria-label="Submit expression">Submit</button>
+      <button id="shareBtn" aria-label="Share game link" hidden>Share</button>
     </section>
 
-    <section id="submit-share-container" class="centered-text">
-      <button id="submit-button" class="outlined-button" aria-label="Submit expression">Submit</button>
-      <button id="share-button" class="outlined-button" aria-label="Share game link" style="display:none; background-color:#007bff; color:white; margin-top:10px;">Share</button>
-    </section>
-
-    <section id="scores-container" class="centered-text" aria-live="polite" aria-label="Game scores summary">
-      <div id="qu0x-completion">Qu0x! Completion: 0/0</div>
-      <div id="qu0x-monthly">Monthly Score: 0</div>
-      <div id="qu0x-ultimate">Ultimate Score: 0</div>
+    <section id="score-area" class="centered-text" aria-live="polite" aria-label="Scores summary">
+      <p id="qu0xCompletion">Qu0x! Completion: 0/0</p>
+      <p id="monthlyScore">Monthly Score: N/A</p>
+      <p id="ultimateScore">Ultimate Score: N/A</p>
     </section>
   </main>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
