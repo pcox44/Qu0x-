@@ -279,20 +279,27 @@ function renderGame(day) {
   dailyBestScoreBox.innerText = bestScores[day] ?? "N/A";
 
   const total = maxDay + 1;
-const qu0xCount = Object.values(lockedDays).filter(d => d.score === 0).length;
-completionRatioBox.innerText = `${qu0xCount}/${total}`;
+  const qu0xCount = Object.values(lockedDays).filter(d => d.score === 0).length;
+  completionRatioBox.innerText = `${qu0xCount}/${total}`;
 
-const allPlayed = [...Array(total).keys()].every(day => day in bestScores);
+  const allPlayed = [...Array(total).keys()].every(day => day in bestScores);
 
-
-masterScoreBox.innerText = allPlayed
-  ? `${Object.values(bestScores).reduce((a, b) => a + b, 0)}`
-  : "N/A";
+  masterScoreBox.innerText = allPlayed
+    ? `${Object.values(bestScores).reduce((a, b) => a + b, 0)}`
+    : "N/A";
 
   if (isLocked(day)) {
     expressionBox.innerText = lockedDays[day].expression;
     evaluateExpression();
     document.getElementById("gameNumberDate").innerText += " – Qu0x! Locked";
+  }
+
+  // *** ADD THIS ***
+  const shareBtn = document.getElementById("shareBtn");
+  if (isLocked(day)) {
+    shareBtn.classList.remove("hidden");
+  } else {
+    shareBtn.classList.add("hidden");
   }
 }
 
