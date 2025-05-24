@@ -1,488 +1,595 @@
-// Qu0x! Daily Dice Game script.js
+// script.js
 
-// Constants
+// --- Constants and Global Variables ---
 const START_DATE = new Date(2025, 4, 15); // May 15, 2025 (month is 0-indexed)
 const TODAY = new Date();
-const MS_PER_DAY = 24 * 60 * 60 * 1000;
-const OPERATORS = ['+', '-', '*', '/', '^', '!', '(', ')'];
-const MAX_TRIPLE_FACTORIALS = 3;
+const MILLIS_PER_DAY = 24 * 60 * 60 * 1000;
 
-// Elements
-const targetBox = document.getElementById('target-number');
-const diceContainer = document.getElementById('dice-container');
-const expressionBox = document.getElementById('expression');
-const resultBox = document.getElementById('result');
-const buttonsContainer = document.getElementById('buttons-container');
-const backspaceBtn = document.getElementById('backspace');
-const clearBtn = document.getElementById('clear');
-const submitBtn = document.getElementById('submit');
-const bestScoreTodayBox = document.getElementById('best-score-today');
-const dailyStatusBox = document.getElementById('daily-status');
-const shareBtn = document.getElementById('share-btn');
-const monthYearSelect = document.getElementById('month-year-select');
-const daySelect = document.getElementById('day-select');
-const qu0xLockedText = document.getElementById('qu0x-locked-text');
-
-let currentGameDate = new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate());
+let currentGameIndex = getGameIndexFromDate(TODAY);
 let diceValues = [];
-let usedDice = [];
-let expression = '';
-let dailyBest = null;
-let dailyBestExpression = '';
-let qu0xAchieved = false;
+let usedDice = new Array(5).fill(false);
+let expression = "";
+let targetNumber = 0;
+let scoresByGame = {}; // { gameIndex: { bestScore, bestExpression, qu0xAchieved } }
+let monthlyCompletion = {}; // { "YYYY-MM": Set of completed game indexes }
+let totalGamesPlayed = new Set();
 
-// Helpers
+const container = document.querySelector(".container");
+const targetNumberSpan = document.getElementById("target-number");
+const diceContainer = document.getElementById("dice-container");
+const expressionDiv = document.getElementById("expression");
+const resultDiv = document.getElementById("result");
+const buttonsContainer = document.getElementById("buttons-container");
+const submitButton = document.getElementById("submit-button");
+const backspaceButton = document.getElementById("backspace-button");
+const clearButton = document.getElementById("clear-button");
+const shareButton = document.getElementById("share-button");
+const prevButton = document.getElementById("prev-button");
+const nextButton = document.getElementById("next-button");
+const monthYearSelect = document.getElementById("month-year-select");
+const gameSelect = document.getElementById("game-select");
+const qu0xLockedSpan = document.getElementById("qu0x-locked");
+const qu0xCompletionDiv = document.getElementById("qu0x-completion");
+const monthlyScoreDiv = document.getElementById("qu0x-monthly");
+const ultimateScoreDiv = document.getElementById("qu0x-ultimate");
 
-// Format date to yyyy-mm-dd string
-function formatDate(date) {
-  return date.toISOString().slice(0, 10);
+// Header best score display between Qu0x and top right buttons
+const headerBestScore = document.createElement("div");
+headerBestScore.id = "header-best-score";
+headerBestScore.style.cssText = `
+  font-weight: bold; 
+  font-size: 1.2em; 
+  text-align: center; 
+  flex-grow: 1; 
+  color: #333;
+`;
+document.querySelector("body > .container").insertBefore(headerBestScore, diceContainer);
+
+// --- Utility Functions ---
+
+function getGameIndexFromDate(date) {
+  // Returns days since START_DATE, or -1 if before start
+  if (date < START_DATE) return -1;
+  const diff = Math.floor((date - START_DATE) / MILLIS_PER_DAY);
+  return diff;
 }
 
-// Seeded random generator (Mulberry32)
-function mulberry32(a) {
+function getDateFromGameIndex(index) {
+  const d = new Date(START_DATE.getTime() + index * MILLIS_PER_DAY);
+  return d;
+}
+
+function formatDate(date) {
+  return date.toISOString().slice(0, 10); // YYYY-MM-DD
+}
+
+function formatMonthYear(date) {
+  return date.toISOString().slice(0, 7); // YYYY-MM
+}
+
+function seedRandom(seed) {
+  // Simple deterministic pseudo-random generator (mulberry32)
   return function() {
-    var t = a += 0x6D2B79F5;
+    let t = seed += 0x6D2B79F5;
     t = Math.imul(t ^ (t >>> 15), t | 1);
     t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  }
+  };
 }
 
-// Generate dice for a given date (5 dice between 1 and 6)
-function generateDice(date) {
-  const seed = date.getFullYear() * 10000 + (date.getMonth()+1) * 100 + date.getDate();
-  const rand = mulberry32(seed);
-  const dice = [];
+function generateDiceValues(seed) {
+  // Use seeded RNG to generate 5 dice between 1 and 6
+  const rng = seedRandom(seed);
+  let values = [];
   for (let i = 0; i < 5; i++) {
-    dice.push(Math.floor(rand() * 6) + 1);
+    values.push(1 + Math.floor(rng() * 6));
   }
-  return dice;
+  return values;
 }
 
-// Generate target number based on date and dice
-function generateTargetNumber(date, dice) {
-  // Example: sum of dice + day + month mod 100 + 1 to keep target 1-100
-  let base = dice.reduce((a,b) => a+b, 0);
-  let val = (base + date.getDate() + (date.getMonth()+1)) % 100 + 1;
-  return val;
+function createDiceElement(value, index) {
+  const die = document.createElement("button");
+  die.className = "dice";
+  die.textContent = value;
+  die.dataset.index = index;
+  die.disabled = false;
+  return die;
 }
 
-// Load saved game data from localStorage
-function loadGameData(date) {
-  const key = `qu0x-game-${formatDate(date)}`;
-  const dataStr = localStorage.getItem(key);
-  if (!dataStr) return null;
-  try {
-    return JSON.parse(dataStr);
-  } catch {
-    return null;
+function isBalanced(expr) {
+  // Check balanced parentheses
+  let stack = [];
+  for (let ch of expr) {
+    if (ch === "(") stack.push(ch);
+    else if (ch === ")") {
+      if (stack.length === 0) return false;
+      stack.pop();
+    }
   }
+  return stack.length === 0;
 }
 
-// Save game data to localStorage
-function saveGameData(date, data) {
-  const key = `qu0x-game-${formatDate(date)}`;
-  localStorage.setItem(key, JSON.stringify(data));
-}
+function countDiceUsage(expr, dice) {
+  // Count usage of each dice value in expr; dice is array of 5 numbers
+  // We'll match digits exactly equal to dice values once each
+  // We disallow reuse of a die value more than once
+  // To do this, parse the expr tokens to identify the used numbers
+  
+  // We'll tokenize the expr for numbers, parentheses, and operators
+  // Then check if dice values used exactly once each (order doesn't matter)
 
-// Clear current expression and reset used dice
-function clearExpression() {
-  expression = '';
-  usedDice = [];
-  updateExpressionBox();
-  updateDiceUsedVisual();
-  updateResultBox('');
-  updateDailyStatus();
-  enableControls(true);
-}
-
-// Update expression display box
-function updateExpressionBox() {
-  expressionBox.textContent = expression || '';
-}
-
-// Update dice visuals based on usage
-function updateDiceUsedVisual() {
-  const diceElems = diceContainer.querySelectorAll('.die');
-  diceElems.forEach((dieElem, i) => {
-    if (usedDice.includes(i)) {
-      dieElem.classList.add('used');
+  // Extract numbers from expr (supports multi-digit numbers)
+  const tokens = [];
+  let currentNum = "";
+  for (let ch of expr) {
+    if ("0123456789".includes(ch)) {
+      currentNum += ch;
     } else {
-      dieElem.classList.remove('used');
-    }
-  });
-}
-
-// Evaluate the current expression safely
-function evaluateExpression(expr) {
-  // Replace factorials (supports !, !!, !!!)
-  // Factorial only valid for non-negative integers
-  // We'll parse and replace factorials before eval
-  
-  function factorial(n) {
-    if (n < 0 || !Number.isInteger(n)) throw 'Invalid factorial input';
-    let res = 1;
-    for (let i=2; i<=n; i++) res *= i;
-    return res;
-  }
-  
-  function tripleFactorial(n) {
-    // For n!!! = n! three times is ambiguous, interpret as factorial applied thrice
-    // i.e. n! then factorial of that result twice more
-    let res = factorial(n);
-    res = factorial(res);
-    res = factorial(res);
-    return res;
-  }
-  
-  // Regex to match triple factorial e.g. 5!!!
-  expr = expr.replace(/(\d+|\([^()]+\))!{3}/g, (match, val) => {
-    let num = evaluateExpression(val);
-    if (num === null) throw 'Invalid triple factorial base';
-    return tripleFactorial(num);
-  });
-  
-  // Double factorial not implemented (to keep scope manageable)
-  // Then single factorial
-  expr = expr.replace(/(\d+|\([^()]+\))!/g, (match, val) => {
-    let num = evaluateExpression(val);
-    if (num === null) throw 'Invalid factorial base';
-    return factorial(num);
-  });
-  
-  // Replace ^ with **
-  expr = expr.replace(/\^/g, '**');
-  
-  // Evaluate
-  try {
-    // eslint-disable-next-line no-eval
-    let val = eval(expr);
-    if (typeof val === 'number' && !isNaN(val) && isFinite(val)) {
-      return val;
-    } else {
-      return null;
-    }
-  } catch {
-    return null;
-  }
-}
-
-// Update result display box with evaluation
-function updateResultBox(val) {
-  if (val === '') {
-    resultBox.textContent = '';
-  } else if (val === null) {
-    resultBox.textContent = '?';
-  } else {
-    resultBox.textContent = val;
-  }
-}
-
-// Update daily status text and buttons disabled state
-function updateDailyStatus() {
-  if (qu0xAchieved) {
-    dailyStatusBox.textContent = 'Qu0x!-Locked';
-    dailyStatusBox.style.color = 'red';
-    qu0xLockedText.style.display = 'inline';
-    enableControls(false);
-  } else {
-    dailyStatusBox.textContent = '';
-    dailyStatusBox.style.color = 'black';
-    qu0xLockedText.style.display = 'none';
-    enableControls(true);
-  }
-  // Update best score display
-  if (dailyBest !== null) {
-    bestScoreTodayBox.textContent = `Best Score Today: ${dailyBest} (${dailyBestExpression})`;
-  } else {
-    bestScoreTodayBox.textContent = 'Best Score Today: N/A';
-  }
-}
-
-// Enable or disable input controls (buttons, backspace, clear, submit)
-function enableControls(enabled) {
-  backspaceBtn.disabled = !enabled;
-  clearBtn.disabled = !enabled;
-  submitBtn.disabled = !enabled;
-  // Operator buttons
-  const operatorBtns = buttonsContainer.querySelectorAll('.button');
-  operatorBtns.forEach(btn => {
-    btn.disabled = !enabled;
-  });
-}
-
-// Handle dice click to add dice value to expression
-function onDiceClick(index) {
-  if (qu0xAchieved) return;
-  if (usedDice.includes(index)) return;
-  usedDice.push(index);
-  expression += diceValues[index];
-  updateExpressionBox();
-  updateDiceUsedVisual();
-  updateCurrentEvaluation();
-}
-
-// Handle operator button click
-function onOperatorClick(op) {
-  if (qu0xAchieved) return;
-  expression += op;
-  updateExpressionBox();
-  updateCurrentEvaluation();
-}
-
-// Handle backspace button
-function onBackspace() {
-  if (qu0xAchieved) return;
-  if (!expression) return;
-  // Remove last char and restore dice if dice was removed
-  let lastChar = expression.slice(-1);
-  expression = expression.slice(0, -1);
-  // Check if lastChar was a dice number and if it matches an unused dice index
-  // This can be tricky: we track usedDice by index; here we remove last dice if needed
-  // We'll scan from the end of usedDice array to see if last char matches the dice value used
-  // We'll only remove the last used dice if its value matches the removed char
-  if (usedDice.length > 0) {
-    let lastUsedDiceIndex = usedDice[usedDice.length -1];
-    if (String(diceValues[lastUsedDiceIndex]) === lastChar) {
-      usedDice.pop();
-    }
-  }
-  updateExpressionBox();
-  updateDiceUsedVisual();
-  updateCurrentEvaluation();
-}
-
-// Handle clear button
-function onClear() {
-  if (qu0xAchieved) return;
-  clearExpression();
-}
-
-// Update the current evaluation of expression and show it
-function updateCurrentEvaluation() {
-  try {
-    let val = evaluateExpression(expression);
-    updateResultBox(val);
-  } catch {
-    updateResultBox(null);
-  }
-}
-
-// Submit the current expression for scoring
-function onSubmit() {
-  if (qu0xAchieved) return;
-  if (usedDice.length !== diceValues.length) {
-    alert('Please use all dice values exactly once.');
-    return;
-  }
-  let val = evaluateExpression(expression);
-  if (val === null) {
-    alert('Invalid Submission');
-    return;
-  }
-  val = Math.round(val * 1000) / 1000; // Round to 3 decimals
-
-  let target = Number(targetBox.textContent);
-  let score = Math.abs(val - target);
-
-  // Update best score if better
-  if (dailyBest === null || score < dailyBest) {
-    dailyBest = score;
-    dailyBestExpression = expression;
-    saveGameData(currentGameDate, { bestScore: dailyBest, expression: dailyBestExpression, qu0x: false });
-  }
-
-  // Check Qu0x!
-  if (score === 0) {
-    qu0xAchieved = true;
-    saveGameData(currentGameDate, { bestScore: 0, expression: expression, qu0x: true });
-    alert('Qu0x! Perfect score achieved!');
-  }
-
-  updateDailyStatus();
-  updateBestScoreUI();
-}
-
-// Update best score UI element
-function updateBestScoreUI() {
-  if (dailyBest !== null) {
-    bestScoreTodayBox.textContent = `Best Score Today: ${dailyBest} (${dailyBestExpression})`;
-  } else {
-    bestScoreTodayBox.textContent = 'Best Score Today: N/A';
-  }
-}
-
-// Populate month-year dropdown with available months from May 2025 to current
-function populateMonthYearDropdown() {
-  monthYearSelect.innerHTML = '';
-  let startYear = 2025;
-  let startMonth = 4; // May is month 4 in 0-based index
-  let currentYear = TODAY.getFullYear();
-  let currentMonth = TODAY.getMonth();
-
-  for (let year = startYear; year <= currentYear; year++) {
-    let monthStart = (year === startYear) ? startMonth : 0;
-    let monthEnd = (year === currentYear) ? currentMonth : 11;
-    for (let m = monthStart; m <= monthEnd; m++) {
-      let option = document.createElement('option');
-      option.value = `${year}-${m}`;
-      option.textContent = `${year}-${(m + 1).toString().padStart(2, '0')}`;
-      if (year === currentGameDate.getFullYear() && m === currentGameDate.getMonth()) {
-        option.selected = true;
+      if (currentNum !== "") {
+        tokens.push(currentNum);
+        currentNum = "";
       }
-      monthYearSelect.appendChild(option);
+      if ("()+-*/^!".includes(ch)) tokens.push(ch);
     }
+  }
+  if (currentNum !== "") tokens.push(currentNum);
+
+  // Collect all numeric tokens not part of factorial etc.
+  // For dice usage, just consider numbers used (dice are single digits)
+  const usedValues = tokens
+    .filter(tok => /^\d+$/.test(tok))
+    .map(Number);
+
+  // Check if usedValues contains exactly the dice numbers, no extras, no repeats
+  // The expression might use a number > 6 (e.g. 12), so not allowed.
+  // Also dice values are single digits from 1-6.
+  // So usedValues must be subset of dice values, and use each dice value exactly once.
+
+  if (usedValues.length !== dice.length) return false;
+
+  const diceCopy = dice.slice();
+  for (let val of usedValues) {
+    const idx = diceCopy.indexOf(val);
+    if (idx === -1) return false;
+    diceCopy.splice(idx, 1);
+  }
+  return diceCopy.length === 0;
+}
+
+function validateExpression(expr, dice) {
+  if (!expr) return false;
+  // Balanced parentheses
+  if (!isBalanced(expr)) return false;
+  // Dice usage exact once each
+  if (!countDiceUsage(expr, dice)) return false;
+  // No fractional powers: no '.' in expr except inside numbers? Let's disallow '.' entirely
+  if (expr.includes(".")) return false;
+  // Additional validation can be done in evaluateExpression
+  return true;
+}
+
+// Factorial functions including double and triple factorial
+function factorial(n) {
+  if (n < 0 || !Number.isInteger(n)) return NaN;
+  if (n === 0 || n === 1) return 1;
+  let f = 1;
+  for (let i = 2; i <= n; i++) f *= i;
+  return f;
+}
+
+function doubleFactorial(n) {
+  if (n < 0 || !Number.isInteger(n)) return NaN;
+  if (n === 0 || n === -1) return 1;
+  let f = 1;
+  for (let i = n; i > 0; i -= 2) f *= i;
+  return f;
+}
+
+function tripleFactorial(n) {
+  if (n < 0 || !Number.isInteger(n)) return NaN;
+  if (n === 0 || n === -1 || n === -2) return 1;
+  let f = 1;
+  for (let i = n; i > 0; i -= 3) f *= i;
+  return f;
+}
+
+function applyFactorials(expr) {
+  // Find sequences like n!, n!!, n!!! and replace with their computed value
+  // We'll use regex to find these patterns
+
+  // Regex to match (number or parenthetical expression) followed by !, !! or !!!
+  // We'll handle factorials applied to parenthetical expressions by evaluating inside first
+  // For simplicity, only allow factorials on integers or parenthesis (after eval)
+  // We'll do iterative replacement until no matches remain
+
+  // This will be a complex step; strategy:
+  // 1. Replace all parenthetical factorials: e.g. (2+1)! 
+  // 2. Then replace simple number factorials.
+
+  // Since the evaluation function is separate, here we just parse from right to left.
+
+  // For implementation simplicity, let's do replacement at evaluation step
+  // Instead of complicated regex here, implement factorial operators during evaluation.
+
+  return expr; // no change here; factorial handled in evaluation
+}
+
+function safeEval(expr) {
+  // Evaluate expression string supporting + - * / ^ and factorials (!, !!, !!!)
+  // Reject fractional powers (exponent must be integer)
+  // Implement factorial operators
+  // Use a simple parser approach
+
+  try {
+    // Replace '^' with '**' for JS exponentiation
+    let jsExpr = expr.replace(/\^/g, "**");
+
+    // Tokenize for factorials: Replace n!!!, n!!, n! with function calls
+    // We'll do multiple passes until no factorial operators remain
+
+    // Replace triples first: number!!! or (expr)!!!
+    jsExpr = jsExpr.replace(/(\d+|\([^()]+\))!!!/g, (match, g1) => {
+      const val = safeEval(g1);
+      if (!Number.isInteger(val) || val < 0) throw "Invalid factorial operand";
+      const res = tripleFactorial(val);
+      if (isNaN(res)) throw "Invalid triple factorial";
+      return res;
+    });
+
+    // Double factorials
+    jsExpr = jsExpr.replace(/(\d+|\([^()]+\))!!/g, (match, g1) => {
+      const val = safeEval(g1);
+      if (!Number.isInteger(val) || val < 0) throw "Invalid factorial operand";
+      const res = doubleFactorial(val);
+      if (isNaN(res)) throw "Invalid double factorial";
+      return res;
+    });
+
+    // Single factorials
+    jsExpr = jsExpr.replace(/(\d+|\([^()]+\))!/g, (match, g1) => {
+      const val = safeEval(g1);
+      if (!Number.isInteger(val) || val < 0) throw "Invalid factorial operand";
+      const res = factorial(val);
+      if (isNaN(res)) throw "Invalid factorial";
+      return res;
+    });
+
+    // Check for fractional powers: look for ** followed by a decimal
+    const fracPower = jsExpr.match(/\*\*\s*(\d*\.\d+)/);
+    if (fracPower) throw "Fractional powers not allowed";
+
+    // Evaluate with Function constructor (safe-ish for this controlled input)
+    // Only digits, operators, parentheses are allowed in jsExpr here
+    if (/[^0-9+\-*/().\s]/.test(jsExpr)) throw "Invalid characters";
+
+    const result = Function(`"use strict";return (${jsExpr})`)();
+
+    if (typeof result !== "number" || !isFinite(result)) throw "Invalid result";
+
+    return result;
+  } catch {
+    return NaN;
   }
 }
 
-// Populate day dropdown based on selected month-year
-function populateDayDropdown() {
-  daySelect.innerHTML = '';
-  let [year, month] = monthYearSelect.value.split('-').map(Number);
-  let daysInMonth = new Date(year, month + 1, 0).getDate();
-  // Clamp max day based on current date if this is current month/year
-  let maxDay = daysInMonth;
-  if (year === TODAY.getFullYear() && month === TODAY.getMonth()) {
-    maxDay = TODAY.getDate();
-  }
-  if (year === START_DATE.getFullYear() && month === START_DATE.getMonth()) {
-    // Ensure no days before start date
-    // Days start at START_DATE.getDate()
-  }
-
-  for (let d = 1; d <= maxDay; d++) {
-    if (year === START_DATE.getFullYear() && month === START_DATE.getMonth() && d < START_DATE.getDate()) {
-      continue; // skip days before start date
-    }
-    let option = document.createElement('option');
-    option.value = d;
-    option.textContent = d;
-    if (d === currentGameDate.getDate()) {
-      option.selected = true;
-    }
-    daySelect.appendChild(option);
-  }
+function calculateScore(target, value) {
+  if (isNaN(value)) return null;
+  return Math.abs(target - value);
 }
 
-// Load game for a selected date
-function loadGame(date) {
-  currentGameDate = date;
-  diceValues = generateDice(date);
-  usedDice = [];
-  expression = '';
-  qu0xAchieved = false;
-  // Load saved data if any
-  let savedData = loadGameData(date);
-  if (savedData) {
-    dailyBest = savedData.bestScore;
-    dailyBestExpression = savedData.expression;
-    qu0xAchieved = savedData.qu0x || false;
-  } else {
-    dailyBest = null;
-    dailyBestExpression = '';
-  }
-  // Set target
-  let target = generateTargetNumber(date, diceValues);
-  targetBox.textContent = target;
+// --- Rendering Functions ---
 
-  // Build dice UI
-  buildDiceUI();
-
-  // Reset expression & UI
-  updateExpressionBox();
-  updateDiceUsedVisual();
-  updateResultBox('');
-  updateDailyStatus();
-  updateBestScoreUI();
-
-  populateMonthYearDropdown();
-  populateDayDropdown();
-  qu0xLockedText.style.display = qu0xAchieved ? 'inline' : 'none';
-}
-
-// Build dice elements in the DOM
-function buildDiceUI() {
-  diceContainer.innerHTML = '';
-  diceValues.forEach((val, idx) => {
-    const die = document.createElement('div');
-    die.classList.add('die', `d${val}`);
-    die.textContent = val;
-    die.addEventListener('click', () => onDiceClick(idx));
+function renderDice() {
+  diceContainer.innerHTML = "";
+  for (let i = 0; i < diceValues.length; i++) {
+    const die = createDiceElement(diceValues[i], i);
+    if (usedDice[i]) die.disabled = true;
     diceContainer.appendChild(die);
-  });
+  }
 }
 
-// Initialize operator buttons
-function initOperatorButtons() {
-  // Operators to show on buttons, in two rows
-  const operatorsRow1 = ['+', '-', '*', '/', '^', '('];
-  const operatorsRow2 = [')', '!', 'Clear', 'Backspace', 'Submit', 'Share'];
-
-  buttonsContainer.innerHTML = '';
-
-  // Create buttons row 1
-  operatorsRow1.forEach(op => {
-    let btn = document.createElement('button');
-    btn.classList.add('button');
-    btn.textContent = op;
-    btn.addEventListener('click', () => onOperatorClick(op));
-    buttonsContainer.appendChild(btn);
-  });
-
-  // Create buttons row 2
-  operatorsRow2.forEach(op => {
-    let btn = document.createElement('button');
-    btn.classList.add('button');
-    btn.textContent = op;
-    if (op === 'Clear') btn.id = 'clear';
-    if (op === 'Backspace') btn.id = 'backspace';
-    if (op === 'Submit') btn.id = 'submit';
-    if (op === 'Share') btn.id = 'share-btn';
-    buttonsContainer.appendChild(btn);
-  });
-
-  // Attach specific handlers
-  clearBtn.addEventListener('click', onClear);
-  backspaceBtn.addEventListener('click', onBackspace);
-  submitBtn.addEventListener('click', onSubmit);
-  shareBtn.addEventListener('click', onShare);
+function renderExpression() {
+  expressionDiv.textContent = expression || "";
 }
 
-// Share button handler
-function onShare() {
-  // Share current expression and date
+function renderResult() {
   if (!expression) {
-    alert('No expression to share!');
+    resultDiv.textContent = "?";
     return;
   }
-  let dateStr = formatDate(currentGameDate);
-  let shareText = `Qu0x! Puzzle ${dateStr}\nExpression: ${expression}\nTarget: ${targetBox.textContent}`;
-  navigator.clipboard.writeText(shareText).then(() => {
-    alert('Copied to clipboard!');
-  }, () => {
-    alert('Failed to copy to clipboard.');
+  if (!validateExpression(expression, diceValues)) {
+    resultDiv.textContent = "?";
+    return;
+  }
+  const val = safeEval(expression);
+  if (isNaN(val)) {
+    resultDiv.textContent = "?";
+  } else {
+    resultDiv.textContent = `= ${val}`;
+  }
+}
+
+function renderButtons() {
+  // Operation buttons gray background
+  const opButtons = buttonsContainer.querySelectorAll(".op-btn");
+  opButtons.forEach(btn => {
+    btn.style.backgroundColor = "#d3d3d3";
+  });
+
+  // Clear button width adjusted by CSS
+  // Submit and Share button colors handled in CSS
+}
+
+function updateHeaderBestScore() {
+  const gameData = scoresByGame[currentGameIndex];
+  if (!gameData || gameData.bestScore == null) {
+    headerBestScore.textContent = "";
+  } else {
+    headerBestScore.textContent = `Best Score: ${gameData.bestScore}${gameData.qu0xAchieved ? " ⭐" : ""}`;
+  }
+}
+
+function updateQu0xLockedUI() {
+  const gameData = scoresByGame[currentGameIndex];
+  if (gameData && gameData.qu0xAchieved) {
+    qu0xLockedSpan.style.display = "inline-block";
+    submitButton.disabled = true;
+    backspaceButton.disabled = true;
+    clearButton.disabled = true;
+    shareButton.style.display = "inline-block";
+  } else {
+    qu0xLockedSpan.style.display = "none";
+    submitButton.disabled = false;
+    backspaceButton.disabled = false;
+    clearButton.disabled = false;
+    shareButton.style.display = "none";
+  }
+}
+
+// --- Input Handling ---
+
+function appendToExpression(char) {
+  if (scoresByGame[currentGameIndex]?.qu0xAchieved) return; // locked
+  expression += char;
+  renderExpression();
+  renderResult();
+}
+
+function removeLastChar() {
+  if (scoresByGame[currentGameIndex]?.qu0xAchieved) return; // locked
+  if (!expression) return;
+  // On backspace, if last char was a digit and matches dice, restore dice usage accordingly
+  // For simplicity, recalc usedDice from scratch after removal
+  expression = expression.slice(0, -1);
+  renderExpression();
+  renderResult();
+}
+
+function clearExpression() {
+  if (scoresByGame[currentGameIndex]?.qu0xAchieved) return; // locked
+  expression = "";
+  renderExpression();
+  renderResult();
+}
+
+// --- Game Logic ---
+
+function generateTarget(gameIndex) {
+  // Use seeded RNG for target number 1-100
+  const rng = seedRandom(gameIndex + 123456); // offset seed
+  return 1 + Math.floor(rng() * 100);
+}
+
+function startGame(index) {
+  if (index < 0) index = 0;
+  if (index > getGameIndexFromDate(TODAY)) index = getGameIndexFromDate(TODAY);
+  currentGameIndex = index;
+  const date = getDateFromGameIndex(currentGameIndex);
+
+  // Generate dice and target
+  diceValues = generateDiceValues(currentGameIndex);
+  usedDice = new Array(5).fill(false);
+  expression = "";
+  targetNumber = generateTarget(currentGameIndex);
+
+  targetNumberSpan.textContent = targetNumber;
+
+  renderDice();
+  renderExpression();
+  renderResult();
+  updateHeaderBestScore();
+  updateQu0xLockedUI();
+  updateDropdowns();
+  clearButton.disabled = false;
+  backspaceButton.disabled = false;
+  submitButton.disabled = false;
+  shareButton.style.display = "none";
+}
+
+function submitExpression() {
+  if (scoresByGame[currentGameIndex]?.qu0xAchieved) return; // locked
+
+  if (!validateExpression(expression, diceValues)) {
+    alert("Invalid Submission: Please ensure balanced parentheses and use each dice value exactly once.");
+    return;
+  }
+
+  const val = safeEval(expression);
+  if (isNaN(val)) {
+    alert("Invalid Submission: Could not evaluate expression.");
+    return;
+  }
+
+  const score = calculateScore(targetNumber, val);
+  if (score === null) {
+    alert("Invalid Submission.");
+    return;
+  }
+
+  let gameData = scoresByGame[currentGameIndex];
+  if (!gameData) {
+    gameData = { bestScore: score, bestExpression: expression, qu0xAchieved: false };
+  } else {
+    if (score < gameData.bestScore) {
+      gameData.bestScore = score;
+      gameData.bestExpression = expression;
+    }
+  }
+
+  if (score === 0) {
+    gameData.qu0xAchieved = true;
+  }
+
+  scoresByGame[currentGameIndex] = gameData;
+
+  // Mark completion sets
+  totalGamesPlayed.add(currentGameIndex);
+  const monthKey = formatMonthYear(getDateFromGameIndex(currentGameIndex));
+  if (!monthlyCompletion[monthKey]) monthlyCompletion[monthKey] = new Set();
+  monthlyCompletion[monthKey].add(currentGameIndex);
+
+  updateHeaderBestScore();
+  updateQu0xLockedUI();
+  updateShareButtonVisibility();
+  updateScoreboards();
+  updateDropdowns();
+}
+
+function updateShareButtonVisibility() {
+  const gameData = scoresByGame[currentGameIndex];
+  if (gameData && gameData.qu0xAchieved) {
+    shareButton.style.display = "inline-block";
+  } else {
+    shareButton.style.display = "none";
+  }
+}
+
+function copyShareText() {
+  const gameData = scoresByGame[currentGameIndex];
+  if (!gameData || !gameData.qu0xAchieved) return;
+  const text = `Qu0x Game Number:  ${gameData.bestExpression}`;
+  navigator.clipboard.writeText(text).then(() => {
+    alert("Copied to clipboard: " + text);
   });
 }
 
-// Dropdown change handlers
-monthYearSelect.addEventListener('change', () => {
-  populateDayDropdown();
-  // After repopulate, load new date
-  let [year, month] = monthYearSelect.value.split('-').map(Number);
-  let day = Number(daySelect.value);
-  let newDate = new Date(year, month, day);
-  loadGame(newDate);
+// --- Dropdown & Navigation ---
+
+function populateMonthYearSelect() {
+  monthYearSelect.innerHTML = "";
+  const startMonth = new Date(START_DATE.getFullYear(), START_DATE.getMonth(), 1);
+  const todayMonth = new Date(TODAY.getFullYear(), TODAY.getMonth(), 1);
+  let d = startMonth;
+  while (d <= todayMonth) {
+    const val = formatMonthYear(d);
+    const option = document.createElement("option");
+    option.value = val;
+    option.textContent = val;
+    monthYearSelect.appendChild(option);
+    d = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+  }
+}
+
+function populateGameSelectForMonth(monthYear) {
+  gameSelect.innerHTML = "";
+  const [year, month] = monthYear.split("-").map(Number);
+  const firstDay = new Date(year, month - 1, 1);
+  const lastDay = new Date(year, month, 0);
+  for (let day = 1; day <= lastDay.getDate(); day++) {
+    const date = new Date(year, month - 1, day);
+    if (date < START_DATE) continue;
+    if (date > TODAY) continue;
+
+    const index = getGameIndexFromDate(date);
+    const option = document.createElement("option");
+    option.value = index;
+    const displayDate = formatDate(date);
+
+    // Emoji for Qu0x or checkmark
+    const gameData = scoresByGame[index];
+    let emoji = "";
+    if (gameData?.qu0xAchieved) emoji = "⭐ ";
+    else if (gameData?.bestScore != null) emoji = "✓ ";
+    option.textContent = emoji + displayDate;
+    gameSelect.appendChild(option);
+  }
+}
+
+function updateDropdowns() {
+  // Set month-year select based on current game
+  const currentDate = getDateFromGameIndex(currentGameIndex);
+  const monthYear = formatMonthYear(currentDate);
+  monthYearSelect.value = monthYear;
+  populateGameSelectForMonth(monthYear);
+  gameSelect.value = currentGameIndex;
+}
+
+// --- Event Listeners ---
+
+monthYearSelect.addEventListener("change", () => {
+  populateGameSelectForMonth(monthYearSelect.value);
+  if (gameSelect.options.length > 0) {
+    gameSelect.selectedIndex = 0;
+    currentGameIndex = Number(gameSelect.value);
+    startGame(currentGameIndex);
+  }
 });
 
-daySelect.addEventListener('change', () => {
-  let [year, month] = monthYearSelect.value.split('-').map(Number);
-  let day = Number(daySelect.value);
-  let newDate = new Date(year, month, day);
-  loadGame(newDate);
+gameSelect.addEventListener("change", () => {
+  currentGameIndex = Number(gameSelect.value);
+  startGame(currentGameIndex);
+});
+
+submitButton.addEventListener("click", () => {
+  submitExpression();
+});
+
+clearButton.addEventListener("click", () => {
+  clearExpression();
+});
+
+backspaceButton.addEventListener("click", () => {
+  removeLastChar();
+});
+
+shareButton.addEventListener("click", () => {
+  copyShareText();
+});
+
+// Dice clicks
+diceContainer.addEventListener("click", (e) => {
+  if (e.target.classList.contains("dice-btn")) {
+    const index = Number(e.target.dataset.index);
+    if (usedDice[index]) return;
+    if (scoresByGame[currentGameIndex]?.qu0xAchieved) return;
+    const val = diceValues[index];
+    appendToExpression(val.toString());
+    usedDice[index] = true;
+    renderDice();
+  }
+});
+
+// Input buttons clicks
+buttonsContainer.addEventListener("click", (e) => {
+  if (!e.target.classList.contains("input-btn")) return;
+  const val = e.target.textContent;
+  if (val === "Clear") clearExpression();
+  else if (val === "Backspace") removeLastChar();
+  else appendToExpression(val);
 });
 
 // Initialization
-window.onload = () => {
-  initOperatorButtons();
-  loadGame(currentGameDate);
-};
+
+function init() {
+  populateMonthYearSelect();
+  startGame(getGameIndexFromDate(TODAY));
+  updateScoreboards();
+  updateDropdowns();
+  renderButtons();
+}
+
+init();
+
+})();</script>
+</body>
+</html>
