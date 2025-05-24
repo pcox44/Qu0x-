@@ -168,7 +168,7 @@ function evaluateExpression() {
 }
 
 function buildButtons() {
-  const ops = ["+", "-", "*", "/", "^", "!", "(", ")", "←", "Clear"];
+  const ops = ["+", "-", "*", "/", "^", "!", "(", ")", "Back", "Clear"];
   buttonGrid.innerHTML = "";
 
 
