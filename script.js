@@ -1,4 +1,4 @@
-// Qu0x! Game Script
+// Qu0x! Game Script - Full Version
 
 // === GLOBAL VARIABLES ===
 const MAX_DICE = 5;
@@ -19,6 +19,7 @@ let usedDice = [];
 let currentDate = new Date();
 let gameData = {}; // { "YYYY-MM-DD": { dice: [...], target: num, score: num|null, expression: string|null } }
 let currentGameKey = "";
+let allGameKeys = [];
 
 // === UTILITIES ===
 function pad(n) {
@@ -33,10 +34,6 @@ function getGameNumber(date) {
   const start = new Date("2025-05-15");
   const diff = Math.floor((date - start) / (1000 * 60 * 60 * 24));
   return diff + 1;
-}
-
-function getTodayKey() {
-  return formatDate(new Date());
 }
 
 function seedFromDate(dateStr) {
@@ -97,7 +94,7 @@ function evaluateExpression() {
   const expr = expressionBox.textContent;
   try {
     const cleanExpr = expr.replace(/(\d+)!+/g, (match, num) => {
-      const factorial = (n) => n <= 1 ? 1 : n * factorial(n - 1);
+      const factorial = (n) => (n <= 1 ? 1 : n * factorial(n - 1));
       let result = parseInt(num);
       const bangs = match.length - num.length;
       for (let i = 0; i < bangs; i++) result = factorial(result);
@@ -120,6 +117,49 @@ function resetGame() {
   usedDice = [];
 }
 
+function populateMonthYearDropdown() {
+  const start = new Date("2025-05-15");
+  const today = new Date();
+  const months = new Set();
+  while (start <= today) {
+    months.add(`${start.getFullYear()}-${pad(start.getMonth() + 1)}`);
+    start.setDate(start.getDate() + 1);
+  }
+  monthYearSelect.innerHTML = "";
+  [...months].forEach((ym) => {
+    const opt = document.createElement("option");
+    opt.value = ym;
+    const [year, month] = ym.split("-");
+    opt.textContent = `${month}/${year}`;
+    monthYearSelect.appendChild(opt);
+  });
+  monthYearSelect.value = `${today.getFullYear()}-${pad(today.getMonth() + 1)}`;
+}
+
+function populateGameDropdown(monthYear) {
+  const [year, month] = monthYear.split("-").map(Number);
+  const start = new Date("2025-05-15");
+  const today = new Date();
+  gameSelect.innerHTML = "";
+  const dayList = [];
+  const temp = new Date(start);
+  while (temp <= today) {
+    if (temp.getFullYear() === year && temp.getMonth() + 1 === month) {
+      const key = formatDate(temp);
+      const gameNum = getGameNumber(temp);
+      const opt = document.createElement("option");
+      opt.value = key;
+      opt.textContent = `Game ${gameNum} - ${key}`;
+      gameSelect.appendChild(opt);
+      dayList.push(key);
+    }
+    temp.setDate(temp.getDate() + 1);
+  }
+  if (dayList.length > 0) {
+    gameSelect.value = dayList[dayList.length - 1];
+  }
+}
+
 // === INIT ===
 function loadGame(dateStr) {
   const seed = seedFromDate(dateStr);
@@ -132,8 +172,10 @@ function loadGame(dateStr) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const today = getTodayKey();
+  const today = formatDate(new Date());
   currentGameKey = today;
+  populateMonthYearDropdown();
+  populateGameDropdown(`${currentDate.getFullYear()}-${pad(currentDate.getMonth() + 1)}`);
   loadGame(today);
 
   // Event listeners
@@ -170,7 +212,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const score = Math.abs(parseInt(result) - target);
     alert(score === 0 ? "🎉 Qu0x! 🎉" : `Score: ${score}`);
-    // Lockout and enable share
     qu0xLocked.hidden = !(score === 0);
     shareBtn.style.display = score === 0 ? "inline-block" : "none";
   });
@@ -185,5 +226,14 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch {
       alert("Could not copy.");
     }
+  });
+
+  monthYearSelect.addEventListener("change", () => {
+    populateGameDropdown(monthYearSelect.value);
+  });
+
+  gameSelect.addEventListener("change", (e) => {
+    currentGameKey = e.target.value;
+    loadGame(currentGameKey);
   });
 });
