@@ -268,38 +268,6 @@ completionRatioBox.innerText = `${qu0xCount}/${total}`;
 
 const allPlayed = [...Array(total).keys()].every(day => day in bestScores);
 
-const now = new Date();
-const currentMonth = now.getMonth();
-const currentYear = now.getFullYear();
-const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // strip time
-
-const game0Date = new Date("2025-05-15");
-const daysSinceStart = Math.floor((today - game0Date) / (1000 * 60 * 60 * 24));
-
-// Start of the month
-const firstOfMonth = new Date(currentYear, currentMonth, 1);
-const startIndex = Math.max(0, Math.floor((firstOfMonth - game0Date) / (1000 * 60 * 60 * 24)));
-
-// Only go up to today (or latest game available)
-const endIndex = Math.min(daysSinceStart, gameData.length - 1); // gameData holds all possible games
-
-// Collect scores for all days this month up to today
-let monthlyDays = [];
-let missing = false;
-
-for (let i = startIndex; i <= endIndex; i++) {
-  if (bestScores[i] !== undefined) {
-    monthlyDays.push(bestScores[i]);
-  } else {
-    missing = true;
-    break;
-  }
-}
-
-const monthlyScoreBox = document.getElementById("monthlyScore");
-monthlyScoreBox.innerText = missing
-  ? `Qu0x! Monthly Score: N/A`
-  : `Qu0x! Monthly Score: ${monthlyDays.reduce((a, b) => a + b, 0)}`;
 
 masterScoreBox.innerText = allPlayed
   ? `${Object.values(bestScores).reduce((a, b) => a + b, 0)}`
