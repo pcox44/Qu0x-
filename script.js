@@ -296,7 +296,7 @@ for (let i = startIndex; i <= endIndex; i++) {
   }
 }
 
-const monthlyScoreBox = document.getElementById("monthly-score");
+const monthlyScoreBox = document.getElementById("monthlyScore");
 monthlyScoreBox.innerText = missing
   ? `Qu0x! Monthly Score: N/A`
   : `Qu0x! Monthly Score: ${monthlyDays.reduce((a, b) => a + b, 0)}`;
