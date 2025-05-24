@@ -192,7 +192,7 @@ body {
   padding: 0.4em 1em;
   background-color: #ff6600;  /* bright orange */
   color: white;
-  border: 2px solid #cc5200;  /* darker orange border */
+  border: 2px solid black;  /* darker orange border */
   border-radius: 8px;
   cursor: pointer;
   margin-top: 1em;
