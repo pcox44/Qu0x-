@@ -37,7 +37,7 @@ body {
   display: inline-block;
   margin: 1em auto;
   border-radius: 5px;
-  border: 2px solid black;
+  border: 5px solid black;
 }
 
 .dice-container {
