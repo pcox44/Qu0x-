@@ -43,19 +43,6 @@ body {
   margin-bottom: 0.75em;
 }
 
-.instructions li::before {
-  content: "✔"; /* checkmark bullet */
-  position: absolute;
-  left: 0;
-  color: #4caf50;  /* green check */
-  font-weight: bold;
-}
-
-.instructions .operator {
-  color: #d84315; /* deep orange for operators */
-  font-weight: bold;
-}
-
 .instructions code {
   background: #eee;
   padding: 0.1em 0.3em;
