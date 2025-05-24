@@ -1,263 +1,173 @@
-/* Reset and base */
-* {
-  box-sizing: border-box;
-}
-
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
   background: #f0f0f0;
-  color: #222;
-}
-
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem 1rem;
-  background: #fff;
-  border-bottom: 2px solid #000;
-}
-
-#header-left {
-  font-weight: bold;
-  font-size: 1.5rem;
-  user-select: none;
-}
-
-#header-right {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-#header-right select,
-#header-right button {
-  font-size: 1rem;
-  padding: 0.25rem 0.5rem;
-  cursor: pointer;
-}
-
-main {
-  max-width: 600px;
-  margin: 1rem auto;
+  padding: 20px;
   text-align: center;
-  padding: 0 1rem;
 }
 
-/* Instructions */
-#instructions p {
-  margin: 0.4rem 0;
-  font-size: 1rem;
-}
-
-/* Target Number box */
-#target-container {
-  margin: 1rem 0 0.5rem;
+#gameContainer {
+  max-width: 500px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 0 10px #ccc;
 }
 
 #targetBox {
-  display: inline-block;
+  font-size: 1.5em;
+  margin: 10px 0;
+  padding: 10px;
   background: pink;
-  border: 2px solid black;
-  padding: 0.25rem 0.75rem;
-  font-weight: bold;
-  font-size: 1.25rem;
-  user-select: none;
-  min-width: fit-content;
+  border-radius: 5px;
 }
 
-/* Dice container */
-#dice-container {
-  margin: 0.75rem 0 1rem;
+#diceContainer {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: 10px;
+  margin: 10px 0;
 }
 
 .die {
-  width: 50px;
-  height: 50px;
-  border: 2px solid black;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.3em;
+  border-radius: 5px;
+  cursor: pointer;
   user-select: none;
+  border: 2px solid black; /* Black border around entire box */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Dice colors */
-.die-1 { background: red; color: white; }
-.die-2 { background: white; color: black; }
-.die-3 { background: blue; color: white; }
-.die-4 { background: yellow; color: black; }
-.die-5 { background: green; color: white; }
-.die-6 { background: black; color: yellow; }
+.die.faded {
+  opacity: 0.4;
+  cursor: default;
+}
 
-/* Expression and result area */
-#expression-area {
+#expressionContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  margin: 10px 0;
+  gap: 15px;
 }
 
 #expressionBox {
-  border: 2px solid black;
-  background: white;
-  min-width: 320px;  /* Slightly wider input */
-  height: 45px;
-  padding: 0 0.5rem;
-  font-size: 1.25rem;
-  display: flex;
-  align-items: center;
+  min-width: 200px;
+  min-height: 30px;
+  border: 2px solid #333;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 1.2em;
+  user-select: none;
+  background: #fafafa;
+  text-align: left;
+  white-space: nowrap;
   overflow-x: auto;
-  user-select: none;
 }
 
-#expressionBox:focus {
-  outline: 2px solid #007bff;
-}
-
-#expression-area span {
+#evaluationBox {
+  min-width: 30px;
+  font-size: 1.2em;
   font-weight: bold;
-  font-size: 1.5rem;
-  user-select: none;
+  padding: 5px;
+  border: 2px solid #333;
+  border-radius: 5px;
+  background: #eee;
 }
 
-#resultBox {
-  border: 2px solid black;
-  background: white;
-  min-width: 160px;  /* Half the width of input */
-  height: 45px;
-  padding: 0 0.5rem;
-  font-size: 1.25rem;
+#buttonGrid {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
-  user-select: none;
+  gap: 8px;
+  margin: 15px 0;
 }
 
-/* Buttons area */
-#buttons-area {
-  margin-bottom: 1rem;
+#buttonGrid button {
+  width: 50px;
+  height: 40px;
+  font-size: 1.1em;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid #666;
+  background: #fff;
+  transition: background-color 0.3s ease;
 }
 
-.button-row {
+#buttonGrid button:hover:not(:disabled) {
+  background-color: #ddd;
+}
+
+#buttonGrid button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+#submitBtn, #shareBtn {
+  margin: 5px 8px;
+  padding: 8px 16px;
+  font-size: 1.1em;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid #333;
+  background: #ffccdd;
+  transition: background-color 0.3s ease;
+}
+
+#submitBtn:disabled, #shareBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+#submitBtn:hover:not(:disabled), #shareBtn:hover:not(:disabled) {
+  background-color: #ff99bb;
+}
+
+#scores {
+  margin-top: 15px;
+  font-size: 1em;
   display: flex;
-  justify-content: center;
-  gap: 0.4rem;
-  margin-bottom: 0.5rem;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
-.op-btn {
-  background: #ccc;
-  border: 1px solid #888;
-  border-radius: 4px;
-  width: 45px;
-  height: 45px;
-  font-size: 1.25rem;
-  cursor: pointer;
-  user-select: none;
-  transition: background 0.2s ease;
-}
-
-.op-btn:hover:not(:disabled) {
-  background: #bbb;
-}
-
-#backspaceBtn,
-#clearBtn {
-  background: #ccc;
-  border: 1px solid #888;
-  border-radius: 4px;
-  cursor: pointer;
-  user-select: none;
-  font-size: 1.25rem;
-  height: 45px;
-  transition: background 0.2s ease;
-}
-
-#backspaceBtn {
-  width: 45px;
-}
-
-#clearBtn {
-  width: 75px;  /* Wider so 'Clear' fits */
-}
-
-#backspaceBtn:hover:not(:disabled),
-#clearBtn:hover:not(:disabled) {
-  background: #bbb;
-}
-
-#submitBtn {
-  background: #4CAF50;
-  color: white;
+#qu0xAnimation {
+  font-size: 3em;
+  color: deeppink;
   font-weight: bold;
-  font-size: 1.25rem;
-  padding: 0.35rem 1.2rem;
-  border: 2px solid black;
-  border-radius: 6px;
+  margin: 15px 0;
+}
+
+.hidden {
+  display: none;
+}
+
+#navigation {
+  margin-top: 15px;
+}
+
+#navigation button, #navigation select {
+  font-size: 1em;
+  padding: 6px 12px;
+  margin: 0 5px;
+  border-radius: 5px;
+  border: 1px solid #666;
   cursor: pointer;
-  user-select: none;
-  margin: 0 auto;
-  display: block;
-  transition: background 0.3s ease;
 }
 
-#submitBtn:hover:not(:disabled) {
-  background: #45a049;
+#navigation button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
-#shareBtn {
-  background: #007bff;
-  color: white;
-  font-weight: bold;
-  font-size: 1.1rem;
-  padding: 0.35rem 1.2rem;
-  border: 2px solid black;
-  border-radius: 6px;
+#navigation select {
   cursor: pointer;
-  user-select: none;
-  margin: 0.75rem auto 0;
-  display: none; /* Hidden by default */
-  transition: background 0.3s ease;
-}
-
-#shareBtn:hover:not(:disabled) {
-  background: #0056b3;
-}
-
-/* Scores */
-#score-area p {
-  margin: 0.3rem 0;
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-/* Scrollbars for expression box if needed */
-#expressionBox::-webkit-scrollbar {
-  height: 6px;
-}
-
-#expressionBox::-webkit-scrollbar-thumb {
-  background: #aaa;
-  border-radius: 3px;
-}
-
-/* Responsive */
-@media (max-width: 480px) {
-  #expressionBox {
-    min-width: 240px;
-  }
-  #resultBox {
-    min-width: 120px;
-  }
-  #clearBtn {
-    width: 65px;
-  }
+  min-width: 140px;
 }
