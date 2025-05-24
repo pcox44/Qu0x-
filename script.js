@@ -271,7 +271,7 @@ const allPlayed = [...Array(total).keys()].every(day => day in bestScores);
 
 masterScoreBox.innerText = allPlayed
   ? `${Object.values(bestScores).reduce((a, b) => a + b, 0)}`
-  : "Master Score: N/A";
+  : "N/A";
 
   if (isLocked(day)) {
     expressionBox.innerText = lockedDays[day].expression;
