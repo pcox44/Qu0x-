@@ -1,15 +1,24 @@
-/* Reset and base */
+/* General Reset and Base */
 * {
   box-sizing: border-box;
 }
+
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
-  background: #f7f7f7;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
   color: #222;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
 }
 
 /* Header */
@@ -17,109 +26,121 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  background-color: #fff;
+  padding: 10px 20px;
   border-bottom: 2px solid #ccc;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  position: sticky;
-  top: 0;
-  z-index: 100;
 }
 
-#game-title {
+header h1 {
   margin: 0;
   font-size: 1.8rem;
   font-weight: bold;
-  color: #222;
 }
 
 #header-right {
   display: flex;
-  align-items: center;
   gap: 8px;
+  align-items: center;
 }
 
+/* Dropdowns and Prev/Next Buttons in header */
 #header-right select,
 #header-right button {
+  padding: 6px 12px;
   font-size: 1rem;
-  padding: 6px 10px;
-  border: 1.5px solid #aaa;
-  border-radius: 4px;
-  background: white;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  border: 1.5px solid #999;
+  border-radius: 4px;
+  background-color: white;
 }
 
-#header-right button:hover,
-#header-right select:hover {
+#header-right button:hover {
   background-color: #eee;
 }
 
-/* Main container */
-main {
-  flex: 1;
-  padding: 15px 20px;
-  max-width: 480px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  text-align: center;
-}
-
 /* Instructions */
-#instructions p {
-  margin: 4px 0;
-  white-space: nowrap; /* prevent wrapping */
+#instructions {
+  margin-top: 20px;
+  margin-bottom: 20px;
   font-size: 1rem;
   line-height: 1.3;
 }
 
-/* Target Box */
-#target-box {
-  display: inline-block;
-  background: #ffc0cb;
-  color: #000;
-  padding: 10px 16px;
-  font-size: 1.4rem;
-  font-weight: bold;
-  border: 3px solid black;
-  border-radius: 6px;
-  min-width: 180px;
-  user-select: none;
+#instructions p {
+  margin: 5px 0;
+  white-space: nowrap; /* no wrapping */
+}
+
+/* Target box */
+#target-container {
   margin-bottom: 10px;
+}
+
+#target-container > div,
+#target-container {
+  display: inline-block;
+  background-color: #ffb6c1; /* pink */
+  color: black;
+  font-weight: bold;
+  padding: 8px 15px;
+  border: 2px solid black;
+  border-radius: 6px;
+  min-width: 140px;
+  user-select: none;
 }
 
 /* Dice container */
 #dice-container {
+  margin-bottom: 20px;
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-bottom: 10px;
 }
 
-/* Expression container */
+/* Dice styles (example) */
+.die {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1.5rem;
+  line-height: 50px;
+  text-align: center;
+  user-select: none;
+  border: 2px solid black;
+}
+
+/* Dice colors as per specification */
+.die-1 { background: red; color: white; }
+.die-2 { background: white; color: black; }
+.die-3 { background: blue; color: white; }
+.die-4 { background: yellow; color: black; }
+.die-5 { background: green; color: white; }
+.die-6 { background: black; color: yellow; }
+
+/* Expression and result container */
 #expression-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-#expression, #result {
-  min-width: 140px;
-  min-height: 38px;
-  border: 2px solid #aaa;
-  border-radius: 5px;
-  background-color: white;
+#expression,
+#result {
+  border: 2px solid black;
+  border-radius: 6px;
+  padding: 8px 12px;
+  min-width: 200px;
+  min-height: 40px;
   font-size: 1.3rem;
-  line-height: 1.3;
-  padding: 6px 10px;
+  background-color: #f9f9f9;
   user-select: none;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
+  white-space: nowrap;
+  overflow-x: auto;
 }
 
 #equal-sign {
@@ -130,103 +151,173 @@ main {
 
 /* Buttons container */
 #buttons-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .button-row {
+  margin-bottom: 10px;
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .button {
-  background-color: #ccc;
-  border: 1.8px solid #999;
+  background-color: #ddd;
+  border: 1.5px solid #aaa;
   border-radius: 6px;
-  padding: 8px 14px;
-  font-size: 1.3rem;
+  padding: 10px 16px;
+  font-size: 1.25rem;
   font-weight: bold;
   cursor: pointer;
   user-select: none;
-  min-width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  min-width: 42px;
+  transition: background-color 0.2s ease;
 }
 
 .button:hover:not(:disabled) {
   background-color: #bbb;
-  border-color: #666;
 }
 
-#backspace-button {
-  font-size: 1.4rem;
-  padding: 8px 12px;
-}
-
+/* Special case Clear button is wider */
 #clear-button {
-  min-width: 60px; /* wider so "Clear" fits nicely */
-  padding-left: 12px;
-  padding-right: 12px;
+  min-width: 70px;
 }
 
-/* Submit and Share container */
-#submit-share-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
+/* Submit button row */
+#submit-row {
   margin-bottom: 15px;
 }
 
-#submit-button,
-#share-button {
+#submit-button {
+  background-color: #28a745; /* green */
+  color: white;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 12px 25px;
   font-size: 1.3rem;
   font-weight: bold;
-  padding: 10px 24px;
-  border-radius: 8px;
   cursor: pointer;
   user-select: none;
-  border: 3px solid black;
-  min-width: 140px;
+  min-width: 150px;
   transition: background-color 0.2s ease;
 }
 
-#submit-button {
-  background-color: #eee;
-  color: #222;
-}
-
 #submit-button:hover:not(:disabled) {
-  background-color: #ddd;
+  background-color: #218838;
 }
 
+/* Share button below submit, hidden initially */
 #share-button {
-  background-color: #007bff;
+  background-color: #007bff; /* blue */
   color: white;
-  border-color: black;
+  border: 2px solid black;
+  border-radius: 8px;
+  padding: 10px 25px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  min-width: 150px;
+  display: none;
+  margin: 0 auto;
+  transition: background-color 0.2s ease;
 }
 
-#share-button:hover:not(:disabled) {
+#share-button:hover {
   background-color: #0056b3;
+}
+
+/* Controls container with prev, month-year, game select, next, and share */
+#controls-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+#controls-container button,
+#controls-container select {
+  padding: 6px 12px;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1.5px solid #999;
+  cursor: pointer;
+  background-color: white;
+}
+
+#controls-container button:hover {
+  background-color: #eee;
 }
 
 /* Scores container */
 #scores-container {
   font-size: 1rem;
-  color: #444;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+#scores-container > div {
+  margin: 4px 0;
   user-select: none;
 }
 
-/* Utility */
-.centered-text {
-  text-align: center;
+/* Backspace button as left arrow */
+#backspace-button {
+  font-size: 1.5rem;
+  padding: 10px 16px;
+  min-width: 42px;
+}
+
+/* Accessibility focus */
+.button:focus,
+#submit-button:focus,
+#share-button:focus,
+#backspace-button:focus,
+#clear-button:focus,
+#header-right select:focus,
+#header-right button:focus,
+#controls-container button:focus,
+#controls-container select:focus {
+  outline: 3px solid #3399ff;
+  outline-offset: 2px;
+}
+
+/* Disabled button style */
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: #eee;
+  color: #666;
+}
+
+/* Scrollbar for expression and result if overflow */
+#expression::-webkit-scrollbar,
+#result::-webkit-scrollbar {
+  height: 6px;
+}
+
+#expression::-webkit-scrollbar-thumb,
+#result::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 3px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  #expression,
+  #result {
+    min-width: 140px;
+  }
+
+  #submit-button,
+  #share-button {
+    min-width: 120px;
+    padding: 10px 20px;
+  }
+
+  #clear-button {
+    min-width: 60px;
+  }
 }
