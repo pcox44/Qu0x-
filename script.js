@@ -266,9 +266,11 @@ function renderGame(day) {
 const qu0xCount = Object.values(lockedDays).filter(d => d.score === 0).length;
 completionRatioBox.innerText = `${qu0xCount}/${total}`;
 
-masterScoreBox.innerText = qu0xCount === total
-  ? Object.values(bestScores).reduce((a, b) => a + b, 0)
-  : "N/A";
+const allPlayed = [...Array(total).keys()].every(day => day in bestScores);
+
+masterScoreBox.innerText = allPlayed
+  ? `Master Score: ${Object.values(bestScores).reduce((a, b) => a + b, 0)}`
+  : "Master Score: N/A";
 
   if (isLocked(day)) {
     expressionBox.innerText = lockedDays[day].expression;
