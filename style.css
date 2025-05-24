@@ -1,265 +1,229 @@
-/* General page styles */
+/* Reset and base */
+* {
+  box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    display: flex;
-    justify-content: center; /* center horizontally */
-    align-items: flex-start;
-    min-height: 100vh;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f9f9f9;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-.container {
-    max-width: 600px;
-    width: 100%;
-    margin: 30px 20px;
-    background-color: #fff;
-    padding: 20px 25px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    text-align: center; /* center all text and inline content */
-    position: relative;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-bottom: 2px solid #ccc;
+  padding: 10px 20px;
 }
 
-/* Target number pink box */
+#header-left h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #d6336c; /* Qu0x pink */
+}
+
+#header-right {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+#header-right button,
+#header-right select,
+#header-right span {
+  font-size: 0.9rem;
+}
+
+main {
+  flex-grow: 1;
+  padding: 20px 15px 40px;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Center text utility */
+.centered-text {
+  text-align: center;
+}
+
+/* Instructions styling */
+#instructions p {
+  margin: 6px 0;
+  line-height: 1.3;
+  font-size: 1rem;
+  color: #444;
+}
+
+/* Target box */
 #target-container {
-    background-color: #ffb6c1;
-    color: #000;
-    font-weight: bold;
-    font-size: 1.5em;
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 15px;
+  margin-top: 10px;
 }
 
-/* Dice container and dice styles */
+#target-box {
+  display: inline-block;
+  background-color: #ffb6c1; /* light pink */
+  color: #000;
+  padding: 8px 15px;
+  font-weight: bold;
+  font-size: 1.4rem;
+  border: 2px solid black;
+  border-radius: 6px;
+  min-width: 130px; /* just wide enough for 'Target: ###' */
+  user-select: none;
+}
+
+/* Dice container */
 #dice-container {
-    display: flex;
-    justify-content: center; /* center dice horizontally */
-    gap: 10px;
-    margin-bottom: 15px;
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
-.die {
-    width: 50px;
-    height: 50px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 1.5em;
-    border: 2px solid black;
-    user-select: none;
-}
-
-/* Dice colors */
-.die-1 {
-    background-color: red;
-    color: white;
-}
-.die-2 {
-    background-color: white;
-    color: black;
-    border: 2px solid black;
-}
-.die-3 {
-    background-color: blue;
-    color: white;
-}
-.die-4 {
-    background-color: yellow;
-    color: black;
-}
-.die-5 {
-    background-color: green;
-    color: white;
-}
-.die-6 {
-    background-color: black;
-    color: yellow;
-}
-
-/* Expression and result container */
+/* Expression area */
 #expression-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-    gap: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.3rem;
+  min-height: 2.4em;
+  user-select: none;
 }
 
 #expression {
-    flex-grow: 1;
-    max-width: 350px;
-    height: 35px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 5px 10px;
-    font-size: 1.2em;
-    background-color: white;
-    user-select: none;
-    overflow-x: auto;
-    text-align: left;
+  min-width: 180px;
+  padding: 6px 10px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  font-family: monospace;
+  white-space: nowrap;
+  overflow-x: auto;
 }
 
 #equal-sign {
-    font-size: 1.5em;
+  font-weight: bold;
+  font-size: 1.4rem;
+  user-select: none;
 }
 
 #result {
-    min-width: 60px;
-    height: 35px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 5px 10px;
-    font-size: 1.2em;
-    background-color: #f0f0f0;
-    text-align: center;
+  min-width: 60px;
+  padding: 6px 10px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  font-family: monospace;
+  text-align: center;
+  user-select: none;
 }
 
-/* Button container */
+/* Buttons container */
 #buttons-container {
-    margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Two rows of buttons centered */
+/* Button rows */
 .button-row {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 8px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
+/* Buttons */
 .button {
-    width: 50px;
-    height: 40px;
-    font-size: 1.4em;
-    font-weight: bold;
-    border-radius: 6px;
-    border: 1px solid #666;
-    background-color: #eee;
-    cursor: pointer;
-    user-select: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-color 0.2s ease;
+  font-size: 1.3rem;
+  padding: 10px 16px;
+  min-width: 40px;
+  background-color: #d6336c; /* Qu0x pink */
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+  font-weight: 600;
+  text-align: center;
 }
 
-.button:hover {
-    background-color: #ddd;
+.button:hover:not(:disabled) {
+  background-color: #ae2757;
 }
 
-.button:active {
-    background-color: #ccc;
+#backspace-button {
+  font-size: 1.4rem;
+  padding: 10px 16px;
+  min-width: 40px;
 }
 
-/* Submit button row */
+#clear-button {
+  min-width: 70px; /* Wider to fit "Clear" comfortably */
+  padding: 10px 18px;
+  font-size: 1.1rem;
+}
+
+/* Submit button */
 #submit-row {
-    margin-top: 12px;
-    text-align: center;
+  margin-top: 15px;
+  text-align: center;
 }
 
 #submit-button {
-    background-color: #4CAF50;
-    color: white;
-    font-size: 1.5em;
-    font-weight: bold;
-    padding: 10px 40px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.3s ease;
+  font-size: 1.3rem;
+  padding: 12px 30px;
+  background-color: #28a745; /* green */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+  user-select: none;
 }
 
-#submit-button:hover {
-    background-color: #45a049;
+#submit-button:hover:not(:disabled) {
+  background-color: #1e7e34;
 }
 
-#submit-button:active {
-    background-color: #3b8e41;
-}
-
-/* Controls container (dropdowns, prev/next) centered below main content */
-#controls-container {
-    margin-top: 15px;
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-}
-
-#month-year-select, #game-select {
-    padding: 6px 8px;
-    font-size: 1em;
-    border-radius: 4px;
-    border: 1px solid #aaa;
-    cursor: pointer;
-}
-
-/* Prev and Next buttons */
-#prev-button, #next-button {
-    padding: 6px 12px;
-    font-size: 1em;
-    border-radius: 4px;
-    border: 1px solid #aaa;
-    background-color: #f0f0f0;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.2s ease;
-}
-
-#prev-button:hover, #next-button:hover {
-    background-color: #ddd;
-}
-
-/* Scores area at bottom, centered */
+/* Scores */
 #scores-container {
-    margin-top: 20px;
-    font-size: 1em;
-    text-align: center;
+  font-size: 1.1rem;
+  color: #333;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-#qu0x-completion, #qu0x-monthly, #qu0x-ultimate {
-    margin: 6px 0;
+/* Disabled button style */
+button:disabled {
+  background-color: #aaa !important;
+  cursor: not-allowed;
 }
 
-#qu0x-completion {
-    font-weight: bold;
-}
+/* Responsive tweak */
+@media (max-width: 400px) {
+  #expression {
+    min-width: 140px;
+  }
 
-/* Qu0x-Locked text */
-#qu0x-locked {
-    color: red;
-    font-weight: bold;
-    margin-left: 15px;
-    display: inline-block;
-}
-
-/* Clipboard Share Button */
-#share-button {
-    margin-right: 12px;
-    padding: 6px 12px;
-    font-size: 1em;
-    border-radius: 4px;
-    border: 1px solid #4CAF50;
-    background-color: #e6f7e6;
-    color: #2e7d32;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.3s ease;
-}
-
-#share-button:hover {
-    background-color: #cde9cd;
-}
-
-/* Disabled state for backspace and clear when locked */
-#backspace-button[disabled], #clear-button[disabled] {
-    background-color: #ddd;
-    cursor: not-allowed;
-    color: #888;
+  #clear-button {
+    min-width: 60px;
+    padding: 10px 12px;
+  }
 }
