@@ -1,115 +1,94 @@
-/* General Reset and Base */
+/* Reset and base */
 * {
   box-sizing: border-box;
 }
 
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
-  padding: 0;
-  background-color: #fff;
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
   color: #222;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
 }
 
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: center;
-}
-
-/* Header */
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
-  border-bottom: 2px solid #ccc;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border-bottom: 2px solid #000;
 }
 
-header h1 {
-  margin: 0;
-  font-size: 1.8rem;
+#header-left {
   font-weight: bold;
+  font-size: 1.5rem;
+  user-select: none;
 }
 
 #header-right {
   display: flex;
-  gap: 8px;
+  gap: 0.5rem;
   align-items: center;
 }
 
-/* Dropdowns and Prev/Next Buttons in header */
 #header-right select,
 #header-right button {
-  padding: 6px 12px;
   font-size: 1rem;
+  padding: 0.25rem 0.5rem;
   cursor: pointer;
-  border: 1.5px solid #999;
-  border-radius: 4px;
-  background-color: white;
 }
 
-#header-right button:hover {
-  background-color: #eee;
+main {
+  max-width: 600px;
+  margin: 1rem auto;
+  text-align: center;
+  padding: 0 1rem;
 }
 
 /* Instructions */
-#instructions {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-size: 1rem;
-  line-height: 1.3;
-}
-
 #instructions p {
-  margin: 5px 0;
-  white-space: nowrap; /* no wrapping */
+  margin: 0.4rem 0;
+  font-size: 1rem;
 }
 
-/* Target box */
+/* Target Number box */
 #target-container {
-  margin-bottom: 10px;
+  margin: 1rem 0 0.5rem;
 }
 
-#target-container > div,
-#target-container {
+#targetBox {
   display: inline-block;
-  background-color: #ffb6c1; /* pink */
-  color: black;
-  font-weight: bold;
-  padding: 8px 15px;
+  background: pink;
   border: 2px solid black;
-  border-radius: 6px;
-  min-width: 140px;
+  padding: 0.25rem 0.75rem;
+  font-weight: bold;
+  font-size: 1.25rem;
   user-select: none;
+  min-width: fit-content;
 }
 
 /* Dice container */
 #dice-container {
-  margin-bottom: 20px;
+  margin: 0.75rem 0 1rem;
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 0.5rem;
 }
 
-/* Dice styles (example) */
 .die {
   width: 50px;
   height: 50px;
-  border-radius: 6px;
+  border: 2px solid black;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: bold;
   font-size: 1.5rem;
-  line-height: 50px;
-  text-align: center;
   user-select: none;
-  border: 2px solid black;
 }
 
-/* Dice colors as per specification */
+/* Dice colors */
 .die-1 { background: red; color: white; }
 .die-2 { background: white; color: black; }
 .die-3 { background: blue; color: white; }
@@ -117,207 +96,168 @@ header h1 {
 .die-5 { background: green; color: white; }
 .die-6 { background: black; color: yellow; }
 
-/* Expression and result container */
-#expression-container {
+/* Expression and result area */
+#expression-area {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-#expression,
-#result {
+#expressionBox {
   border: 2px solid black;
-  border-radius: 6px;
-  padding: 8px 12px;
-  min-width: 200px;
-  min-height: 40px;
-  font-size: 1.3rem;
-  background-color: #f9f9f9;
-  user-select: none;
+  background: white;
+  min-width: 320px;  /* Slightly wider input */
+  height: 45px;
+  padding: 0 0.5rem;
+  font-size: 1.25rem;
   display: flex;
   align-items: center;
-  justify-content: left;
-  white-space: nowrap;
   overflow-x: auto;
-}
-
-#equal-sign {
-  font-size: 1.5rem;
-  font-weight: bold;
   user-select: none;
 }
 
-/* Buttons container */
-#buttons-container {
-  margin-bottom: 15px;
+#expressionBox:focus {
+  outline: 2px solid #007bff;
+}
+
+#expression-area span {
+  font-weight: bold;
+  font-size: 1.5rem;
+  user-select: none;
+}
+
+#resultBox {
+  border: 2px solid black;
+  background: white;
+  min-width: 160px;  /* Half the width of input */
+  height: 45px;
+  padding: 0 0.5rem;
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+/* Buttons area */
+#buttons-area {
+  margin-bottom: 1rem;
 }
 
 .button-row {
-  margin-bottom: 10px;
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
 }
 
-.button {
-  background-color: #ddd;
-  border: 1.5px solid #aaa;
-  border-radius: 6px;
-  padding: 10px 16px;
-  font-size: 1.25rem;
-  font-weight: bold;
-  cursor: pointer;
-  user-select: none;
-  min-width: 42px;
-  transition: background-color 0.2s ease;
-}
-
-.button:hover:not(:disabled) {
-  background-color: #bbb;
-}
-
-/* Special case Clear button is wider */
-#clear-button {
-  min-width: 70px;
-}
-
-/* Submit button row */
-#submit-row {
-  margin-bottom: 15px;
-}
-
-#submit-button {
-  background-color: #28a745; /* green */
-  color: white;
-  border: 2px solid black;
-  border-radius: 8px;
-  padding: 12px 25px;
-  font-size: 1.3rem;
-  font-weight: bold;
-  cursor: pointer;
-  user-select: none;
-  min-width: 150px;
-  transition: background-color 0.2s ease;
-}
-
-#submit-button:hover:not(:disabled) {
-  background-color: #218838;
-}
-
-/* Share button below submit, hidden initially */
-#share-button {
-  background-color: #007bff; /* blue */
-  color: white;
-  border: 2px solid black;
-  border-radius: 8px;
-  padding: 10px 25px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  cursor: pointer;
-  user-select: none;
-  min-width: 150px;
-  display: none;
-  margin: 0 auto;
-  transition: background-color 0.2s ease;
-}
-
-#share-button:hover {
-  background-color: #0056b3;
-}
-
-/* Controls container with prev, month-year, game select, next, and share */
-#controls-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-}
-
-#controls-container button,
-#controls-container select {
-  padding: 6px 12px;
-  font-size: 1rem;
+.op-btn {
+  background: #ccc;
+  border: 1px solid #888;
   border-radius: 4px;
-  border: 1.5px solid #999;
+  width: 45px;
+  height: 45px;
+  font-size: 1.25rem;
   cursor: pointer;
-  background-color: white;
+  user-select: none;
+  transition: background 0.2s ease;
 }
 
-#controls-container button:hover {
-  background-color: #eee;
+.op-btn:hover:not(:disabled) {
+  background: #bbb;
 }
 
-/* Scores container */
-#scores-container {
+#backspaceBtn,
+#clearBtn {
+  background: #ccc;
+  border: 1px solid #888;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 1.25rem;
+  height: 45px;
+  transition: background 0.2s ease;
+}
+
+#backspaceBtn {
+  width: 45px;
+}
+
+#clearBtn {
+  width: 75px;  /* Wider so 'Clear' fits */
+}
+
+#backspaceBtn:hover:not(:disabled),
+#clearBtn:hover:not(:disabled) {
+  background: #bbb;
+}
+
+#submitBtn {
+  background: #4CAF50;
+  color: white;
+  font-weight: bold;
+  font-size: 1.25rem;
+  padding: 0.35rem 1.2rem;
+  border: 2px solid black;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  margin: 0 auto;
+  display: block;
+  transition: background 0.3s ease;
+}
+
+#submitBtn:hover:not(:disabled) {
+  background: #45a049;
+}
+
+#shareBtn {
+  background: #007bff;
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: 0.35rem 1.2rem;
+  border: 2px solid black;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  margin: 0.75rem auto 0;
+  display: none; /* Hidden by default */
+  transition: background 0.3s ease;
+}
+
+#shareBtn:hover:not(:disabled) {
+  background: #0056b3;
+}
+
+/* Scores */
+#score-area p {
+  margin: 0.3rem 0;
   font-size: 1rem;
   font-weight: bold;
-  margin-bottom: 30px;
 }
 
-#scores-container > div {
-  margin: 4px 0;
-  user-select: none;
-}
-
-/* Backspace button as left arrow */
-#backspace-button {
-  font-size: 1.5rem;
-  padding: 10px 16px;
-  min-width: 42px;
-}
-
-/* Accessibility focus */
-.button:focus,
-#submit-button:focus,
-#share-button:focus,
-#backspace-button:focus,
-#clear-button:focus,
-#header-right select:focus,
-#header-right button:focus,
-#controls-container button:focus,
-#controls-container select:focus {
-  outline: 3px solid #3399ff;
-  outline-offset: 2px;
-}
-
-/* Disabled button style */
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-  background-color: #eee;
-  color: #666;
-}
-
-/* Scrollbar for expression and result if overflow */
-#expression::-webkit-scrollbar,
-#result::-webkit-scrollbar {
+/* Scrollbars for expression box if needed */
+#expressionBox::-webkit-scrollbar {
   height: 6px;
 }
 
-#expression::-webkit-scrollbar-thumb,
-#result::-webkit-scrollbar-thumb {
+#expressionBox::-webkit-scrollbar-thumb {
   background: #aaa;
   border-radius: 3px;
 }
 
-/* Responsive tweaks */
+/* Responsive */
 @media (max-width: 480px) {
-  #expression,
-  #result {
-    min-width: 140px;
+  #expressionBox {
+    min-width: 240px;
   }
-
-  #submit-button,
-  #share-button {
+  #resultBox {
     min-width: 120px;
-    padding: 10px 20px;
   }
-
-  #clear-button {
-    min-width: 60px;
+  #clearBtn {
+    width: 65px;
   }
 }
