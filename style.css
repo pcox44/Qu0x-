@@ -1,17 +1,15 @@
-/* General reset and base */
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #fff;
-  color: #222;
+/* Reset and base */
+* {
+  box-sizing: border-box;
 }
-
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 1rem;
-  text-align: center;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+  color: #222;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* Header */
@@ -19,95 +17,85 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem;
+  padding: 15px 20px;
+  background-color: #fff;
   border-bottom: 2px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-#header-left {
+#game-title {
+  margin: 0;
+  font-size: 1.8rem;
   font-weight: bold;
-  font-size: 1.5rem;
-  color: #e60073; /* Pinkish for Qu0x! */
+  color: #222;
 }
 
 #header-right {
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
+  gap: 8px;
+}
+
+#header-right select,
+#header-right button {
+  font-size: 1rem;
+  padding: 6px 10px;
+  border: 1.5px solid #aaa;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#header-right button:hover,
+#header-right select:hover {
+  background-color: #eee;
+}
+
+/* Main container */
+main {
+  flex: 1;
+  padding: 15px 20px;
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: center;
 }
 
 /* Instructions */
-#instructions {
-  margin: 1rem 0;
-  font-size: 1rem;
-  line-height: 1.4;
-}
-
 #instructions p {
-  margin: 0.3rem 0;
-  white-space: nowrap; /* no wrap, single line each */
+  margin: 4px 0;
+  white-space: nowrap; /* prevent wrapping */
+  font-size: 1rem;
+  line-height: 1.3;
 }
 
-/* Target Number box */
-#target-container {
-  background-color: #e60073; /* pink */
-  color: white;
-  font-weight: bold;
-  font-size: 1.3rem;
-  padding: 0.3rem 0.6rem;
-  margin-bottom: 0.5rem;
+/* Target Box */
+#target-box {
   display: inline-block;
-  border: 2px solid black;
+  background: #ffc0cb;
+  color: #000;
+  padding: 10px 16px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border: 3px solid black;
   border-radius: 6px;
-  min-width: 140px; /* enough for "Target Number: ###" */
+  min-width: 180px;
+  user-select: none;
+  margin-bottom: 10px;
 }
 
 /* Dice container */
 #dice-container {
-  margin: 0.6rem 0 1rem 0;
   display: flex;
   justify-content: center;
-  gap: 0.8rem;
-}
-
-/* Buttons container */
-#buttons-container {
-  margin-bottom: 1rem;
-}
-
-.button-row {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.button {
-  background-color: #d0d0d0; /* grey as requested */
-  border: 1.5px solid #999;
-  border-radius: 5px;
-  font-size: 1.25rem;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 0.45rem 0.9rem;
-  min-width: 38px;
-  height: 42px;
-  user-select: none;
-  transition: background-color 0.15s ease;
-}
-
-.button:hover:not(:disabled) {
-  background-color: #bbb;
-}
-
-#clear-button {
-  min-width: 60px; /* wider so "Clear" fits nicely */
-}
-
-#backspace-button {
-  min-width: 38px;
-  font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 1;
-  padding-top: 0.15rem;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 /* Expression container */
@@ -115,109 +103,130 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 8px;
+  margin-bottom: 10px;
 }
 
 #expression, #result {
-  border: 1.5px solid #999;
+  min-width: 140px;
+  min-height: 38px;
+  border: 2px solid #aaa;
   border-radius: 5px;
-  min-width: 200px;
-  height: 42px;
+  background-color: white;
   font-size: 1.3rem;
-  padding: 0.4rem 0.8rem;
+  line-height: 1.3;
+  padding: 6px 10px;
+  user-select: none;
   display: flex;
   align-items: center;
-  justify-content: left;
-  background-color: #f7f7f7;
-  user-select: none;
-  font-family: 'Courier New', Courier, monospace;
+  justify-content: center;
 }
 
-#expression {
-  text-align: left;
-  overflow-x: auto;
-}
-
-#result {
-  text-align: right;
-  min-width: 80px;
-  font-weight: bold;
-}
-
-/* Equal sign */
 #equal-sign {
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: bold;
   user-select: none;
 }
 
-/* Submit button row */
-#submit-row {
-  margin-bottom: 0.7rem;
+/* Buttons container */
+#buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.button {
+  background-color: #ccc;
+  border: 1.8px solid #999;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  min-width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.button:hover:not(:disabled) {
+  background-color: #bbb;
+  border-color: #666;
+}
+
+#backspace-button {
+  font-size: 1.4rem;
+  padding: 8px 12px;
+}
+
+#clear-button {
+  min-width: 60px; /* wider so "Clear" fits nicely */
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+/* Submit and Share container */
+#submit-share-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+#submit-button,
+#share-button {
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding: 10px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  border: 3px solid black;
+  min-width: 140px;
+  transition: background-color 0.2s ease;
 }
 
 #submit-button {
-  background-color: #28a745; /* green */
-  color: white;
-  font-weight: 700;
-  font-size: 1.3rem;
-  padding: 0.5rem 1.2rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  width: 150px;
-  transition: background-color 0.2s ease;
-  user-select: none;
+  background-color: #eee;
+  color: #222;
 }
 
 #submit-button:hover:not(:disabled) {
-  background-color: #218838;
+  background-color: #ddd;
 }
 
-/* Share button - hidden initially, blue */
 #share-button {
-  background-color: #007bff; /* blue */
+  background-color: #007bff;
   color: white;
-  font-weight: 600;
-  font-size: 1.1rem;
-  padding: 0.4rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 130px;
-  display: none; /* only show after Qu0x */
-  margin: 0 auto;
-  user-select: none;
+  border-color: black;
 }
 
-#share-button:hover {
+#share-button:hover:not(:disabled) {
   background-color: #0056b3;
-}
-
-/* Controls container below */
-#controls-container {
-  margin-top: 1rem;
-  display: flex;
-  justify-content: center;
-  gap: 0.6rem;
-  flex-wrap: wrap;
 }
 
 /* Scores container */
 #scores-container {
-  margin-top: 1rem;
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #333;
+  font-size: 1rem;
+  color: #444;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  user-select: none;
 }
 
-/* Responsive tweaks */
-@media (max-width: 480px) {
-  #expression, #result {
-    min-width: 120px;
-  }
-  #submit-button, #share-button {
-    width: 100%;
-  }
+/* Utility */
+.centered-text {
+  text-align: center;
 }
