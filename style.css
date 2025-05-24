@@ -86,7 +86,7 @@ body {
   padding: 0.4em 0.5em;
   background: white;
   border: 2px solid #000;
-  min-width: 160px;      /* narrower */
+  min-width: 80px;      /* narrower */
   min-height: 1.2em;     /* match height */
 }
 
