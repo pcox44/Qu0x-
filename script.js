@@ -104,36 +104,60 @@ function addToExpression(char) {
   evaluateExpression();
 }
 
+function doubleFactorial(n) {
+  if (n < 0 || !Number.isInteger(n)) throw "Invalid double factorial";
+  if (n === 0 || n === 1) return 1;
+  let product = 1;
+  for (let i = n; i > 1; i -= 2) {
+    product *= i;
+  }
+  return product;
+}
+
+function tripleFactorial(n) {
+  if (n < 0 || !Number.isInteger(n)) throw "Invalid triple factorial";
+  if (n === 0 || n === 1) return 1;
+  let product = 1;
+  for (let i = n; i > 1; i -= 3) {
+    product *= i;
+  }
+  return product;
+}
+
+function factorial(n) {
+  if (n < 0 || !Number.isInteger(n)) throw "Invalid factorial";
+  return n <= 1 ? 1 : n * factorial(n - 1);
+}
+
 function evaluateExpression() {
   const expr = expressionBox.innerText;
   try {
     let replaced = expr;
 
-    // Replace triple factorial, e.g. 5!!! or (2+1)!!!
+    // Triple factorial e.g. 5!!! or (2+1)!!!
     replaced = replaced.replace(/(\([^)]+\)|\d+)!!!/g, (_, val) => {
       let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
       if (!Number.isInteger(n) || n < 0) throw "Invalid triple factorial";
       return tripleFactorial(n);
     });
 
-    // Replace double factorial, e.g. 7!! or (3!)!!
+    // Double factorial e.g. 4!! or (3!!)!!
     replaced = replaced.replace(/(\([^)]+\)|\d+)!!/g, (_, val) => {
       let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
       if (!Number.isInteger(n) || n < 0) throw "Invalid double factorial";
       return doubleFactorial(n);
     });
 
-    // Replace single factorial, e.g. 3! or (4)!
+    // Single factorial e.g. 3! or (4)!
     replaced = replaced.replace(/(\([^)]+\)|\d+)!/g, (_, val) => {
       let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
       if (!Number.isInteger(n) || n < 0) throw "Invalid factorial";
       return factorial(n);
     });
 
-    // Replace exponentiation symbol ^ with **
+    // Replace ^ with **
     replaced = replaced.replace(/\^/g, "**");
 
-    // Evaluate final expression
     let result = eval(replaced);
 
     if (!Number.isInteger(result)) throw "Non-integer";
@@ -142,24 +166,6 @@ function evaluateExpression() {
     evaluationBox.innerText = "?";
   }
 }
-
-function factorial(n) {
-  if (n < 0 || !Number.isInteger(n)) throw "Invalid factorial";
-  return n <= 1 ? 1 : n * factorial(n - 1);
-}
-
-function doubleFactorial(n) {
-  if (n < 0 || !Number.isInteger(n)) throw "Invalid double factorial";
-  if (n <= 1) return 1;
-  return n * doubleFactorial(n - 2);
-}
-
-function tripleFactorial(n) {
-  if (n < 0 || !Number.isInteger(n)) throw "Invalid triple factorial";
-  if (n <= 2) return 1;
-  return n * tripleFactorial(n - 3);
-}
-
 
 function buildButtons() {
   const ops = ["+", "-", "*", "/", "^", "!", "(", ")", "Back", "Clear"];
