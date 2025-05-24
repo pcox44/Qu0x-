@@ -268,6 +268,36 @@ completionRatioBox.innerText = `${qu0xCount}/${total}`;
 
 const allPlayed = [...Array(total).keys()].every(day => day in bestScores);
 
+  // Get the current month and year
+const now = new Date();
+const month = now.getMonth(); // 0-indexed
+const year = now.getFullYear();
+
+// Start and end dates of the current month
+const firstOfMonth = new Date(year, month, 1);
+const lastOfMonth = new Date(year, month + 1, 0);
+
+// Game #0 is 2025-05-15
+const game0Date = new Date("2025-05-15");
+
+// Calculate start and end indexes of the current month
+const startIndex = Math.max(0, Math.floor((firstOfMonth - game0Date) / (1000 * 60 * 60 * 24)));
+const endIndex = Math.floor((lastOfMonth - game0Date) / (1000 * 60 * 60 * 24));
+
+const monthlyDays = [];
+for (let i = startIndex; i <= endIndex; i++) {
+  if (bestScores[i] !== undefined) {
+    monthlyDays.push(bestScores[i]);
+  }
+}
+
+const totalMonthDays = endIndex - startIndex + 1;
+
+const monthlyScoreBox = document.getElementById("monthly-score");
+monthlyScoreBox.innerText = monthlyDays.length === totalMonthDays
+  ? `Qu0x! Monthly Score: ${monthlyDays.reduce((a, b) => a + b, 0)}`
+  : `Qu0x! Monthly Score: N/A`;
+
 masterScoreBox.innerText = allPlayed
   ? `${Object.values(bestScores).reduce((a, b) => a + b, 0)}`
   : "Master Score: N/A";
