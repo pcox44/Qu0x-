@@ -269,7 +269,7 @@ completionRatioBox.innerText = `${qu0xCount}/${total}`;
 const allPlayed = [...Array(total).keys()].every(day => day in bestScores);
 
 masterScoreBox.innerText = allPlayed
-  ? `Master Score: ${Object.values(bestScores).reduce((a, b) => a + b, 0)}`
+  ? `${Object.values(bestScores).reduce((a, b) => a + b, 0)}`
   : "Master Score: N/A";
 
   if (isLocked(day)) {
