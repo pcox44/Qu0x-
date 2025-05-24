@@ -20,12 +20,36 @@ body {
   margin-left: 0.25em;
 }
 
-.instructions ul {
-  list-style: none;
-  padding: 0;
+.instructions {
+  background: #fff8e1;             /* light warm background */
+  border: 2px solid #ffd54f;       /* thicker golden border */
+  padding: 1em 2em;
+  max-width: 480px;
   margin: 1em auto;
-  width: fit-content;
-  text-align: left;
+  border-radius: 10px;
+  font-size: 1.1em;
+  color: #333;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  text-align: left;                /* left align for readability */
+}
+
+.instructions ul {
+  list-style-type: none;           /* remove default bullets */
+  padding-left: 0;
+}
+
+.instructions li {
+  position: relative;
+  padding-left: 1.4em;
+  margin-bottom: 0.75em;
+}
+
+.instructions li::before {
+  content: "✔";                   /* green checkmark bullet */
+  position: absolute;
+  left: 0;
+  color: #4caf50;
+  font-weight: bold;
 }
 
 .target-box {
