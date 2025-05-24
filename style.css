@@ -1,153 +1,146 @@
 body {
   font-family: Arial, sans-serif;
-  padding: 20px;
-  max-width: 600px;
-  margin: auto;
+  text-align: center;
+  margin: 0;
+  background: #f7f7f7;
 }
 
-#rulesText {
-  background: #ffe6f0;
-  border: 1px solid black;
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-#targetBox {
-  background: pink;
-  border: 2px solid black;
-  padding: 10px 20px;
-  font-weight: bold;
-  font-size: 1.4em;
-  width: fit-content;
-  margin-bottom: 10px;
-}
-
-#diceContainer {
+.top-bar {
   display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
+  justify-content: space-between;
+  align-items: center;
+  background: #333;
+  color: white;
+  padding: 0.5em 1em;
+}
+
+.nav-controls select,
+.nav-controls button {
+  font-size: 1rem;
+  margin-left: 0.25em;
+}
+
+.instructions ul {
+  list-style: none;
+  padding: 0;
+  margin: 1em auto;
+  width: fit-content;
+  text-align: left;
+}
+
+.target-box {
+  background-color: pink;
+  color: black;
+  font-weight: bold;
+  padding: 0.5em 1em; /* increased padding */
+  font-size: 2.5em;  /* bigger text */
+  display: inline-block;
+  margin: 1em auto;
+  border-radius: 5px;
   border: 2px solid black;
-  padding: 10px;
+}
+
+.dice-container {
+  display: flex;
   justify-content: center;
+  margin: 1em 0;
 }
 
 .die {
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5em;
   font-weight: bold;
-  font-size: 1.4em;
-  border-radius: 6px;
+  border: 3px solid black;
+  border-radius: 8px;
+  margin: 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  user-select: none;
-  border: 1px solid black;
-  transition: opacity 0.3s;
+  transition: opacity 0.3s ease;
 }
 
 .die.faded {
-  opacity: 0.3;
+  opacity: 0.2;
   pointer-events: none;
 }
 
-#inputArea {
+.expression-section {
   display: flex;
+  justify-content: center;
   align-items: center;
+  margin-bottom: 1em;
   font-size: 1.5em;
-  margin-bottom: 10px;
-  gap: 10px;
 }
 
-#expressionBox, #evaluationBox {
-  min-width: 120px;
-  border: 1px solid #aaa;
-  padding: 5px 10px;
-  background: #f9f9f9;
-  border-radius: 4px;
-  user-select: none;
-  white-space: nowrap;
-  overflow-x: auto;
+#expressionBox {
+  padding: 0.4em 1.2em;  /* wider input */
+  background: white;
+  border: 2px solid #000;
+  min-width: 240px;      /* slightly wider */
+  min-height: 1.2em;     /* match height */
 }
 
 #evaluationBox {
-  min-width: 50px;
-  text-align: center;
+  padding: 0.4em 0.5em;
+  background: white;
+  border: 2px solid #000;
+  min-width: 160px;      /* narrower */
+  min-height: 1.2em;     /* match height */
+}
+
+#equalsSign {
+  padding: 0 0.5em;
+  font-weight: bold;
 }
 
 #buttonGrid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 8px;
-  margin-bottom: 10px;
+  gap: 0.5em;
+  margin: 1em auto;
+  max-width: 500px;
 }
 
 #buttonGrid button {
-  padding: 10px 0;
+  padding: 0.6em;
   font-size: 1.2em;
-  background: #ccc;
-  border: 1px solid #888;
   border-radius: 5px;
   cursor: pointer;
-  user-select: none;
 }
 
-#buttonGrid button:disabled {
-  background: #eee;
-  cursor: not-allowed;
-  color: #999;
+#submitArea {
+  margin: 1em;
 }
 
-.greenBtn {
-  background-color: #4CAF50;
+.submit {
+  font-size: 1.3em;
+  padding: 0.5em 1em;
+  background-color: green;
   color: white;
-  font-weight: bold;
-  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  margin-bottom: 8px;
-  display: inline-block;
 }
 
-.blueBtn {
-  background-color: #007bff;
-  color: white;
-  font-weight: bold;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 10px;
-  display: inline-block;
-}
-
-.hidden {
-  display: none !important;
-}
-
-#scoreArea {
-  margin-top: 10px;
-  font-weight: bold;
-  font-size: 1em;
-  line-height: 1.6em;
-}
-
-#gameNumberDate {
-  margin-top: 15px;
-  font-weight: bold;
-  font-size: 1.1em;
-  text-align: center;
+.scoreboard p {
+  margin: 0.5em;
 }
 
 #qu0xAnimation {
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 6em;
-  color: hotpink;
-  font-weight: bold;
-  user-select: none;
-  pointer-events: none;
-  z-index: 1000;
+  font-size: 4.5em;
+  color: #ff00ff;
+  animation: pop 3s ease-in-out;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes pop {
+  0% { transform: scale(0); opacity: 0; }
+  25% { transform: scale(1.2); opacity: 1; }
+  50% { transform: scale(1); }
+  100% { opacity: 0; }
 }
