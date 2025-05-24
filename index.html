@@ -1,36 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Qu0x! Daily Dice Game</title>
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Qu0x!</title>
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="gameContainer">
-    <h1>Qu0x! Daily Dice Game</h1>
-    <div id="gameNumberDate"></div>
-    <div id="targetBox">Target: 0</div>
-    <div id="diceContainer"></div>
-    <div id="expressionContainer">
-      <div id="expressionBox" contenteditable="false" aria-label="Expression input" tabindex="0"></div>
-      <div id="evaluationBox">?</div>
+  <div id="rules">
+    <p>Use each of the 5 dice values exactly once to build a math expression. Make the target box bigger like that one I sent you.</p>
+    <p>Allowed operations: +, -, ×, ÷, ^ (exponent), ! (factorial)</p>
+    <p>Submit an expression to get as close as possible to the target number.</p>
+    <p>Score = |Target − Result|. A score of 0 earns a Qu0x!</p>
+  </div>
+
+  <div id="target-container">
+    <div id="target-box" aria-live="polite"></div>
+  </div>
+
+  <div id="dice-container"></div>
+
+  <div id="input-container">
+    <div id="expression"></div>
+    <div id="equal-sign">=</div>
+    <div id="result">?</div>
+  </div>
+
+  <div id="buttons-container">
+    <div class="button-row" id="row1">
+      <button class="op-btn" data-value="+">+</button>
+      <button class="op-btn" data-value="-">−</button>
+      <button class="op-btn" data-value="*">×</button>
+      <button class="op-btn" data-value="/">÷</button>
+      <button class="op-btn" data-value="^">^</button>
+      <button class="op-btn" data-value="!">!</button>
     </div>
-    <div id="buttonGrid"></div>
-    <button id="submitBtn">Submit</button>
-    <button id="shareBtn">Share</button>
-    <div id="scores">
-      <div>Daily Best Score: <span id="dailyBestScore">N/A</span></div>
-      <div>Qu0x! Completion: <span id="completionRatio">0/0</span></div>
-      <div>Qu0x! Master Score: <span id="masterScore">N/A</span></div>
-    </div>
-    <div id="qu0xAnimation" class="hidden">Qu0x!</div>
-    <div id="navigation">
-      <button id="prevDay">&lt; Prev</button>
-      <select id="gameDropdown"></select>
-      <button id="nextDay">Next &gt;</button>
+    <div class="button-row" id="row2">
+      <button class="op-btn" data-value="(">(</button>
+      <button class="op-btn" data-value=")">)</button>
+      <button id="backspace-btn" class="op-btn">Back</button>
+      <button id="clear-btn" class="op-btn">Clear</button>
     </div>
   </div>
+
+  <div id="submit-share-container">
+    <button id="submit-btn" class="green-btn">Submit</button>
+    <button id="share-btn" class="blue-btn" style="display:none;">Share</button>
+  </div>
+
+  <div id="scores-container">
+    <div id="completion-score">Qu0x! Completion: 0 / 0</div>
+    <div id="best-score">Daily Best Score: N/A</div>
+    <div id="monthly-score">Qu0x! Monthly Score: N/A</div>
+    <div id="ultimate-score">Qu0x! Ultimate Score: N/A</div>
+  </div>
+
+  <div id="navigation">
+    <select id="month-year-dropdown" aria-label="Select Month and Year"></select>
+    <select id="day-dropdown" aria-label="Select Day"></select>
+    <button id="prev-btn">Prev</button>
+    <button id="next-btn">Next</button>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
