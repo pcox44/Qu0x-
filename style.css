@@ -1,173 +1,231 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f0f0f0;
-  padding: 20px;
+  margin: 20px;
+  background: #f9f9f9;
+  color: #222;
+}
+
+#rules {
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 480px;
+  user-select: none;
+}
+
+#target-container {
+  margin-bottom: 12px;
   text-align: center;
 }
 
-#gameContainer {
-  max-width: 500px;
-  margin: 0 auto;
-  background: white;
-  border-radius: 8px;
-  padding: 15px;
-  box-shadow: 0 0 10px #ccc;
+#target-box {
+  display: inline-block;
+  border: 2px solid black;
+  background: #ffc0cb;
+  padding: 10px 18px;
+  font-size: 36px;
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-width: 110px;
+  user-select: none;
 }
 
-#targetBox {
-  font-size: 1.5em;
-  margin: 10px 0;
-  padding: 10px;
-  background: pink;
-  border-radius: 5px;
-}
-
-#diceContainer {
+#dice-container {
+  margin: 10px 0 20px;
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin: 10px 0;
+  gap: 12px;
 }
 
 .die {
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  font-weight: bold;
-  font-size: 1.3em;
-  border-radius: 5px;
-  cursor: pointer;
-  user-select: none;
-  border: 2px solid black; /* Black border around entire box */
+  width: 60px;
+  height: 60px;
+  border: 2px solid black; /* Black trim only around die box */
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.die.faded {
-  opacity: 0.4;
+  font-size: 28px;
+  font-weight: bold;
+  user-select: none;
   cursor: default;
 }
 
-#expressionContainer {
+.die-1 { background: red; color: white; }
+.die-2 { background: white; color: black; }
+.die-3 { background: blue; color: white; }
+.die-4 { background: yellow; color: black; }
+.die-5 { background: green; color: white; }
+.die-6 { background: black; color: yellow; }
+
+#input-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px 0;
-  gap: 15px;
-}
-
-#expressionBox {
-  min-width: 200px;
-  min-height: 30px;
-  border: 2px solid #333;
-  border-radius: 5px;
-  padding: 5px 10px;
-  font-size: 1.2em;
+  margin-bottom: 12px;
+  font-size: 24px;
   user-select: none;
-  background: #fafafa;
-  text-align: left;
-  white-space: nowrap;
+}
+
+#expression {
+  min-width: 300px;
+  border: 1px solid #999;
+  padding: 6px 10px;
+  background: white;
+  border-radius: 4px;
+  font-family: monospace;
+  min-height: 30px;
   overflow-x: auto;
+  white-space: nowrap;
+  cursor: default;
 }
 
-#evaluationBox {
-  min-width: 30px;
-  font-size: 1.2em;
+#equal-sign {
+  margin: 0 12px;
   font-weight: bold;
-  padding: 5px;
-  border: 2px solid #333;
-  border-radius: 5px;
-  background: #eee;
+  user-select: none;
 }
 
-#buttonGrid {
+#result {
+  min-width: 60px;
+  border: 1px solid #999;
+  background: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  text-align: center;
+  font-family: monospace;
+  user-select: none;
+}
+
+#buttons-container {
+  max-width: 420px;
+  margin: 0 auto 20px;
+  user-select: none;
+}
+
+.button-row {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   gap: 8px;
-  margin: 15px 0;
+  margin-bottom: 8px;
 }
 
-#buttonGrid button {
-  width: 50px;
-  height: 40px;
-  font-size: 1.1em;
+.op-btn {
+  background-color: #ccc;
+  border: 1px solid #999;
+  border-radius: 6px;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 10px 14px;
   cursor: pointer;
-  border-radius: 5px;
-  border: 1px solid #666;
-  background: #fff;
-  transition: background-color 0.3s ease;
+  user-select: none;
+  min-width: 48px;
+  transition: background-color 0.2s;
 }
 
-#buttonGrid button:hover:not(:disabled) {
-  background-color: #ddd;
+.op-btn:active:not(:disabled) {
+  background-color: #bbb;
 }
 
-#buttonGrid button:disabled {
+.op-btn:disabled {
+  background-color: #eee;
   cursor: not-allowed;
-  opacity: 0.5;
+  color: #999;
 }
 
-#submitBtn, #shareBtn {
-  margin: 5px 8px;
-  padding: 8px 16px;
-  font-size: 1.1em;
-  cursor: pointer;
-  border-radius: 5px;
-  border: 2px solid #333;
-  background: #ffccdd;
-  transition: background-color 0.3s ease;
+#clear-btn {
+  min-width: 72px;
 }
 
-#submitBtn:disabled, #shareBtn:disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-#submitBtn:hover:not(:disabled), #shareBtn:hover:not(:disabled) {
-  background-color: #ff99bb;
-}
-
-#scores {
-  margin-top: 15px;
-  font-size: 1em;
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-#qu0xAnimation {
-  font-size: 3em;
-  color: deeppink;
+.green-btn {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 10px 28px;
+  font-size: 18px;
   font-weight: bold;
-  margin: 15px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  margin: 0 0 12px 0;
+  display: inline-block;
+  transition: background-color 0.3s;
 }
 
-.hidden {
-  display: none;
+.green-btn:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+.blue-btn {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 28px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  display: inline-block;
+  transition: background-color 0.3s;
+  margin-top: 8px;
+}
+
+.blue-btn:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+#submit-share-container {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+#scores-container {
+  max-width: 480px;
+  margin: 0 auto 20px;
+  font-size: 16px;
+  text-align: center;
+  user-select: none;
+  line-height: 1.4;
 }
 
 #navigation {
-  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  user-select: none;
 }
 
-#navigation button, #navigation select {
-  font-size: 1em;
-  padding: 6px 12px;
-  margin: 0 5px;
-  border-radius: 5px;
-  border: 1px solid #666;
+#month-year-dropdown,
+#day-dropdown {
+  padding: 6px 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #999;
   cursor: pointer;
 }
 
-#navigation button:disabled {
+#prev-btn,
+#next-btn {
+  padding: 8px 16px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #999;
+  cursor: pointer;
+  background-color: white;
+  transition: background-color 0.2s;
+}
+
+#prev-btn:hover,
+#next-btn:hover {
+  background-color: #eee;
+}
+
+#prev-btn:disabled,
+#next-btn:disabled {
+  background-color: #f5f5f5;
   cursor: not-allowed;
-  opacity: 0.5;
-}
-
-#navigation select {
-  cursor: pointer;
-  min-width: 140px;
+  color: #999;
 }
