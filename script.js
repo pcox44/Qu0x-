@@ -345,7 +345,7 @@ function populateDropdown() {
     option.value = i;
     
     // Option text, you can customize with emojis or formatting
-    option.text = `Game #${i + 1} (${getDateFromDayIndex(i)})`;
+    option.text = `Game #${i + 1}`;
     
     // Mark locked games with a star emoji in option text
     if (lockedDays[i] && lockedDays[i].score === 0) {
