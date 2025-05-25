@@ -318,17 +318,25 @@ if (lockedDays[day] && lockedDays[day].expression) {
   const totalScore = Object.values(bestScores).reduce((a, b) => a + b, 0);
   masterScoreBox.innerText = (Object.keys(bestScores).length > 0) ? `Master Score: ${totalScore}` : "Master Score: N/A";
 
-  // Disable inputs if locked
+   // Disable inputs if locked
   const locked = isLocked(day);
   if (locked) {
     expressionBox.style.pointerEvents = "none";
     submitBtn.disabled = true;
     buttonGrid.querySelectorAll("button").forEach(btn => btn.disabled = true);
+    document.querySelectorAll(".die").forEach(die => die.style.pointerEvents = "none");
+    document.getElementById("shareBtn").classList.remove("hidden");
   } else {
     expressionBox.style.pointerEvents = "auto";
     submitBtn.disabled = false;
     buttonGrid.querySelectorAll("button").forEach(btn => btn.disabled = false);
+    document.querySelectorAll(".die").forEach(die => die.style.pointerEvents = "auto");
+    document.getElementById("shareBtn").classList.add("hidden");
   }
+
+  evaluateExpression();
+}
+
 
   // Hide or show the Share button depending on whether a Qu0x! was achieved
   if (locked && lockedDays[day]?.expression) {
