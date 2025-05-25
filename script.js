@@ -304,18 +304,18 @@ function renderGame(day) {
   gameNumberDate.innerText = `Game #${day + 1} (${getDateFromDayIndex(day)})`;
 
   if (bestScores[day] !== undefined) {
-    dailyBestScoreBox.innerText = `Best Score: ${bestScores[day]}`;
+    dailyBestScoreBox.innerText = `${bestScores[day]}`;
   } else {
-    dailyBestScoreBox.innerText = "Best Score: N/A";
+    dailyBestScoreBox.innerText = "N/A";
   }
 
   const completedDays = Object.values(bestScores).filter(score => score === 0).length;
-  completionRatioBox.innerText = `Qu0x! Completion: ${completedDays}/${maxDay + 1}`;
+  completionRatioBox.innerText = `${completedDays}/${maxDay + 1}`;
 
   const totalScore = Object.values(bestScores).reduce((a, b) => a + b, 0);
   masterScoreBox.innerText = Object.keys(bestScores).length > 0
-    ? `Master Score: ${totalScore}`
-    : "Master Score: N/A";
+    ? `${totalScore}`
+    : "N/A";
 
   const locked = isLocked(day);
 
