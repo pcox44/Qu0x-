@@ -317,7 +317,7 @@ function populateDropdown() {
     const emoji = lockedDays[i]?.score === 0 ? "⭐" :
                   bestScores[i] !== undefined ? "✅" : "";
     option.value = i;
-    option.innerText = `Game ${i + 1} ${emoji} (${date})`;
+    option.innerText = `Game ${i + 1} ${emoji}`;
     if (i === currentDay) option.selected = true;
     dropdown.appendChild(option);
   }
