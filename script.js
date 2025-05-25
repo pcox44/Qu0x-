@@ -10,6 +10,7 @@ const completionRatioBox = document.getElementById("completionRatio");
 const masterScoreBox = document.getElementById("masterScore");
 const gameNumberDate = document.getElementById("gameNumberDate");
 const qu0xAnimation = document.getElementById("qu0xAnimation");
+const allOperations = ['+', '-', '*', '/', '^', '!'];
 
 let currentDate = new Date();
 let currentDay = getDayIndex(currentDate);
@@ -37,6 +38,38 @@ function getDayIndex(date) {
   const start = new Date("2025-05-15T00:00:00");
   const diff = Math.floor((date - start) / (1000 * 60 * 60 * 24));
   return Math.max(0, diff);
+}
+
+function getFrozenOperationsForDate(dateString) {
+  const seed = hashString("hardmode-" + dateString); // Simple hash
+  const prng = mulberry32(seed);
+  const operations = [...allOperations];
+  const frozen = [];
+
+  for (let i = 0; i < 2; i++) {
+    const index = Math.floor(prng() * operations.length);
+    frozen.push(operations.splice(index, 1)[0]);
+  }
+
+  return frozen;
+}
+
+// Example PRNG and hash
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  }
+}
+
+function hashString(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash * 31 + str.charCodeAt(i)) >>> 0;
+  }
+  return hash;
 }
 
 function getDateFromDayIndex(index) {
@@ -353,6 +386,20 @@ document.getElementById("prevDay").onclick = () => {
     populateDropdown();
   }
 };
+
+document.getElementById('hardModeToggle').addEventListener('change', (e) => {
+  localStorage.setItem('hardModeEnabled', e.target.checked);
+  location.reload(); // Or re-render UI
+});
+
+const hardModeEnabled = localStorage.getItem('hardModeEnabled') === 'true';
+document.getElementById('hardModeToggle').checked = hardModeEnabled;
+
+if (hardModeEnabled) {
+  const todayStr = getTodayString(); // Format: '2025-05-25'
+  const frozenOps = getFrozenOperationsForDate(todayStr);
+  disableOperationButtons(frozenOps);
+}
 
 document.getElementById("nextDay").onclick = () => {
   if (currentDay < maxDay) {
