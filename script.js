@@ -291,8 +291,13 @@ function renderGame(day) {
   generatePuzzle(day);
   renderDice();
 
+  if (lockedDays[day] && lockedDays[day].expression) {
+  expressionBox.innerText = lockedDays[day].expression;
+} else {
   expressionBox.innerText = "";
-  evaluationBox.innerText = "?";
+}
+evaluationBox.innerText = "?";
+
 
   targetBox.innerText = `Target: ${target}`;
   gameNumberDate.innerText = `Game #${day + 1} (${getDateFromDayIndex(day)})`;
