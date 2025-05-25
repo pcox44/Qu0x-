@@ -65,7 +65,7 @@ body {
   padding: 0.5em 1em; /* increased padding */
   font-size: 2.5em;  /* bigger text */
   display: inline-block;
-  margin: 1em auto;
+  margin: 0.7em auto;
   border-radius: 5px;
   border: 5px solid black;
 }
