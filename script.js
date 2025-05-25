@@ -369,5 +369,4 @@ dropdown.addEventListener("change", (e) => {
 // Initialize buttons, dropdown, and render current game on page load
 buildButtons();
 populateDropdown();
-submitBtn.addEventListener("click", submit);
 renderGame(currentDay);
