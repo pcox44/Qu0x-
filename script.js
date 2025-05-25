@@ -143,20 +143,9 @@ function factorial(n) {
 }
 
 function evaluateExpression() {
-  const expr = expressionBox.innerText.trim();
-
-  if (expr === "") {
-    evaluationBox.innerText = "?";
-    return;
-  }
-
+  const expr = expressionBox.innerText;
   try {
-    // existing code...
-  } catch {
-    evaluationBox.innerText = "?";
-  }
-}
-
+    let replaced = expr;
 
     // Triple factorial e.g. 5!!! or (2+1)!!!
     replaced = replaced.replace(/(\([^)]+\)|\d+)!!!/g, (_, val) => {
@@ -304,72 +293,36 @@ function renderGame(day) {
     ? `${Object.values(bestScores).reduce((a, b) => a + b, 0)}`
     : "N/A";
 
-  if (isLocked(day)) {
-    expressionBox.innerText = lockedDays[day].expression;
-    evaluateExpression();
-    document.getElementById("gameNumberDate").innerText += " – Qu0x! Locked";
-  }
-
-  // *** ADD THIS ***
-  const shareBtn = document.getElementById("shareBtn");
-  if (isLocked(day)) {
-    shareBtn.classList.remove("hidden");
+  // Hide or show share button
+  if (lockedDays[day]?.score === 0) {
+    document.getElementById("shareBtn").classList.remove("hidden");
   } else {
-    shareBtn.classList.add("hidden");
+    document.getElementById("shareBtn").classList.add("hidden");
   }
 }
 
-function populateDropdown() {
-  dropdown.innerHTML = "";
-  for (let i = 0; i <= maxDay; i++) {
+function setupDropdown() {
+  for (let d = 0; d <= maxDay; d++) {
     const option = document.createElement("option");
-    const date = getDateFromDayIndex(i);
-    const emoji = lockedDays[i]?.score === 0 ? "⭐" :
-                  bestScores[i] !== undefined ? "✅" : "";
-    option.value = i;
-    option.innerText = `Game ${i + 1} ${emoji} (${date})`;
-    if (i === currentDay) option.selected = true;
+    option.value = d;
+    option.innerText = `Game #${d + 1} (${getDateFromDayIndex(d)})`;
     dropdown.appendChild(option);
   }
+  dropdown.value = currentDay;
+  dropdown.onchange = () => {
+    currentDay = Number(dropdown.value);
+    renderGame(currentDay);
+  };
 }
 
-submitBtn.onclick = submit;
-dropdown.onchange = () => {
-  currentDay = Number(dropdown.value);
-  renderGame(currentDay);
-  populateDropdown();
+document.getElementById("submitBtn").onclick = submit;
+
+document.getElementById("shareBtn").onclick = () => {
+  if (!lockedDays[currentDay]) return;
+  const textToCopy = expressionToShareable(lockedDays[currentDay].expression);
+  navigator.clipboard.writeText(textToCopy);
+  alert("Expression copied to clipboard!");
 };
 
-document.getElementById("prevDay").onclick = () => {
-  if (currentDay > 0) {
-    currentDay--;
-    renderGame(currentDay);
-    populateDropdown();
-  }
-};
-
-document.getElementById("nextDay").onclick = () => {
-  if (currentDay < maxDay) {
-    currentDay++;
-    renderGame(currentDay);
-    populateDropdown();
-  }
-};
-
-window.onload = () => {
-  populateDropdown();
-  renderGame(currentDay);
-};
-
-document.getElementById("shareBtn").addEventListener("click", () => {
-  const gameNumber = currentDay + 1;  // game number = day index + 1
-  const expression = expressionBox.innerText;
-  const shareableExpr = expressionToShareable(expression);
-
-  const shareText = `Qu0x! ${gameNumber}: ${shareableExpr}`;
-
-  navigator.clipboard.writeText(shareText).then(() => {
-    alert("Copied your Qu0x! expression to clipboard!");
-  });
-});
-
+setupDropdown();
+renderGame(currentDay);
