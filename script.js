@@ -45,16 +45,19 @@ function getDateFromDayIndex(index) {
   return date.toISOString().slice(0, 10);
 }
 
-function seedRandom(seed) {
-  let x = Math.sin(seed) * 10000;
-  return () => {
-    x = Math.sin(x) * 10000;
-    return x - Math.floor(x);
+// Mulberry32 PRNG implementation
+function mulberry32(seed) {
+  return function() {
+    let t = seed += 0x6D2B79F5;
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
 
 function generatePuzzle(day) {
-  const rand = seedRandom(day + 1);
+  // Use mulberry32 with seed = day + 1
+  const rand = mulberry32(day + 1);
   diceValues = Array.from({ length: 5 }, () => Math.floor(rand() * 6) + 1);
   target = Math.floor(rand() * 100) + 1;
 }
@@ -263,49 +266,42 @@ function animateQu0x() {
 }
 
 function renderGame(day) {
+  currentDay = day;
+
   generatePuzzle(day);
   renderDice();
-  buildButtons();
-
-  document.getElementById("submitBtn").disabled = isLocked(day);
-  document.querySelectorAll("#buttonGrid button").forEach(btn => {
-    if (["Back", "Clear"].includes(btn.innerText)) {
-      btn.disabled = isLocked(day);
-    }
-  });
-
-  const dateStr = getDateFromDayIndex(day);
-  gameNumberDate.innerText = `Game #${day + 1} – ${dateStr}`;
-  targetBox.innerText = `Target: ${target}`;
 
   expressionBox.innerText = "";
   evaluationBox.innerText = "?";
-  usedDice = [];
 
-  dailyBestScoreBox.innerText = bestScores[day] ?? "N/A";
+  targetBox.innerText = `Target: ${target}`;
+  gameNumberDate.innerText = `Game #${day + 1} (${getDateFromDayIndex(day)})`;
 
-  const total = maxDay + 1;
-  const qu0xCount = Object.values(lockedDays).filter(d => d.score === 0).length;
-  completionRatioBox.innerText = `${qu0xCount}/${total}`;
-
-  const allPlayed = [...Array(total).keys()].every(day => day in bestScores);
-
-  masterScoreBox.innerText = allPlayed
-    ? `${Object.values(bestScores).reduce((a, b) => a + b, 0)}`
-    : "N/A";
-
-  if (isLocked(day)) {
-    expressionBox.innerText = lockedDays[day].expression;
-    evaluateExpression();
-    document.getElementById("gameNumberDate").innerText += "";
+  if (bestScores[day] !== undefined) {
+    dailyBestScoreBox.innerText = `Best Score: ${bestScores[day]}`;
+  } else {
+    dailyBestScoreBox.innerText = "Best Score: N/A";
   }
 
-  // *** ADD THIS ***
-  const shareBtn = document.getElementById("shareBtn");
-  if (isLocked(day)) {
-    shareBtn.classList.remove("hidden");
+  let completedDays = Object.values(bestScores).filter(s => s === 0).length;
+  completionRatioBox.innerText = `Qu0x! Completion: ${completedDays}/${maxDay + 1}`;
+
+  // Master score is sum of best scores or "N/A"
+  const totalScore = Object.values(bestScores).reduce((a, b) => a + b, 0);
+  masterScoreBox.innerText = (Object.keys(bestScores).length > 0) ? `Master Score: ${totalScore}` : "Master Score: N/A";
+
+  // Disable inputs if locked
+  const locked = isLocked(day);
+  if (locked) {
+    expressionBox.style.pointerEvents = "none";
+    submitBtn.disabled = true;
+    buttonGrid.querySelectorAll("button").forEach(btn => btn.disabled = true);
+    document.getElementById("shareBtn").classList.remove("hidden");
   } else {
-    shareBtn.classList.add("hidden");
+    expressionBox.style.pointerEvents = "auto";
+    submitBtn.disabled = false;
+    buttonGrid.querySelectorAll("button").forEach(btn => btn.disabled = false);
+    document.getElementById("shareBtn").classList.add("hidden");
   }
 }
 
@@ -313,52 +309,27 @@ function populateDropdown() {
   dropdown.innerHTML = "";
   for (let i = 0; i <= maxDay; i++) {
     const option = document.createElement("option");
-    const date = getDateFromDayIndex(i);
-    const emoji = lockedDays[i]?.score === 0 ? "⭐" :
-                  bestScores[i] !== undefined ? "✅" : "";
     option.value = i;
-    option.innerText = `Game ${i + 1} ${emoji}`;
-    if (i === currentDay) option.selected = true;
+    option.text = `Game #${i + 1} (${getDateFromDayIndex(i)})`;
     dropdown.appendChild(option);
   }
+  dropdown.value = currentDay;
+  dropdown.onchange = e => {
+    renderGame(parseInt(e.target.value));
+  };
 }
 
-submitBtn.onclick = submit;
-dropdown.onchange = () => {
-  currentDay = Number(dropdown.value);
-  renderGame(currentDay);
-  populateDropdown();
-};
+document.getElementById("submitBtn").onclick = submit;
 
-document.getElementById("prevDay").onclick = () => {
-  if (currentDay > 0) {
-    currentDay--;
-    renderGame(currentDay);
-    populateDropdown();
-  }
-};
-
-document.getElementById("nextDay").onclick = () => {
-  if (currentDay < maxDay) {
-    currentDay++;
-    renderGame(currentDay);
-    populateDropdown();
-  }
-};
-
-window.onload = () => {
-  populateDropdown();
-  renderGame(currentDay);
-};
-
-document.getElementById("shareBtn").addEventListener("click", () => {
-  const gameNumber = currentDay + 1;  // game number = day index + 1
-  const expression = expressionBox.innerText;
-  const shareableExpr = expressionToShareable(expression);
-
-  const shareText = `Qu0x! ${gameNumber}: ${shareableExpr}`;
-
+document.getElementById("shareBtn").onclick = () => {
+  if (!lockedDays[currentDay]) return;
+  const expr = lockedDays[currentDay].expression;
+  const shareText = expressionToShareable(expr);
   navigator.clipboard.writeText(shareText).then(() => {
-    alert("Copied your Qu0x! expression to clipboard!");
+    alert("Expression copied to clipboard!");
   });
-});
+};
+
+buildButtons();
+populateDropdown();
+renderGame(currentDay);
