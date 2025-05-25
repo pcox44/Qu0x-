@@ -385,6 +385,8 @@ dropdown.addEventListener("change", (e) => {
   }
 });
 
+submitBtn.addEventListener("click", submit);
+
 // Initialize buttons, dropdown, and render current game on page load
 buildButtons();
 populateDropdown();
