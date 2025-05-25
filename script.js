@@ -338,14 +338,22 @@ function populateDropdown() {
   for (let i = 0; i <= maxDay; i++) {
     const option = document.createElement("option");
     option.value = i;
-    // Add an emoji before "Game #"
-    option.text = `⭐ Game #${i + 1}`;
+
+    // Determine prefix emoji based on completion status
+    let prefix = "";
+    if (bestScores[i] === 0) {
+      prefix = "⭐ "; // Qu0x! perfect score
+    } else if (bestScores[i] !== undefined) {
+      prefix = "✅ "; // solved but not perfect
+    } else {
+      prefix = ""; // unsolved
+    }
+
+    option.text = `${prefix}Game #${i + 1}`;
     dropdown.appendChild(option);
   }
-  dropdown.value = currentDay;
-  dropdown.onchange = e => {
-    renderGame(parseInt(e.target.value));
-  };
+
+  dropdown.value = currentDay; // Select current day by default
 }
 
 document.getElementById("submitBtn").onclick = submit;
