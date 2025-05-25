@@ -292,15 +292,13 @@ function renderGame(day) {
   generatePuzzle(day);
   renderDice();
 
-if (lockedDays[day] && lockedDays[day].expression) {
-  expressionBox.innerText = lockedDays[day].expression;
-  evaluateExpression();  // Evaluate and display result
-} else {
-  expressionBox.innerText = "";
-  evaluationBox.innerText = "?";
-}
-
-
+  if (lockedDays[day] && lockedDays[day].expression) {
+    expressionBox.innerText = lockedDays[day].expression;
+    evaluateExpression();
+  } else {
+    expressionBox.innerText = "";
+    evaluationBox.innerText = "?";
+  }
 
   targetBox.innerText = `Target: ${target}`;
   gameNumberDate.innerText = `Game #${day + 1} (${getDateFromDayIndex(day)})`;
@@ -311,40 +309,38 @@ if (lockedDays[day] && lockedDays[day].expression) {
     dailyBestScoreBox.innerText = "Best Score: N/A";
   }
 
-  let completedDays = Object.values(bestScores).filter(s => s === 0).length;
+  const completedDays = Object.values(bestScores).filter(score => score === 0).length;
   completionRatioBox.innerText = `Qu0x! Completion: ${completedDays}/${maxDay + 1}`;
 
-  // Master score is sum of best scores or "N/A"
   const totalScore = Object.values(bestScores).reduce((a, b) => a + b, 0);
-  masterScoreBox.innerText = (Object.keys(bestScores).length > 0) ? `Master Score: ${totalScore}` : "Master Score: N/A";
+  masterScoreBox.innerText = Object.keys(bestScores).length > 0
+    ? `Master Score: ${totalScore}`
+    : "Master Score: N/A";
 
-   // Disable inputs if locked
   const locked = isLocked(day);
-  if (locked) {
-    expressionBox.style.pointerEvents = "none";
-    submitBtn.disabled = true;
-    buttonGrid.querySelectorAll("button").forEach(btn => btn.disabled = true);
-    document.querySelectorAll(".die").forEach(die => die.style.pointerEvents = "none");
-    document.getElementById("shareBtn").classList.remove("hidden");
-  } else {
-    expressionBox.style.pointerEvents = "auto";
-    submitBtn.disabled = false;
-    buttonGrid.querySelectorAll("button").forEach(btn => btn.disabled = false);
-    document.querySelectorAll(".die").forEach(die => die.style.pointerEvents = "auto");
-    document.getElementById("shareBtn").classList.add("hidden");
-  }
 
-  evaluateExpression();
-}
+  expressionBox.style.pointerEvents = locked ? "none" : "auto";
+  submitBtn.disabled = locked;
 
+  // Disable or enable all operator buttons
+  buttonGrid.querySelectorAll("button").forEach(btn => {
+    btn.disabled = locked;
+    if (locked) {
+      btn.classList.add("disabled");
+    } else {
+      btn.classList.remove("disabled");
+    }
+  });
 
-  // Hide or show the Share button depending on whether a Qu0x! was achieved
+  // Hide or show Share button
+  const shareBtn = document.getElementById("shareBtn");
   if (locked && lockedDays[day]?.expression) {
-    document.getElementById("shareBtn").classList.remove("hidden");
+    shareBtn.classList.remove("hidden");
   } else {
-    document.getElementById("shareBtn").classList.add("hidden");
+    shareBtn.classList.add("hidden");
   }
 }
+
 
 function populateDropdown() {
   dropdown.innerHTML = "";
