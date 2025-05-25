@@ -143,9 +143,20 @@ function factorial(n) {
 }
 
 function evaluateExpression() {
-  const expr = expressionBox.innerText;
+  const expr = expressionBox.innerText.trim();
+
+  if (expr === "") {
+    evaluationBox.innerText = "?";
+    return;
+  }
+
   try {
-    let replaced = expr;
+    // existing code...
+  } catch {
+    evaluationBox.innerText = "?";
+  }
+}
+
 
     // Triple factorial e.g. 5!!! or (2+1)!!!
     replaced = replaced.replace(/(\([^)]+\)|\d+)!!!/g, (_, val) => {
