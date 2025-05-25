@@ -297,7 +297,7 @@ function renderGame(day) {
   if (isLocked(day)) {
     expressionBox.innerText = lockedDays[day].expression;
     evaluateExpression();
-    document.getElementById("gameNumberDate").innerText += " – Qu0x! Locked";
+    document.getElementById("gameNumberDate").innerText += "";
   }
 
   // *** ADD THIS ***
