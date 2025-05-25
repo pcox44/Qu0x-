@@ -3,11 +3,7 @@ body {
   text-align: center;
   margin: 0;
   background: #f7f7f7;
-  padding-left: 12px;   /* add horizontal padding */
-  padding-right: 12px;
-  box-sizing: border-box;  /* important for padding */
 }
-
 
 .top-bar {
   display: flex;
@@ -77,12 +73,8 @@ body {
 .dice-container {
   display: flex;
   justify-content: center;
-  margin: 1em auto;   /* center horizontally */
-  max-width: 480px;   /* match other containers */
-  gap: 10px;          /* optional: space between dice */
-  flex-wrap: wrap;    /* wrap on small screens */
+  margin: 1em 0;
 }
-
 
 .die {
   width: 70px;
@@ -200,61 +192,9 @@ body {
   border-color: #993d00;
 }
 
-.expression-section {
-  justify-content: center;
-  gap: 12px;
-  padding: 0 4px;  /* small horizontal padding */
-  flex-wrap: wrap; /* wrap on very narrow screens */
-}
-
-#expressionBox {
-  max-width: 70vw;  /* max width relative to viewport */
-  box-sizing: border-box;
-}
-
-#evaluationBox {
-  max-width: 25vw;
-  box-sizing: border-box;
-}
-
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   body {
-    padding-left: 16px;
-    padding-right: 16px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
-
-  .die {
-    width: 50px;
-    height: 50px;
-    font-size: 1.8em;
-  }
-
-  #expressionBox {
-    font-size: 1.2em;
-    min-width: 160px;
-    max-width: 65vw;
-  }
-
-  #evaluationBox {
-    font-size: 1.2em;
-    min-width: 50px;
-    max-width: 20vw;
-  }
-
-  #buttonGrid {
-    grid-template-columns: repeat(4, 1fr);
-    max-width: 360px;
-  }
-
-  #buttonGrid button {
-    font-size: 1em;
-    padding: 0.4em;
-  }
-
-  .top-bar {
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-}
-
-
+} 
