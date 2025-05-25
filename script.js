@@ -172,7 +172,11 @@ function evaluateExpression() {
     replaced = replaced.replace(/\^/g, "**");
 
     let result = eval(replaced);
-    evaluationBox.innerText = result;
+    if (result === undefined || result === null) {
+      evaluationBox.innerText = "?";
+    } else {
+      evaluationBox.innerText = result;
+    }
 
   } catch {
     evaluationBox.innerText = "?";
@@ -203,7 +207,6 @@ function buildButtons() {
         expressionBox.innerText = "";
         usedDice = [];
         renderDice();
-        evaluationBox.innerText = "?";
       } else {
         addToExpression(op);
       }
