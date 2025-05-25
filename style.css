@@ -23,7 +23,7 @@ body {
 .instructions {
   background: #fff8e1;
   border: 2px solid #ffd54f;
-  padding: 0.4em 2em;      /* less vertical padding */
+  padding: 0.15em 1.5em;      /* less vertical padding */
   max-width: 480px;
   margin: 0.5em auto;      /* slightly less space above/below the box */
   border-radius: 10px;
