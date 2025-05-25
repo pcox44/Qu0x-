@@ -57,6 +57,7 @@ const staticPuzzles = [
   { dice: [6,3, 1, 6, 1], target: 19 },
   { dice: [3, 1, 1, 3, 5], target: 73 },
   { dice: [3, 1, 3, 2, 6], target: 31 },
+  { dice: [4, 5, 5, 3, 2], target: 52 },
 ];
 
 // Optional: use mulberry32 PRNG for dynamic puzzles from day 10 onward
@@ -71,7 +72,7 @@ function mulberry32(seed) {
 
 // Step 2: Modify generatePuzzle to use static for first 10 days, dynamic for others
 function generatePuzzle(day) {
-  if (day < 10) {
+  if (day < 11) {
     diceValues = staticPuzzles[day].dice.slice();  // clone array
     target = staticPuzzles[day].target;
   } else {
