@@ -330,7 +330,7 @@ function populateDropdown() {
   for (let i = 0; i <= maxDay; i++) {
     const option = document.createElement("option");
     option.value = i;
-    option.text = `Game #${i + 1} (${getDateFromDayIndex(i)})`;
+    option.text = `Game #${i + 1}`;
     dropdown.appendChild(option);
   }
   dropdown.value = currentDay;
