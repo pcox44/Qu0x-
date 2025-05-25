@@ -104,24 +104,20 @@ body {
   font-size: 1.5em;
 }
 
-#expressionBox, #evaluationBox {
-  height: 1.2em;
-  line-height: 1.2em;
-  box-sizing: border-box;
-}
-
 #expressionBox {
-  padding: 0.4em 1.2em;
+  padding: 0.4em 1.2em;  /* wider input */
   background: white;
   border: 2px solid #000;
-  min-width: 240px;
+  min-width: 240px;      /* slightly wider */
+  min-height: 1.2em;     /* match height */
 }
 
 #evaluationBox {
   padding: 0.4em 0.5em;
   background: white;
   border: 2px solid #000;
-  min-width: 80px;
+  min-width: 80px;      /* narrower */
+  min-height: 1.2em;     /* match height */
 }
 
 #equalsSign {
