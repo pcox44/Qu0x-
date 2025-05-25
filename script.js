@@ -389,3 +389,15 @@ dropdown.addEventListener("change", (e) => {
 buildButtons();
 populateDropdown();
 renderGame(currentDay);
+
+document.getElementById("shareBtn").addEventListener("click", () => {
+  const gameNumber = currentDay + 1;  // game number = day index + 1
+  const expression = expressionBox.innerText;
+  const shareableExpr = expressionToShareable(expression);
+
+  const shareText = `Qu0x! ${gameNumber}: ${shareableExpr}`;
+
+  navigator.clipboard.writeText(shareText).then(() => {
+    alert("Copied your Qu0x! expression to clipboard!");
+  });
+});
