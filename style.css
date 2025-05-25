@@ -21,16 +21,17 @@ body {
 }
 
 .instructions {
-  background: #fff8e1;  /* soft light yellow */
-  border: 2px solid #ffd54f; /* golden border */
-  padding: 0.6em 1em;       /* smaller padding */
-  max-width: 380px;         /* narrower box */
-  margin: 1em auto;
-  border-radius: 8px;
-  font-size: 0.95em;        /* smaller text */
+  background: #fff8e1;
+  border: 2px solid #ffd54f;
+  padding: 0.4em 2em;      /* less vertical padding */
+  max-width: 480px;
+  margin: 0.5em auto;      /* slightly less space above/below the box */
+  border-radius: 10px;
+  font-size: 1.1em;
   color: #333;
-  box-shadow: 2px 2px 6px rgba(0,0,0,0.08);
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
 }
+
 
 .instructions ul {
   list-style-type: none; /* remove default bullets */
