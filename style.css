@@ -193,8 +193,9 @@ body {
 }
 
 @media (max-width: 600px) {
-  body {
+  #expressionBox, #evaluationBox {
     margin-left: 10px;
     margin-right: 10px;
+    box-sizing: border-box; /* Make sure padding and border don’t cause overflow */
   }
-} 
+}
