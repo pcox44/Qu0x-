@@ -324,11 +324,16 @@ if (lockedDays[day] && lockedDays[day].expression) {
     expressionBox.style.pointerEvents = "none";
     submitBtn.disabled = true;
     buttonGrid.querySelectorAll("button").forEach(btn => btn.disabled = true);
-    document.getElementById("shareBtn").classList.remove("hidden");
   } else {
     expressionBox.style.pointerEvents = "auto";
     submitBtn.disabled = false;
     buttonGrid.querySelectorAll("button").forEach(btn => btn.disabled = false);
+  }
+
+  // Hide or show the Share button depending on whether a Qu0x! was achieved
+  if (locked && lockedDays[day]?.expression) {
+    document.getElementById("shareBtn").classList.remove("hidden");
+  } else {
     document.getElementById("shareBtn").classList.add("hidden");
   }
 }
