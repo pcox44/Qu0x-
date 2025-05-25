@@ -173,7 +173,6 @@ function evaluateExpression() {
 
     let result = eval(replaced);
 
-    if (!Number.isInteger(result)) throw "Non-integer";
     evaluationBox.innerText = result;
   } catch {
     evaluationBox.innerText = "?";
@@ -225,7 +224,10 @@ function submit() {
     alert("Invalid Submission");
     return;
   }
-
+  if (!Number.isInteger(Number(result))) {
+  alert("Submission must be an integer result.");
+  return;
+  }
   if (usedDice.length !== 5) {
     alert("You must use all 5 dice.");
     return;
