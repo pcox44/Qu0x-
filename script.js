@@ -341,6 +341,21 @@ function renderGame(day) {
   }
 }
 
+document.getElementById("prevDay").onclick = () => {
+  if (currentDay > 0) {
+    currentDay--;
+    renderGame(currentDay);
+    populateDropdown();
+  }
+};
+
+document.getElementById("nextDay").onclick = () => {
+  if (currentDay < maxDay) {
+    currentDay++;
+    renderGame(currentDay);
+    populateDropdown();
+  }
+};
 
 function populateDropdown() {
   dropdown.innerHTML = "";
