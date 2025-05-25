@@ -313,9 +313,14 @@ function renderGame(day) {
   completionRatioBox.innerText = `${completedDays}/${maxDay + 1}`;
 
   const totalScore = Object.values(bestScores).reduce((a, b) => a + b, 0);
-  masterScoreBox.innerText = Object.keys(bestScores).length > 0
-    ? `${totalScore}`
-    : "N/A";
+  const totalGames = maxDay + 1;
+
+  if (Object.keys(bestScores).length === totalGames) {
+    masterScoreBox.innerText = `${totalScore}`;
+  } else {
+    masterScoreBox.innerText = "N/A";
+  }
+
 
   const locked = isLocked(day);
 
