@@ -143,7 +143,11 @@ function factorial(n) {
 }
 
 function evaluateExpression() {
-  const expr = expressionBox.innerText;
+  const expr = expressionBox.innerText.trim();
+  if (expr.length === 0) {
+    evaluationBox.innerText = "?";
+    return;
+  }
   try {
     let replaced = expr;
 
