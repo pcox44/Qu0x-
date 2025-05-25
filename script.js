@@ -172,9 +172,8 @@ function evaluateExpression() {
     replaced = replaced.replace(/\^/g, "**");
 
     let result = eval(replaced);
-
-    if (!Number.isInteger(result)) throw "Non-integer";
     evaluationBox.innerText = result;
+
   } catch {
     evaluationBox.innerText = "?";
   }
