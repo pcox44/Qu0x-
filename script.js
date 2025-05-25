@@ -172,12 +172,9 @@ function evaluateExpression() {
     replaced = replaced.replace(/\^/g, "**");
 
     let result = eval(replaced);
-    if (result === undefined || result === null) {
-      evaluationBox.innerText = "?";
-    } else {
-      evaluationBox.innerText = result;
-    }
 
+    if (!Number.isInteger(result)) throw "Non-integer";
+    evaluationBox.innerText = result;
   } catch {
     evaluationBox.innerText = "?";
   }
@@ -229,12 +226,6 @@ function submit() {
     return;
   }
 
-  // NEW: Check if result is integer
-  if (!Number.isInteger(Number(result))) {
-    alert("Result must be an integer.");
-    return;
-  }
-  
   if (usedDice.length !== 5) {
     alert("You must use all 5 dice.");
     return;
@@ -297,36 +288,71 @@ function renderGame(day) {
     ? `${Object.values(bestScores).reduce((a, b) => a + b, 0)}`
     : "N/A";
 
-  // Hide or show share button
-  if (lockedDays[day]?.score === 0) {
-    document.getElementById("shareBtn").classList.remove("hidden");
+  if (isLocked(day)) {
+    expressionBox.innerText = lockedDays[day].expression;
+    evaluateExpression();
+    document.getElementById("gameNumberDate").innerText += " – Qu0x! Locked";
+  }
+
+  // *** ADD THIS ***
+  const shareBtn = document.getElementById("shareBtn");
+  if (isLocked(day)) {
+    shareBtn.classList.remove("hidden");
   } else {
-    document.getElementById("shareBtn").classList.add("hidden");
+    shareBtn.classList.add("hidden");
   }
 }
 
-function setupDropdown() {
-  for (let d = 0; d <= maxDay; d++) {
+function populateDropdown() {
+  dropdown.innerHTML = "";
+  for (let i = 0; i <= maxDay; i++) {
     const option = document.createElement("option");
-    option.value = d;
-    option.innerText = `Game #${d + 1} (${getDateFromDayIndex(d)})`;
+    const date = getDateFromDayIndex(i);
+    const emoji = lockedDays[i]?.score === 0 ? "⭐" :
+                  bestScores[i] !== undefined ? "✅" : "";
+    option.value = i;
+    option.innerText = `Game ${i + 1} ${emoji} (${date})`;
+    if (i === currentDay) option.selected = true;
     dropdown.appendChild(option);
   }
-  dropdown.value = currentDay;
-  dropdown.onchange = () => {
-    currentDay = Number(dropdown.value);
-    renderGame(currentDay);
-  };
 }
 
-document.getElementById("submitBtn").onclick = submit;
-
-document.getElementById("shareBtn").onclick = () => {
-  if (!lockedDays[currentDay]) return;
-  const textToCopy = expressionToShareable(lockedDays[currentDay].expression);
-  navigator.clipboard.writeText(textToCopy);
-  alert("Expression copied to clipboard!");
+submitBtn.onclick = submit;
+dropdown.onchange = () => {
+  currentDay = Number(dropdown.value);
+  renderGame(currentDay);
+  populateDropdown();
 };
 
-setupDropdown();
-renderGame(currentDay);
+document.getElementById("prevDay").onclick = () => {
+  if (currentDay > 0) {
+    currentDay--;
+    renderGame(currentDay);
+    populateDropdown();
+  }
+};
+
+document.getElementById("nextDay").onclick = () => {
+  if (currentDay < maxDay) {
+    currentDay++;
+    renderGame(currentDay);
+    populateDropdown();
+  }
+};
+
+window.onload = () => {
+  populateDropdown();
+  renderGame(currentDay);
+};
+
+document.getElementById("shareBtn").addEventListener("click", () => {
+  const gameNumber = currentDay + 1;  // game number = day index + 1
+  const expression = expressionBox.innerText;
+  const shareableExpr = expressionToShareable(expression);
+
+  const shareText = `Qu0x! ${gameNumber}: ${shareableExpr}`;
+
+  navigator.clipboard.writeText(shareText).then(() => {
+    alert("Copied your Qu0x! expression to clipboard!");
+  });
+});
