@@ -56,7 +56,7 @@ const staticPuzzles = [
   { dice: [1, 6, 4, 4, 3], target: 4 },
   { dice: [6,3, 1, 6, 1], target: 19 },
   { dice: [3, 1, 1, 3, 5], target: 73 },
-  { dice: [3, 1, 3, 2, 6], target: 90 },
+  { dice: [3, 1, 3, 2, 6], target: 31 },
 ];
 
 // Optional: use mulberry32 PRNG for dynamic puzzles from day 10 onward
