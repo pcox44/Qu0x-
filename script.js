@@ -203,6 +203,7 @@ function buildButtons() {
         expressionBox.innerText = "";
         usedDice = [];
         renderDice();
+        evaluationBox.innerText = "?";
       } else {
         addToExpression(op);
       }
