@@ -45,7 +45,21 @@ function getDateFromDayIndex(index) {
   return date.toISOString().slice(0, 10);
 }
 
-// Mulberry32 PRNG implementation
+// Step 1: Define the static puzzles for the first 10 days
+const staticPuzzles = [
+  { dice: [3, 2, 5, 1, 1], target: 82 },
+  { dice: [6, 3, 2, 4, 3], target: 46 },
+  { dice: [2, 6, 2, 5, 4], target: 93 },
+  { dice: [1, 6, 6, 3, 3], target: 44 },
+  { dice: [1, 5, 4, 3, 2], target: 76 },
+  { dice: [4, 2, 6, 3, 5], target: 4 },
+  { dice: [1, 6, 4, 4, 3], target: 4 },
+  { dice: [6,3, 1, 6, 1], target: 19 },
+  { dice: [3, 1, 1, 3, 5], target: 73 },
+  { dice: [3, 1, 3, 2, 6], target: 90 },
+];
+
+// Optional: use mulberry32 PRNG for dynamic puzzles from day 10 onward
 function mulberry32(seed) {
   return function() {
     let t = seed += 0x6D2B79F5;
@@ -55,11 +69,17 @@ function mulberry32(seed) {
   };
 }
 
+// Step 2: Modify generatePuzzle to use static for first 10 days, dynamic for others
 function generatePuzzle(day) {
-  // Use mulberry32 with seed = day + 1
-  const rand = mulberry32(day + 1);
-  diceValues = Array.from({ length: 5 }, () => Math.floor(rand() * 6) + 1);
-  target = Math.floor(rand() * 100) + 1;
+  if (day < 10) {
+    diceValues = staticPuzzles[day].dice.slice();  // clone array
+    target = staticPuzzles[day].target;
+  } else {
+    // For days 11 onward, generate procedurally using mulberry32 seeded with day+1
+    const rand = mulberry32(day + 1);
+    diceValues = Array.from({ length: 5 }, () => Math.floor(rand() * 6) + 1);
+    target = Math.floor(rand() * 100) + 1;
+  }
 }
 
 function renderDice() {
