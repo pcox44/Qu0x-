@@ -10,7 +10,7 @@ const completionRatioBox = document.getElementById("completionRatio");
 const masterScoreBox = document.getElementById("masterScore");
 const gameNumberDate = document.getElementById("gameNumberDate");
 const qu0xAnimation = document.getElementById("qu0xAnimation");
-const allOperations = ['+', '-', '*', '/', '^', '!'];
+
 
 let currentDate = new Date();
 let currentDay = getDayIndex(currentDate);
@@ -40,19 +40,6 @@ function getDayIndex(date) {
   return Math.max(0, diff);
 }
 
-function getFrozenOperationsForDate(dateString) {
-  const seed = hashString("hardmode-" + dateString); // Simple hash
-  const prng = mulberry32(seed);
-  const operations = [...allOperations];
-  const frozen = [];
-
-  for (let i = 0; i < 2; i++) {
-    const index = Math.floor(prng() * operations.length);
-    frozen.push(operations.splice(index, 1)[0]);
-  }
-
-  return frozen;
-}
 
 // Example PRNG and hash
 function mulberry32(a) {
@@ -386,20 +373,6 @@ document.getElementById("prevDay").onclick = () => {
     populateDropdown();
   }
 };
-
-document.getElementById('hardModeToggle').addEventListener('change', (e) => {
-  localStorage.setItem('hardModeEnabled', e.target.checked);
-  location.reload(); // Or re-render UI
-});
-
-const hardModeEnabled = localStorage.getItem('hardModeEnabled') === 'true';
-document.getElementById('hardModeToggle').checked = hardModeEnabled;
-
-if (hardModeEnabled) {
-  const todayStr = getTodayString(); // Format: '2025-05-25'
-  const frozenOps = getFrozenOperationsForDate(todayStr);
-  disableOperationButtons(frozenOps);
-}
 
 document.getElementById("nextDay").onclick = () => {
   if (currentDay < maxDay) {
