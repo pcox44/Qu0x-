@@ -338,35 +338,30 @@ function populateDropdown() {
   for (let i = 0; i <= maxDay; i++) {
     const option = document.createElement("option");
     option.value = i;
-
-    // Determine prefix emoji based on completion status
-    let prefix = "";
-    if (bestScores[i] === 0) {
-      prefix = "⭐ "; // Qu0x! perfect score
-    } else if (bestScores[i] !== undefined) {
-      prefix = "✅ "; // solved but not perfect
-    } else {
-      prefix = ""; // unsolved
+    
+    // Option text, you can customize with emojis or formatting
+    option.text = `Game #${i + 1} (${getDateFromDayIndex(i)})`;
+    
+    // Mark locked games with a star emoji in option text
+    if (lockedDays[i] && lockedDays[i].score === 0) {
+      option.text = "⭐ " + option.text;
     }
 
-    option.text = `${prefix}Game #${i + 1}`;
     dropdown.appendChild(option);
   }
-
-  dropdown.value = currentDay; // Select current day by default
+  // Set the dropdown value to the currentDay so UI matches the current game
+  dropdown.value = currentDay;
 }
 
-document.getElementById("submitBtn").onclick = submit;
+// Add event listener to handle selection change
+dropdown.addEventListener("change", (e) => {
+  const selectedDay = Number(e.target.value);
+  if (selectedDay >= 0 && selectedDay <= maxDay) {
+    renderGame(selectedDay);
+  }
+});
 
-document.getElementById("shareBtn").onclick = () => {
-  if (!lockedDays[currentDay]) return;
-  const expr = lockedDays[currentDay].expression;
-  const shareText = expressionToShareable(expr);
-  navigator.clipboard.writeText(shareText).then(() => {
-    alert("Expression copied to clipboard!");
-  });
-};
-
+// Initialize buttons, dropdown, and render current game on page load
 buildButtons();
 populateDropdown();
 renderGame(currentDay);
