@@ -334,14 +334,14 @@ function populateDropdown() {
   dropdown.innerHTML = "";
   for (let i = 0; i <= maxDay; i++) {
     const option = document.createElement("option");
+    const date = getDateFromDayIndex(i);
+    const emoji = lockedDays[i]?.score === 0 ? "⭐" :
+                  bestScores[i] !== undefined ? "✅" : "";
     option.value = i;
-    option.text = `Game #${i + 1}`;
+    option.innerText = `Game ${i + 1} ${emoji}`;
+    if (i === currentDay) option.selected = true;
     dropdown.appendChild(option);
   }
-  dropdown.value = currentDay;
-  dropdown.onchange = e => {
-    renderGame(parseInt(e.target.value));
-  };
 }
 
 document.getElementById("submitBtn").onclick = submit;
