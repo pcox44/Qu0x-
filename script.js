@@ -225,6 +225,12 @@ function submit() {
     return;
   }
 
+  // NEW: Check if result is integer
+  if (!Number.isInteger(Number(result))) {
+    alert("Result must be an integer.");
+    return;
+  }
+  
   if (usedDice.length !== 5) {
     alert("You must use all 5 dice.");
     return;
