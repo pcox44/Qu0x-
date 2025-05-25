@@ -6,7 +6,7 @@ const targetBox = document.getElementById("targetBox");
 const submitBtn = document.getElementById("submitBtn");
 const dropdown = document.getElementById("gameDropdown");
 const dailyBestScoreBox = document.getElementById("dailyBestScore");
-const completionRatioBox = document.getElementById("completionRatio");
+const completionRatioBox = document.getElemesntById("completionRatio");
 const masterScoreBox = document.getElementById("masterScore");
 const gameNumberDate = document.getElementById("gameNumberDate");
 const qu0xAnimation = document.getElementById("qu0xAnimation");
@@ -369,4 +369,5 @@ dropdown.addEventListener("change", (e) => {
 // Initialize buttons, dropdown, and render current game on page load
 buildButtons();
 populateDropdown();
+submitBtn.addEventListener("click", submit);
 renderGame(currentDay);
