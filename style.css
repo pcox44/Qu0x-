@@ -125,6 +125,35 @@ body {
   font-weight: bold;
 }
 
+.hidden {
+  display: none;
+}
+
+/* Style deluxe expression and evaluation boxes same as normal */
+#deluxeExpressionBox, #deluxeEvaluationBox {
+  border: 1px solid black;
+  padding: 6px;
+  font-size: 1.2em;
+  min-height: 30px;
+  margin: 5px 0;
+}
+
+/* Style the deluxe submit button */
+#deluxeSubmitBtn {
+  margin-top: 5px;
+  padding: 8px 12px;
+  font-weight: bold;
+  background-color: purple;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#deluxeSubmitBtn:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
 #buttonGrid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
