@@ -192,6 +192,15 @@ body {
   border-color: #993d00;
 }
 
+/* Icy blue style for disabled operator buttons in Hard Mode */
+.icy {
+  background-color: #a0d8ef !important;  /* light icy blue */
+  color: #004a75 !important;             /* darker blue text */
+  border-color: #005f99 !important;      /* blue border */
+  cursor: not-allowed !important;
+  opacity: 0.7 !important;
+}
+
 @media (max-width: 600px) {
   #expressionBox, #evaluationBox {
     margin-left: 10px;
