@@ -25,7 +25,7 @@ body {
   border: 2px solid #ffd54f;
   padding: 0.1em 1.4em;      /* less vertical padding */
   max-width: 480px;
-  margin: 0.3em auto;      /* slightly less space above/below the box */
+  margin: 0.15em auto;      /* slightly less space above/below the box */
   border-radius: 10px;
   font-size: 1.1em;
   color: #333;
@@ -100,7 +100,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 1em;
+  margin-bottom: 0.7em;
   font-size: 1.5em;
 }
 
