@@ -212,48 +212,51 @@ function evaluateExpression() {
     evaluationBox.innerText = "?";
     return;
   }
+
   try {
     let replaced = expr;
 
-    // Quintuple factorial e.g. 5!!!!! or (2+3)!!!!!
-    replaced = replaced.replace(/(\([^)]+\)|\d+)!!!!!/g, (_, val) => {
-      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
+    // Handle quintuple factorial: 5!!!!! or (2+3)!!!!!
+    replaced = replaced.replace(/(\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)|\d+)!!!!!/g, (_, val) => {
+      const n = eval(val);
       return quintupleFactorial(n);
     });
 
-    // Quadruple factorial e.g. 6!!!! or (3+1)!!!!
-    replaced = replaced.replace(/(\([^)]+\)|\d+)!!!!/g, (_, val) => {
-      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
+    // Handle quadruple factorial: 4!!!! or (3+1)!!!!
+    replaced = replaced.replace(/(\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)|\d+)!!!!/g, (_, val) => {
+      const n = eval(val);
       return quadrupleFactorial(n);
     });
 
-    // Triple factorial e.g. 5!!! or (2+1)!!!
-    replaced = replaced.replace(/(\([^)]+\)|\d+)!!!/g, (_, val) => {
-      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
+    // Handle triple factorial: 3!!! or (2+1)!!!
+    replaced = replaced.replace(/(\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)|\d+)!!!/g, (_, val) => {
+      const n = eval(val);
       return tripleFactorial(n);
     });
 
-    // Double factorial e.g. 4!! or (3+1)!!
-    replaced = replaced.replace(/(\([^)]+\)|\d+)!!/g, (_, val) => {
-      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
+    // Handle double factorial: 4!! or (3+1)!!
+    replaced = replaced.replace(/(\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)|\d+)!!/g, (_, val) => {
+      const n = eval(val);
       return doubleFactorial(n);
     });
 
-    // Single factorial e.g. 3! or (4)!
-    replaced = replaced.replace(/(\([^)]+\)|\d+)!/g, (_, val) => {
-      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
+    // Handle single factorial: 5! or (2+3)!
+    replaced = replaced.replace(/(\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)|\d+)!/g, (_, val) => {
+      const n = eval(val);
       return factorial(n);
     });
 
-    // Replace ^ with **
+    // Replace ^ with ** for exponentiation
     replaced = replaced.replace(/\^/g, "**");
 
+    // Evaluate the final expression
     let result = eval(replaced);
-    evaluationBox.innerText = result;
+    evaluationBox.innerText = Number.isFinite(result) ? result : "?";
   } catch {
     evaluationBox.innerText = "?";
   }
 }
+
 
 
 function buildButtons() {
