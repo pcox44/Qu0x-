@@ -139,22 +139,24 @@ function styleDie(die, val) {
 }
 
 function addToExpression(char) {
-  const expr = expressionBox.innerText;
+  let expr = expressionBox.innerText;
   const lastChar = expr.slice(-1);
 
-  // Define what counts as a number character (digits)
   const isDigit = c => /\d/.test(c);
+  const isFactorial = c => c === '!';
+  const isClosingParen = c => c === ')';
+  const isOpeningParen = c => c === '(';
 
-  // If char is a digit (from dice):
-  if (isDigit(char)) {
-    // If last char is also a digit, add a space before adding new digit to prevent concatenation
-    if (isDigit(lastChar)) {
-      expressionBox.innerText += ' ' + char;
-    } else {
-      expressionBox.innerText += char;
-    }
+  // Disallow number or '(' directly after '!' or ')'
+  if ((isFactorial(lastChar) || isClosingParen(lastChar)) && (isDigit(char) || isOpeningParen(char))) {
+    // Invalid syntax: do not add
+    return;
+  }
+
+  // Disallow two numbers directly adjacent (digits should come from dice clicks)
+  if (isDigit(lastChar) && isDigit(char)) {
+    expressionBox.innerText += ' ' + char;
   } else {
-    // For operators and parentheses, append directly
     expressionBox.innerText += char;
   }
 
