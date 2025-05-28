@@ -195,25 +195,39 @@ function evaluateExpression() {
   try {
     let replaced = expr;
 
+    // Quintuple factorial e.g. 5!!!!! or (2+3)!!!!!
+    replaced = replaced.replace(/(\([^)]+\)|\d+)!!!!!/g, (_, val) => {
+      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
+      if (!Number.isInteger(n) || n < 0) throw "Invalid quintuple factorial";
+      return multiFactorial(n, 5);
+    });
+
+    // Quadruple factorial e.g. 6!!!! or (3+1)!!!!
+    replaced = replaced.replace(/(\([^)]+\)|\d+)!!!!/g, (_, val) => {
+      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
+      if (!Number.isInteger(n) || n < 0) throw "Invalid quadruple factorial";
+      return multiFactorial(n, 4);
+    });
+
     // Triple factorial e.g. 5!!! or (2+1)!!!
     replaced = replaced.replace(/(\([^)]+\)|\d+)!!!/g, (_, val) => {
       let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
       if (!Number.isInteger(n) || n < 0) throw "Invalid triple factorial";
-      return tripleFactorial(n);
+      return multiFactorial(n, 3);
     });
 
-    // Double factorial e.g. 4!! or (3!!)!!
+    // Double factorial e.g. 4!! or (3+1)!!
     replaced = replaced.replace(/(\([^)]+\)|\d+)!!/g, (_, val) => {
       let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
       if (!Number.isInteger(n) || n < 0) throw "Invalid double factorial";
-      return doubleFactorial(n);
+      return multiFactorial(n, 2);
     });
 
     // Single factorial e.g. 3! or (4)!
     replaced = replaced.replace(/(\([^)]+\)|\d+)!/g, (_, val) => {
       let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
       if (!Number.isInteger(n) || n < 0) throw "Invalid factorial";
-      return factorial(n);
+      return multiFactorial(n, 1);
     });
 
     // Replace ^ with **
@@ -226,6 +240,7 @@ function evaluateExpression() {
     evaluationBox.innerText = "?";
   }
 }
+
 
 function buildButtons() {
   const ops = ["+", "-", "*", "/", "^", "!", "(", ")", "Back", "Clear"];
