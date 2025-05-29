@@ -145,18 +145,7 @@ function addToExpression(char) {
   // Define what counts as a number character (digits)
   const isDigit = c => /\d/.test(c);
 
-  // If char is a digit (from dice):
-  if (isDigit(char)) {
-    // If last char is also a digit, add a space before adding new digit to prevent concatenation
-    if (isDigit(lastChar)) {
-      expressionBox.innerText += ' ' + char;
-    } else {
-      expressionBox.innerText += char;
-    }
-  } else {
-    // For operators and parentheses, append directly
-    expressionBox.innerText += char;
-  }
+  expressionBox.innerText += char;
 
   evaluateExpression();
 }
