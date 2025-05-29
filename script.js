@@ -145,7 +145,18 @@ function addToExpression(char) {
   // Define what counts as a number character (digits)
   const isDigit = c => /\d/.test(c);
 
-  expressionBox.innerText += char;
+  // If char is a digit (from dice):
+  if (isDigit(char)) {
+    // If last char is also a digit, add a space before adding new digit to prevent concatenation
+    if (isDigit(lastChar)) {
+      expressionBox.innerText += ' ' + char;
+    } else {
+      expressionBox.innerText += char;
+    }
+  } else {
+    // For operators and parentheses, append directly
+    expressionBox.innerText += char;
+  }
 
   evaluateExpression();
 }
@@ -201,51 +212,48 @@ function evaluateExpression() {
     evaluationBox.innerText = "?";
     return;
   }
-
   try {
     let replaced = expr;
 
-    // Handle quintuple factorial: 5!!!!! or (2+3)!!!!!
-    replaced = replaced.replace(/(\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)|\d+)!!!!!/g, (_, val) => {
-      const n = eval(val);
+    // Quintuple factorial e.g. 5!!!!! or (2+3)!!!!!
+    replaced = replaced.replace(/(\([^)]+\)|\d+)!!!!!/g, (_, val) => {
+      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
       return quintupleFactorial(n);
     });
 
-    // Handle quadruple factorial: 4!!!! or (3+1)!!!!
-    replaced = replaced.replace(/(\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)|\d+)!!!!/g, (_, val) => {
-      const n = eval(val);
+    // Quadruple factorial e.g. 6!!!! or (3+1)!!!!
+    replaced = replaced.replace(/(\([^)]+\)|\d+)!!!!/g, (_, val) => {
+      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
       return quadrupleFactorial(n);
     });
 
-    // Handle triple factorial: 3!!! or (2+1)!!!
-    replaced = replaced.replace(/(\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)|\d+)!!!/g, (_, val) => {
-      const n = eval(val);
+    // Triple factorial e.g. 5!!! or (2+1)!!!
+    replaced = replaced.replace(/(\([^)]+\)|\d+)!!!/g, (_, val) => {
+      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
       return tripleFactorial(n);
     });
 
-    // Handle double factorial: 4!! or (3+1)!!
-    replaced = replaced.replace(/(\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)|\d+)!!/g, (_, val) => {
-      const n = eval(val);
+    // Double factorial e.g. 4!! or (3+1)!!
+    replaced = replaced.replace(/(\([^)]+\)|\d+)!!/g, (_, val) => {
+      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
       return doubleFactorial(n);
     });
 
-    // Handle single factorial: 5! or (2+3)!
-    replaced = replaced.replace(/(\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)|\d+)!/g, (_, val) => {
-      const n = eval(val);
+    // Single factorial e.g. 3! or (4)!
+    replaced = replaced.replace(/(\([^)]+\)|\d+)!/g, (_, val) => {
+      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
       return factorial(n);
     });
 
-    // Replace ^ with ** for exponentiation
+    // Replace ^ with **
     replaced = replaced.replace(/\^/g, "**");
 
-    // Evaluate the final expression
     let result = eval(replaced);
-    evaluationBox.innerText = Number.isFinite(result) ? result : "?";
+    evaluationBox.innerText = result;
   } catch {
     evaluationBox.innerText = "?";
   }
 }
-
 
 
 function buildButtons() {
