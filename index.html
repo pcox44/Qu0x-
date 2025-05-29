@@ -50,18 +50,10 @@
 <div class="instructions">
   <ul>
     <li><strong>Use each of the 5 dice </strong> exactly once to build an expression to get as close as possible to the <strong>target</strong>.</li>
-    <li><strong>Allowed operations:</strong> +, -, <span class="operator">×</span>, <span class="operator">÷</span>, ^ (exponent), <span 
-        style="border-bottom: 1px dotted; cursor: help;" 
-        title="Factorials:
-- n! = n × (n-1) × ... × 1 for whole non-negative integers
-- Double factorial (!!): product of every second number down to 1 or 2
-- Triple factorial (!!!): product of every third number down to 1, 2, or 3
-Supports up to quintuple factorials (!!!!!)."
-      >!</span> (factorial)</li>
+    <li><strong>Allowed operations:</strong> +, -, <span class="operator">×</span>, <span class="operator">÷</span>, ^ (exponent), ! (factorial)</li>
     <li><strong>Score = |Target − Result|.</strong> A score of 0 earns a <span class="qu0x">Qu0x!</span></li>
   </ul>
 </div>
-
 
   <div id="gameHeader">
     <!-- Removed gameNumberDate from here -->
@@ -94,7 +86,7 @@ Supports up to quintuple factorials (!!!!!)."
   </div>
 
  
-    <button
+   <button
   onclick="window.open('https://pcox44.github.io/Qu0x2/', '_blank')"
   style="margin: 10px; padding: 10px 20px; font-size: 1.1em; background-color: purple; color: #fff; border-radius: 8px; border: 2px solid black; cursor: pointer;">
   Play Qu0x!+
