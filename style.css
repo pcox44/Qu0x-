@@ -36,9 +36,9 @@ body {
 .instructions {
   background: #fff8e1;
   border: 2px solid #ffd54f;
-  padding: 0.05em 1em;      /* less vertical padding */
+  padding: 0.01em 1.1em;      /* less vertical padding */
   max-width: 480px;
-  margin: 0.02em auto;      /* slightly less space above/below the box */
+  margin: 0.05em auto;      /* slightly less space above/below the box */
   border-radius: 10px;
   font-size: 1.1em;
   color: #333;
