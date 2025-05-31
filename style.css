@@ -229,6 +229,59 @@ body {
   100% { opacity: 0; }
 }
 
+.scoreboard {
+  background-color: #fff;           
+  border: 2px solid #ffd54f;        
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(255, 213, 79, 0.4); 
+  padding: 1em 1.5em;
+  max-width: 360px;
+  margin: 1em auto;
+  font-size: 1.2em;
+  color: #333;
+  user-select: none;
+}
+
+.scoreboard p {
+  margin: 0.5em 0;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.3em;
+}
+
+.scoreboard p:last-child {
+  border-bottom: none;
+}
+
+.scoreboard .score-label {
+  color: #666;
+}
+
+.scoreboard .score-value {
+  color: #000;
+  font-weight: 900;
+}
+
+/* Optional: icons before labels */
+.scoreboard .best-score .score-label::before {
+  content: "🏆 ";
+}
+
+.scoreboard .qu0x-count .score-label::before {
+  content: "⭐️ ";
+}
+
+/* Responsive adjustment */
+@media (max-width: 480px) {
+  .scoreboard {
+    font-size: 1em;
+    max-width: 90vw;
+  }
+}
+
+
 #shareBtn {
   font-size: 1.1em;
   padding: 0.4em 1em;
