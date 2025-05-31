@@ -264,8 +264,8 @@ body {
   font-weight: 900;
 }
 
-/* Optional: icons before labels */
-.scoreboard .best-score .score-label::before {
+/* Optional icons for Master Score and Qu0x Count */
+.scoreboard .master-score .score-label::before {
   content: "🏆 ";
 }
 
@@ -280,6 +280,7 @@ body {
     max-width: 90vw;
   }
 }
+
 
 
 #shareBtn {
