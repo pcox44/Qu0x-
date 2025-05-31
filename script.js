@@ -535,16 +535,32 @@ function animateQu0x() {
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
-  // Multiple confetti bursts for bigger celebration
-  confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, scalar: 1 });
-  confetti({ particleCount: 100, spread: 100, origin: { y: 0.7 }, scalar: 0.8, colors: ['#ff0', '#f0f', '#0ff'] });
-  confetti({ particleCount: 120, spread: 60, origin: { y: 0.5 }, scalar: 1.2, shapes: ['circle', 'square'] });
-  confetti({ particleCount: 80, spread: 150, origin: { y: 0.4 }, scalar: 1, gravity: 0.3 });
+  // Launch confetti bursts repeatedly for 3 seconds
+  const duration = 3000; // total duration in ms
+  const intervalTime = 250; // time between bursts in ms
+  const end = Date.now() + duration;
+
+  const interval = setInterval(() => {
+    if (Date.now() > end) {
+      clearInterval(interval);
+      return;
+    }
+    // Burst with random parameters for variation
+    confetti({
+      particleCount: 50 + Math.floor(Math.random() * 50),
+      spread: 60 + Math.random() * 40,
+      origin: { x: Math.random(), y: Math.random() * 0.6 + 0.4 },
+      scalar: 0.8 + Math.random() * 0.7,
+      gravity: 0.3 + Math.random() * 0.4,
+      colors: ['#ff0', '#f0f', '#0ff', '#0f0', '#f00'],
+    });
+  }, intervalTime);
 
   setTimeout(() => {
     qu0xAnimation.classList.add("hidden");
-  }, 3000);
+  }, duration);
 }
+
 
 
 
