@@ -280,6 +280,41 @@ body {
   }
 }
 
+.game-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 1.2em 0;
+}
+
+.game-links button {
+  padding: 10px 20px;
+  font-size: 1.05em;
+  font-weight: bold;
+  color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.3s ease;
+}
+
+.game-links button:hover {
+  transform: scale(1.05);
+}
+
+.game-links button:nth-child(1) {
+  background-color: purple;
+}
+
+.game-links button:nth-child(2) {
+  background-color: hotpink;
+}
+
+.game-links button:nth-child(3) {
+  background-color: maroon;
+}
+
 
 #shareBtn {
   font-size: 1.1em;
