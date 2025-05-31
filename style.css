@@ -36,25 +36,28 @@ body {
 .instructions {
   background: #fff8e1;
   border: 2px solid #ffd54f;
-  padding: 0.05em 1.1em;      /* small vertical padding */
+  padding: 0.05em 1.1em;
   max-width: 480px;
   margin: 0.05em auto;
   border-radius: 10px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 1.05em;
-  line-height: 1.4;
-  font-weight: 400;
-  color: #222;
-  letter-spacing: 0.02em;
+  
+  /* Improved font styles */
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;               /* Medium weight */
+  font-size: 1.1em;
+  line-height: 1.5;
+  letter-spacing: 0.025em;
+  color: #2b2b2b;                 /* Darker but soft */
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.8); /* subtle highlight */
+  
   box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
 }
 
 .instructions ul {
-  list-style-type: none;  /* Removes bullets */
+  list-style-type: none;
   margin: 0;
-  padding-left: 1.2em;    /* Keeps indentation */
+  padding-left: 1.2em;
 }
-
 
 .instructions li {
   margin-bottom: 0.6em;
@@ -72,7 +75,7 @@ body {
 .instructions .qu0x {
   font-weight: 900;
   font-style: italic;
-  color: #a200ff; /* bright purple */
+  color: #a200ff;
 }
 
 
