@@ -126,13 +126,61 @@ function renderDice() {
   diceContainer.innerHTML = "";
   usedDice = [];
 
+  if (isLocked(currentDay)) {
+    // Day is locked — just show dice statically with final values and no roll animation
+    diceValues.forEach((val, idx) => {
+      const die = document.createElement("div");
+      die.className = "die faded";  // faded to show they're used/locked
+      die.dataset.index = idx;
+      die.innerText = val;
+      styleDie(die, val);
+      diceContainer.appendChild(die);
+    });
+    return;  // exit early, no animation
+  }
+
   const isD6 = (document.getElementById("dieTypeDropdown")?.value || "6") === "6";
 
   if (isD6) {
-    // Animate D6 dice one at a time with easing flicker
-    rollDiceOneByOne();
+    const dieFaces = [1, 2, 3, 4, 5, 6];
+    const flickerMax = 12;
+    let flickerCount = 0;
+
+    diceValues.forEach((val, idx) => {
+      const die = document.createElement("div");
+      die.className = "die";
+      die.dataset.index = idx;
+      diceContainer.appendChild(die);
+
+      die.addEventListener("click", () => {
+        if (!usedDice.includes(idx) && !isLocked(currentDay)) {
+          usedDice.push(idx);
+          die.classList.add("faded");
+          addToExpression(diceValues[idx].toString());
+        }
+      });
+    });
+
+    const flickerInterval = setInterval(() => {
+      flickerCount++;
+      const diceDivs = diceContainer.querySelectorAll(".die");
+
+      diceDivs.forEach((die, idx) => {
+        if (flickerCount < flickerMax) {
+          const randomVal = dieFaces[Math.floor(Math.random() * dieFaces.length)];
+          die.innerText = randomVal;
+          styleDie(die, randomVal);
+        } else {
+          die.innerText = diceValues[die.dataset.index];
+          styleDie(die, diceValues[die.dataset.index]);
+        }
+      });
+
+      if (flickerCount >= flickerMax) {
+        clearInterval(flickerInterval);
+      }
+    }, 100);
   } else {
-    // Static rendering for non-D6
     diceValues.forEach((val, idx) => {
       const die = document.createElement("div");
       die.className = "die";
