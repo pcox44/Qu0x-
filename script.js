@@ -535,16 +535,15 @@ function animateQu0x() {
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
-  // Launch confetti burst
-  confetti({
-    particleCount: 150,
-    spread: 80,
-    origin: { y: 0.6 }
-  });
 
+for (let i = 0; i < 3; i++) {
   setTimeout(() => {
-    qu0xAnimation.classList.add("hidden");
-  }, 3000);
+    confetti({
+      particleCount: 100,
+      spread: 70 + i * 10,
+      origin: { y: 0.6 - i * 0.1 }
+    });
+  }, i * 300);
 }
 
 
