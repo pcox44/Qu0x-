@@ -34,42 +34,38 @@ body {
 
 
 .instructions {
-  background: #fff8e1;
-  border: 2px solid #ffd54f;
-  padding: 0.01em 1.1em;      /* less vertical padding */
-  max-width: 480px;
-  margin: 0.05em auto;      /* slightly less space above/below the box */
-  border-radius: 10px;
-  font-size: 1.1em;
-  color: #333;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.05em;
+  line-height: 1.4;
+  font-weight: 400;
+  color: #222;
+  letter-spacing: 0.02em;
 }
 
-
 .instructions ul {
-  list-style-type: none; /* remove default bullets */
-  padding-left: 0;
+  margin: 0;
+  padding-left: 1.2em; /* indent list */
 }
 
 .instructions li {
-  position: relative;
-  padding-left: 1.4em;
-  margin-bottom: 0.75em;
+  margin-bottom: 0.6em;
 }
 
-.instructions code {
-  background: #eee;
-  padding: 0.1em 0.1em;
-  border-radius: 3px;
-  font-family: monospace;
-  font-weight: bold;
+.instructions strong {
+  font-weight: 600;
+}
+
+.instructions .operator {
+  font-weight: 700;
+  color: #555;
 }
 
 .instructions .qu0x {
-  color: #d500f9; /* bright purple */
   font-weight: 900;
   font-style: italic;
+  color: #a200ff; /* bright purple */
 }
+
 
 .target-box {
   font-size: 2.5em;
