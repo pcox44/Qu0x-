@@ -14,11 +14,21 @@ body {
   padding: 0.5em 1em;
 }
 
-.nav-controls select,
-.nav-controls button {
-  font-size: 1rem;
-  margin-left: 0.25em;
+.nav-controls {
+  display: flex;
+  flex-wrap: nowrap;   /* no wrapping */
+  gap: 0.25em;
+  align-items: center;
 }
+
+.nav-controls button,
+.nav-controls select {
+  flex-shrink: 1;      /* allow shrinking */
+  min-width: 40px;     /* adjust minimum width as needed */
+  white-space: nowrap; /* prevent text wrap inside buttons */
+  font-size: 1rem;     /* keep your font size */
+}
+
 
 .instructions {
   background: #fff8e1;
