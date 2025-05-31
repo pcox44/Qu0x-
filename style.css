@@ -2,11 +2,20 @@ body {
   font-family: Arial, sans-serif;
   text-align: center;
   margin: 0;
-  background: 
-    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.05) 2px, transparent 3px),
-    radial-gradient(circle at 30% 80%, rgba(255, 0, 0, 0.03) 2px, transparent 3px),
-    linear-gradient(45deg, #f0f0f0 25%, #e8e8e8 25%, #e8e8e8 50%, #f0f0f0 50%, #f0f0f0 75%, #e8e8e8 75%, #e8e8e8);
+  background-color: #f0f0f0; /* light neutral base */
+
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.07) 2px, transparent 3px),   /* white on red */
+    radial-gradient(circle at 25% 70%, rgba(0, 0, 0, 0.05) 2px, transparent 3px),           /* black on white */
+    radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.06) 2px, transparent 3px),     /* white on blue */
+    radial-gradient(circle at 60% 80%, rgba(0, 0, 0, 0.04) 2px, transparent 3px),           /* black on yellow */
+    radial-gradient(circle at 75% 25%, rgba(255, 255, 255, 0.05) 2px, transparent 3px),     /* white on green */
+    radial-gradient(circle at 85% 65%, rgba(255, 255, 0, 0.04) 2px, transparent 3px);       /* yellow on black */
+
   background-size: 50px 50px;
+  background-repeat: repeat;
+}
+
 }
 
 
