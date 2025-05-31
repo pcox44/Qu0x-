@@ -114,24 +114,31 @@ body {
 
 .dice-container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  gap: 0.5em;
   margin: 1em 0;
+  max-width: 100%;
 }
 
 .die {
-  width: 70px;
-  height: 70px;
-  font-size: 2.5em;
+  width: 18vw; /* Responsive width based on viewport */
+  height: 18vw; /* Keep it square */
+  max-width: 70px;  /* Limit size for larger screens */
+  max-height: 70px;
+  font-size: 6vw; /* Scale font relative to viewport */
   font-weight: bold;
   border: 4.2px solid black;
   border-radius: 8px;
-  margin: 0 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: opacity 0.3s ease;
+  box-sizing: border-box;
+  margin: 0.25em;
 }
+
 .die:hover:not(.faded) {
   box-shadow: 0 6px 10px rgba(0,0,0,0.3);
   transform: translateY(-3px);
@@ -149,7 +156,6 @@ body {
   transform: none;
   cursor: default;
 }
-
 
 .expression-section {
   display: flex;
