@@ -2,22 +2,60 @@ body {
   font-family: Arial, sans-serif;
   text-align: center;
   margin: 0;
-  background-color: #f0f0f0; /* light neutral base */
+  background-color: #fafafa; /* off-white base */
+
+  /* Large faint color blocks */
+  background-image:
+    linear-gradient(90deg, 
+      rgba(255, 255, 255, 0.1) 20%,    /* white on red block */
+      transparent 20%, transparent 40%,
+      rgba(0, 0, 0, 0.08) 40%,          /* black on white block */
+      transparent 40%, transparent 60%,
+      rgba(255, 255, 255, 0.07) 60%,   /* white on blue block */
+      transparent 60%, transparent 80%,
+      rgba(0, 0, 0, 0.05) 80%,          /* black on yellow block */
+      transparent 80%, transparent 100%
+    ),
+    linear-gradient(0deg, 
+      rgba(255, 255, 255, 0.1) 20%,    /* white on green block */
+      transparent 20%, transparent 40%,
+      rgba(255, 255, 0, 0.07) 40%,     /* yellow on black block */
+      transparent 40%, transparent 60%,
+      rgba(255, 255, 255, 0.05) 60%,   /* white on red block again */
+      transparent 60%, transparent 80%,
+      rgba(0, 0, 0, 0.03) 80%,          /* black on white block again */
+      transparent 80%, transparent 100%
+    );
+
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+
+  position: relative;
+}
+
+/* Overlay grid lines in dice colors */
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: -1;
 
   background-image:
-    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.07) 2px, transparent 3px),   /* white on red */
-    radial-gradient(circle at 25% 70%, rgba(0, 0, 0, 0.05) 2px, transparent 3px),           /* black on white */
-    radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.06) 2px, transparent 3px),     /* white on blue */
-    radial-gradient(circle at 60% 80%, rgba(0, 0, 0, 0.04) 2px, transparent 3px),           /* black on yellow */
-    radial-gradient(circle at 75% 25%, rgba(255, 255, 255, 0.05) 2px, transparent 3px),     /* white on green */
-    radial-gradient(circle at 85% 65%, rgba(255, 255, 0, 0.04) 2px, transparent 3px);       /* yellow on black */
+    linear-gradient(to right, 
+      rgba(255, 255, 255, 0.15) 1px, transparent 1px),  /* white on red vertical line */
+    linear-gradient(to right, 
+      rgba(0, 0, 0, 0.1) 3px, transparent 3px),          /* black on white vertical line */
+    linear-gradient(to bottom, 
+      rgba(255, 255, 255, 0.12) 1px, transparent 1px),  /* white on blue horizontal line */
+    linear-gradient(to bottom, 
+      rgba(0, 0, 0, 0.08) 3px, transparent 3px);          /* black on yellow horizontal line */
 
-  background-size: 50px 50px;
+  background-size: 100px 100px, 200px 200px, 100px 100px, 200px 200px;
+  background-position: 0 0, 50px 0, 0 0, 0 50px;
   background-repeat: repeat;
 }
-
-}
-
 
 .top-bar {
   display: flex;
