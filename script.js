@@ -127,11 +127,17 @@ function renderDice() {
   usedDice = [];
   diceValues.forEach((val, idx) => {
     const die = document.createElement("div");
-    die.className = "die";
+    die.className = "die rolling"; // Add rolling animation
     die.dataset.index = idx;
     die.dataset.value = val;
     die.innerText = val;
     styleDie(die, val);
+
+    // Remove animation class after it plays so it can be re-added later
+    die.addEventListener("animationend", () => {
+      die.classList.remove("rolling");
+    });
+
     die.addEventListener("click", () => {
       if (!usedDice.includes(idx) && !isLocked(currentDay)) {
         usedDice.push(idx);
@@ -139,9 +145,11 @@ function renderDice() {
         addToExpression(val.toString());
       }
     });
+
     diceContainer.appendChild(die);
   });
 }
+
 
 function styleDie(die, val) {
   const styles = {
