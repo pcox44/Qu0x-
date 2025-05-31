@@ -174,35 +174,6 @@ function styleDie(die, val) {
   die.style.color = style.fg;
 }
 
-async function animateDiceRoll(diceValues) {
-  for (let idx = 0; idx < diceValues.length; idx++) {
-    const die = diceContainer.children[idx];
-    const finalVal = diceValues[idx];
-    const dieFaces = [1, 2, 3, 4, 5, 6];
-    const flickers = 12;
-
-    for (let i = 0; i < flickers; i++) {
-      const randomVal = dieFaces[Math.floor(Math.random() * dieFaces.length)];
-      die.innerText = randomVal;
-      styleDie(die, randomVal);
-      await new Promise(r => setTimeout(r, 30 + i * 15)); // easing delay
-    }
-
-    die.innerText = finalVal;
-    styleDie(die, finalVal);
-    die.dataset.value = finalVal;
-
-    die.addEventListener("click", () => {
-      if (!usedDice.includes(idx) && !isLocked(currentDay)) {
-        usedDice.push(idx);
-        die.classList.add("faded");
-        addToExpression(finalVal.toString());
-      }
-    });
-
-    await new Promise(r => setTimeout(r, 150)); // pause between dice
-  }
-}
 
 function addToExpression(char) {
   const expr = expressionBox.innerText;
