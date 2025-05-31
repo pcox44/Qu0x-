@@ -59,16 +59,33 @@ body {
 }
 
 .target-box {
-  background-color: pink;
-  color: black;
-  font-weight: bold;
-  padding: 0.3em 0.8em; /* increased padding */
-  font-size: 2.5em;  /* bigger text */
-  display: inline-block;
-  margin: 0.2em auto;
-  border-radius: 5px;
-  border: 5px solid black;
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #fff;
+  text-align: center;
+  padding: 0.8em 1.5em; /* roughly equal to 20px 30px */
+  border-radius: 15px;
+  border: 3px solid #00ffea;
+  background: linear-gradient(270deg, #00ffe7, #00aaff, #0055ff, #00ffe7);
+  background-size: 600% 600%;
+  box-shadow:
+    0 0 15px #00ffe7,
+    inset 0 0 10px #00aaff;
+  animation: gradientShift 8s ease infinite;
+  user-select: none;
+  text-shadow: 0 0 10px #00fff0;
+  margin: 0.6em auto; /* similar to your margin spacing */
+  width: fit-content;
+  min-width: 120px;
 }
+
+/* Animate the gradient background */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 
 .dice-container {
   display: flex;
