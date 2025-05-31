@@ -125,15 +125,30 @@ function generatePuzzle(day) {
 function renderDice() {
   diceContainer.innerHTML = "";
   usedDice = [];
+
   diceValues.forEach((val, idx) => {
     const die = document.createElement("div");
-    die.className = "die rolling"; // Add rolling animation
+    die.className = "die rolling";
     die.dataset.index = idx;
-    die.dataset.value = val;
-    die.innerText = val;
     styleDie(die, val);
 
-    // Remove animation class after it plays so it can be re-added later
+    // Flicker effect: show random numbers before settling on val
+    let flickerCount = 0;
+    const flickerMax = 10;
+    const dieFaces = getDieFaces(); // Get valid faces for current die type (e.g., 1–6, 1–8)
+
+    const flickerInterval = setInterval(() => {
+      const randomVal = dieFaces[Math.floor(Math.random() * dieFaces.length)];
+      die.innerText = randomVal;
+      styleDie(die, randomVal); // Optional: animate color flicker too
+      flickerCount++;
+      if (flickerCount >= flickerMax) {
+        clearInterval(flickerInterval);
+        die.innerText = val;
+        styleDie(die, val); // Final styling
+      }
+    }, 50);
+
     die.addEventListener("animationend", () => {
       die.classList.remove("rolling");
     });
@@ -149,6 +164,7 @@ function renderDice() {
     diceContainer.appendChild(die);
   });
 }
+
 
 
 function styleDie(die, val) {
