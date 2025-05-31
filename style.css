@@ -276,6 +276,7 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding-bottom: 0.2em;
   min-width: max-content;
+  gap: 1.5em; /* <- adds space between label and score */
 }
 
 .scoreboard p:last-child {
