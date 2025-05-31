@@ -535,6 +535,13 @@ function animateQu0x() {
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
+  // Dynamically scale font size for mobile widths
+  if (window.innerWidth < 400) {
+    qu0xAnimation.style.fontSize = "1rem"; // smaller font on small devices
+  } else {
+    qu0xAnimation.style.fontSize = "1.5rem"; // default font size
+  }
+
   // Launch confetti bursts repeatedly for 3 seconds
   const duration = 3000; // total duration in ms
   const intervalTime = 250; // time between bursts in ms
