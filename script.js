@@ -137,7 +137,7 @@ function renderDice() {
       // Flicker animation for D6 only
       die.classList.add("rolling");
       let flickerCount = 0;
-      const flickerMax = 10;
+      const flickerMax = 15;
       const dieFaces = [1, 2, 3, 4, 5, 6];
 
       const flickerInterval = setInterval(() => {
@@ -150,7 +150,7 @@ function renderDice() {
           die.innerText = val;
           styleDie(die, val);
         }
-      }, 50);
+      }, 100);
     } else {
       // No animation for non-D6 dice
       die.innerText = val;
