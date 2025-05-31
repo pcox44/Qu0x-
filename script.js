@@ -348,13 +348,23 @@ function submit() {
 }
 
 function animateQu0x() {
-  const qu0xAnimation = document.getElementById("qu0xAnimation");
-  qu0xAnimation.innerText = `${getRandomCelebrationEmojis()} Qu0x! ${getRandomCelebrationEmojis()}`;
+  const emoji1 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+  const emoji2 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+  qu0xAnimation.innerText = `${emoji1}${emoji2} Qu0x! ${emoji1}${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
+
+  // Launch confetti burst
+  confetti({
+    particleCount: 150,
+    spread: 80,
+    origin: { y: 0.6 }
+  });
+
   setTimeout(() => {
     qu0xAnimation.classList.add("hidden");
   }, 3000);
 }
+
 
 function renderGame(day) {
   currentDay = day;
