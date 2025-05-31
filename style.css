@@ -177,7 +177,7 @@ body {
 #deluxeSubmitBtn:disabled {
   background-color: #aaa;
   cursor: not-allowed;
-}" 
+}
 
 #buttonGrid {
   display: grid;
