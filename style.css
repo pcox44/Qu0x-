@@ -14,19 +14,21 @@ body {
   padding: 0.5em 1em;
 }
 
+.nav-controls {
+  display: flex;
+  flex-wrap: nowrap;        /* keep buttons on one line */
+  justify-content: center;  /* center buttons horizontally */
+  gap: 0.25em;              /* spacing between buttons */
+  align-items: center;
+}
+
 .nav-controls select,
 .nav-controls button {
   font-size: 1rem;
-  margin-left: 0; /* remove margin to avoid extra spacing */
-  /* rely on flex container gap instead */
+  margin-left: 0;           /* remove left margin to rely on gap */
+  white-space: nowrap;
 }
 
-.nav-controls {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 0.25em; /* spacing between buttons/selects */
-  align-items: center;
-}
 
 
 .instructions {
