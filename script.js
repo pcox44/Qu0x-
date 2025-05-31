@@ -126,48 +126,37 @@ function renderDice() {
   diceContainer.innerHTML = "";
   usedDice = [];
 
-  const isD6 = (document.getElementById("dieTypeDropdown")?.value || "6") === "6";
-
-  diceValues.forEach((val, idx) => {
+  // Add placeholder dice first
+  diceValues.forEach((_, idx) => {
     const die = document.createElement("div");
     die.className = "die";
     die.dataset.index = idx;
-
-    if (isD6) {
-      // Flicker animation for D6 only
-      die.classList.add("rolling");
-      let flickerCount = 0;
-      const flickerMax = 15;
-      const dieFaces = [1, 2, 3, 4, 5, 6];
-
-      const flickerInterval = setInterval(() => {
-        const randomVal = dieFaces[Math.floor(Math.random() * dieFaces.length)];
-        die.innerText = randomVal;
-        styleDie(die, randomVal);
-        flickerCount++;
-        if (flickerCount >= flickerMax) {
-          clearInterval(flickerInterval);
-          die.innerText = val;
-          styleDie(die, val);
-        }
-      }, 100);
-    } else {
-      // No animation for non-D6 dice
-      die.innerText = val;
-      styleDie(die, val);
-    }
-
-    die.addEventListener("click", () => {
-      if (!usedDice.includes(idx) && !isLocked(currentDay)) {
-        usedDice.push(idx);
-        die.classList.add("faded");
-        addToExpression(val.toString());
-      }
-    });
-
+    die.innerText = "?";
     diceContainer.appendChild(die);
   });
+
+  // Animate dice roll for D6 only
+  const isD6 = dieType === 6 || !dieType; // default D6
+  if (isD6) {
+    animateDiceRoll(diceValues);
+  } else {
+    // For other die types, render normally without animation
+    diceValues.forEach((val, idx) => {
+      const die = diceContainer.children[idx];
+      die.dataset.value = val;
+      die.innerText = val;
+      styleDie(die, val);
+      die.addEventListener("click", () => {
+        if (!usedDice.includes(idx) && !isLocked(currentDay)) {
+          usedDice.push(idx);
+          die.classList.add("faded");
+          addToExpression(val.toString());
+        }
+      });
+    });
+  }
 }
+
 
 
 
@@ -183,6 +172,36 @@ function styleDie(die, val) {
   const style = styles[val];
   die.style.backgroundColor = style.bg;
   die.style.color = style.fg;
+}
+
+async function animateDiceRoll(diceValues) {
+  for (let idx = 0; idx < diceValues.length; idx++) {
+    const die = diceContainer.children[idx];
+    const finalVal = diceValues[idx];
+    const dieFaces = [1, 2, 3, 4, 5, 6];
+    const flickers = 12;
+
+    for (let i = 0; i < flickers; i++) {
+      const randomVal = dieFaces[Math.floor(Math.random() * dieFaces.length)];
+      die.innerText = randomVal;
+      styleDie(die, randomVal);
+      await new Promise(r => setTimeout(r, 30 + i * 15)); // easing delay
+    }
+
+    die.innerText = finalVal;
+    styleDie(die, finalVal);
+    die.dataset.value = finalVal;
+
+    die.addEventListener("click", () => {
+      if (!usedDice.includes(idx) && !isLocked(currentDay)) {
+        usedDice.push(idx);
+        die.classList.add("faded");
+        addToExpression(finalVal.toString());
+      }
+    });
+
+    await new Promise(r => setTimeout(r, 150)); // pause between dice
+  }
 }
 
 function addToExpression(char) {
