@@ -355,7 +355,7 @@ function evaluateExpressionSafe(expr) {
 
     // Unary minus support could be added here if needed
 
-    throw Unexpected token: ${current};
+    throw `Unexpected token: ${current}`;
   }
 
   const result = parseExpression();
@@ -365,7 +365,21 @@ function evaluateExpressionSafe(expr) {
   }
 
   return result;
-}"
+}
+
+function evaluateExpression() {
+  const expr = expressionBox.innerText.trim();
+  if (expr.length === 0) {
+    evaluationBox.innerText = "?";
+    return;
+  }
+  try {
+    const result = evaluateExpressionSafe(expr);
+    evaluationBox.innerText = result;
+  } catch (e) {
+    evaluationBox.innerText = "?";
+  }
+}
 
 
 
