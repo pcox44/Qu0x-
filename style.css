@@ -1,9 +1,8 @@
 body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  margin: 0;
-  background: #f7f7f7;
+  background: #121212;
+  color: #ddd;
 }
+
 
 .top-bar {
   display: flex;
