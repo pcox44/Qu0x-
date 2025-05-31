@@ -151,44 +151,6 @@ function renderDice() {
   }
 }
 
-async function rollDiceOneByOne() {
-  const dieFaces = [1, 2, 3, 4, 5, 6];
-
-  for (let idx = 0; idx < diceValues.length; idx++) {
-    const finalVal = diceValues[idx];
-    const die = document.createElement("div");
-    die.className = "die";
-    die.dataset.index = idx;
-    diceContainer.appendChild(die);
-
-    let flickers = 12;
-    for (let i = 0; i < flickers; i++) {
-      const rollVal = dieFaces[Math.floor(Math.random() * 6)];
-      die.innerText = rollVal;
-      styleDie(die, rollVal);
-      await new Promise(r => setTimeout(r, 50 + i * 20)); // gradually slows down
-    }
-
-    die.innerText = finalVal;
-    styleDie(die, finalVal);
-    die.dataset.value = finalVal;
-
-    die.addEventListener("click", () => {
-      if (!usedDice.includes(idx) && !isLocked(currentDay)) {
-        usedDice.push(idx);
-        die.classList.add("faded");
-        addToExpression(finalVal.toString());
-      }
-    });
-
-    await new Promise(r => setTimeout(r, 150)); // pause before next die rolls
-  }
-}
-
-
-
-
-
 function styleDie(die, val) {
   const styles = {
     1: { bg: "red", fg: "white" },
