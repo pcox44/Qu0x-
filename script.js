@@ -11,7 +11,7 @@ const masterScoreBox = document.getElementById("masterScore");
 const gameNumberDate = document.getElementById("gameNumberDate");
 const qu0xAnimation = document.getElementById("qu0xAnimation");
 
-
+let diceRolledOnce = false;
 let currentDate = new Date();
 let currentDay = getDayIndex(currentDate);
 let maxDay = getDayIndex(new Date());
@@ -127,21 +127,22 @@ function renderDice() {
   usedDice = [];
 
   if (isLocked(currentDay)) {
-    // Day is locked — just show dice statically with final values and no roll animation
+    // Locked day — show dice statically, no animation
     diceValues.forEach((val, idx) => {
       const die = document.createElement("div");
-      die.className = "die faded";  // faded to show they're used/locked
+      die.className = "die faded";  // show locked/used visually
       die.dataset.index = idx;
       die.innerText = val;
       styleDie(die, val);
       diceContainer.appendChild(die);
     });
-    return;  // exit early, no animation
+    return;
   }
 
   const isD6 = (document.getElementById("dieTypeDropdown")?.value || "6") === "6";
 
-  if (isD6) {
+  if (isD6 && !diceRolledOnce) {
+    // Roll animation only once on page load
     const dieFaces = [1, 2, 3, 4, 5, 6];
     const flickerMax = 12;
     let flickerCount = 0;
@@ -178,9 +179,11 @@ function renderDice() {
 
       if (flickerCount >= flickerMax) {
         clearInterval(flickerInterval);
+        diceRolledOnce = true;  // mark that rolling is done
       }
     }, 100);
   } else {
+    // Static dice rendering (either non-D6 or after roll already done)
     diceValues.forEach((val, idx) => {
       const die = document.createElement("div");
       die.className = "die";
@@ -198,6 +201,7 @@ function renderDice() {
     });
   }
 }
+
 
 function styleDie(die, val) {
   const styles = {
