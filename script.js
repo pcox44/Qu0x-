@@ -350,7 +350,7 @@ function submit() {
 function animateQu0x() {
   const emoji1 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
   const emoji2 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
-  qu0xAnimation.innerText = `${emoji1}${emoji2} Qu0x! ${emoji1}${emoji2}`;
+  qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
   // Launch confetti burst
