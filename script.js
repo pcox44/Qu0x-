@@ -10,7 +10,7 @@ const completionRatioBox = document.getElementById("completionRatio");
 const masterScoreBox = document.getElementById("masterScore");
 const gameNumberDate = document.getElementById("gameNumberDate");
 const qu0xAnimation = document.getElementById("qu0xAnimation");
-const { evaluate } = math;
+
 
 let currentDate = new Date();
 let currentDay = getDayIndex(currentDate);
@@ -212,32 +212,48 @@ function evaluateExpression() {
     evaluationBox.innerText = "?";
     return;
   }
-
   try {
-    const scope = {
-      factorial: factorial,
-      doubleFactorial: doubleFactorial,
-      tripleFactorial: tripleFactorial,
-      quadrupleFactorial: quadrupleFactorial,
-      quintupleFactorial: quintupleFactorial
-    };
+    let replaced = expr;
 
-    // Replace custom factorial notation with function calls
-    let replaced = expr
-      .replace(/(\([^)]+\)|\d+)!!!!!/g, "quintupleFactorial($1)")
-      .replace(/(\([^)]+\)|\d+)!!!!/g, "quadrupleFactorial($1)")
-      .replace(/(\([^)]+\)|\d+)!!!/g, "tripleFactorial($1)")
-      .replace(/(\([^)]+\)|\d+)!!/g, "doubleFactorial($1)")
-      .replace(/(\([^)]+\)|\d+)!/g, "factorial($1)")
-      .replace(/\^/g, "**");
+    // Quintuple factorial e.g. 5!!!!! or (2+3)!!!!!
+    replaced = replaced.replace(/(\([^)]+\)|\d+)!!!!!/g, (_, val) => {
+      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
+      return quintupleFactorial(n);
+    });
 
-    const result = evaluate(replaced, scope);
+    // Quadruple factorial e.g. 6!!!! or (3+1)!!!!
+    replaced = replaced.replace(/(\([^)]+\)|\d+)!!!!/g, (_, val) => {
+      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
+      return quadrupleFactorial(n);
+    });
+
+    // Triple factorial e.g. 5!!! or (2+1)!!!
+    replaced = replaced.replace(/(\([^)]+\)|\d+)!!!/g, (_, val) => {
+      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
+      return tripleFactorial(n);
+    });
+
+    // Double factorial e.g. 4!! or (3+1)!!
+    replaced = replaced.replace(/(\([^)]+\)|\d+)!!/g, (_, val) => {
+      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
+      return doubleFactorial(n);
+    });
+
+    // Single factorial e.g. 3! or (4)!
+    replaced = replaced.replace(/(\([^)]+\)|\d+)!/g, (_, val) => {
+      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
+      return factorial(n);
+    });
+
+    // Replace ^ with **
+    replaced = replaced.replace(/\^/g, "**");
+
+    let result = eval(replaced);
     evaluationBox.innerText = result;
   } catch {
     evaluationBox.innerText = "?";
   }
 }
-
 
 
 function buildButtons() {
