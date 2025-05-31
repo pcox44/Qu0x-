@@ -244,13 +244,6 @@ body {
   border-color: #993d00;
 }
 
-@media (min-width: 768px) {
-  .nav-controls {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-  }
-}
 
 @media (max-width: 600px) {
   #expressionBox, #evaluationBox {
