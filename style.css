@@ -114,21 +114,24 @@ body {
 
 .dice-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5em;
-  margin: 1em 0;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+  width: 100%;
   max-width: 100%;
+  padding: 0 1vw;
+  box-sizing: border-box;
 }
 
 .die {
-  width: 70px;
-  height: 70px;
-  font-size: 2.5em;
+  flex: 1 1 18%; /* allow slight flex but limit width */
+  max-width: 18%;
+  aspect-ratio: 1 / 1;
+  font-size: 5vw;
   font-weight: bold;
-  border: 4.2px solid black;
-  border-radius: 8px;
-  margin: 0 5px;
+  border: 0.5vw solid black;
+  border-radius: 1vw;
+  margin: 0 0.5vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -153,6 +156,7 @@ body {
   transform: none;
   cursor: default;
 }
+
 
 @media (max-width: 500px) {
   .die {
