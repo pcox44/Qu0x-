@@ -45,51 +45,39 @@ body {
 
 
 .instructions {
-  background: #fffbea;  /* lighter warm cream */
-  border: 2px solid #ffca28; /* softer yellow */
-  padding: 0.8em 1.2em;   /* more vertical padding */
-  max-width: 500px;
-  margin: 0.5em auto 1em auto;  /* more space above and below */
-  border-radius: 12px;
-  font-size: 1.15em;
-  color: #444;
-  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+  background: #fff8e1;
+  border: 2px solid #ffd54f;
+  padding: 0.05em 1em;      /* less vertical padding */
+  max-width: 480px;
+  margin: 0.08em auto;      /* slightly less space above/below the box */
+  border-radius: 10px;
+  font-size: 1.1em;
+  color: #333;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
 }
 
+
 .instructions ul {
-  list-style-type: none;
+  list-style-type: none; /* remove default bullets */
   padding-left: 0;
 }
 
 .instructions li {
   position: relative;
-  padding-left: 1.8em;
-  margin-bottom: 1em;
-  line-height: 1.4;
-}
-
-.instructions li::before {
-  content: "●";  /* bullet */
-  color: #ffca28;
-  position: absolute;
-  left: 0;
-  top: 0.25em;
-  font-size: 1.2em;
-  line-height: 1;
+  padding-left: 1.4em;
+  margin-bottom: 0.75em;
 }
 
 .instructions code {
-  background: #e6e6e6;
-  padding: 0.15em 0.4em;
-  border-radius: 4px;
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: 600;
-  color: #222;
-  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.1);
+  background: #eee;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+  font-family: monospace;
+  font-weight: bold;
 }
 
 .instructions .qu0x {
-  color: #aa00ff;
+  color: #d500f9; /* bright purple */
   font-weight: 900;
   font-style: italic;
 }
