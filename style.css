@@ -2,7 +2,11 @@ body {
   font-family: Arial, sans-serif;
   text-align: center;
   margin: 0;
-  background: linear-gradient(135deg, #f7f7f7, #e0e0e0);
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.05) 2px, transparent 3px),
+    radial-gradient(circle at 30% 80%, rgba(255, 0, 0, 0.03) 2px, transparent 3px),
+    linear-gradient(45deg, #f0f0f0 25%, #e8e8e8 25%, #e8e8e8 50%, #f0f0f0 50%, #f0f0f0 75%, #e8e8e8 75%, #e8e8e8);
+  background-size: 50px 50px;
 }
 
 
