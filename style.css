@@ -17,7 +17,15 @@ body {
 .nav-controls select,
 .nav-controls button {
   font-size: 1rem;
-  margin-left: 0.25em;
+  margin-left: 0; /* remove margin to avoid extra spacing */
+  /* rely on flex container gap instead */
+}
+
+.nav-controls {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.25em; /* spacing between buttons/selects */
+  align-items: center;
 }
 
 
