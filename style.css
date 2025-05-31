@@ -119,23 +119,19 @@ body {
 }
 
 .die {
-  width: 72px;
-  height: 72px;
-  font-size: 2.6em;
+  width: 70px;
+  height: 70px;
+  font-size: 2.5em;
   font-weight: bold;
   border: 4.2px solid black;
-  border-radius: 10px;
-  margin: 0 7px;
+  border-radius: 8px;
+  margin: 0 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: opacity 0.3s ease, box-shadow 0.25s ease, transform 0.15s ease;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
-  background: white;  /* base background, overwritten by color classes */
-  user-select: none;
+  transition: opacity 0.3s ease;
 }
-
 .die:hover:not(.faded) {
   box-shadow: 0 6px 10px rgba(0,0,0,0.3);
   transform: translateY(-3px);
@@ -289,11 +285,4 @@ body {
   }
 }
 
-@media (max-width: 600px) {
-  .die {
-    width: 14vw;
-    height: 14vw;
-    font-size: 1.8em;
-    margin: 0 0.4vw;
-  }
-}
+
