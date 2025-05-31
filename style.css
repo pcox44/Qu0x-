@@ -241,13 +241,14 @@ body {
   border: 2px solid #000;
   border-radius: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-  padding: 0.4em 0.9em;
+  padding: 0.4em 20px; /* horizontal padding = breathing room */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.05em;
   color: #ddd;
   user-select: none;
+  max-width: max-content; /* fits to text width */
+  margin: 0 auto; /* center it with spacing */
 }
-
 
 .scoreboard p {
   margin: 0.3em 0;
@@ -277,8 +278,10 @@ body {
 @media (max-width: 480px) {
   .scoreboard {
     font-size: 1em;
+    padding: 0.4em 15px;
   }
 }
+
 
 .game-links {
   display: flex;
