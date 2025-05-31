@@ -50,9 +50,11 @@ body {
 }
 
 .instructions ul {
+  list-style-type: none;  /* Removes bullets */
   margin: 0;
-  padding-left: 1.2em; /* indent list */
+  padding-left: 1.2em;    /* Keeps indentation */
 }
+
 
 .instructions li {
   margin-bottom: 0.6em;
