@@ -225,6 +225,148 @@ function factorial(n) {
   return n <= 1 ? 1 : n * factorial(n - 1);
 }
 
+function evaluateExpressionSafe(expr) {
+  // Remove spaces for easier parsing
+  expr = expr.replace(/\s+/g, '');
+
+  // Tokenize expression into numbers, operators, factorials, and parentheses
+  // We handle factorials as postfix operators: !, !!, !!!, !!!!, !!!!!
+  
+  // Regex to match tokens: numbers (with decimals), operators, parentheses, factorial sequences
+  const tokenPattern = /(\d+|\^|\+|\-|\*|\/|\(|\)|!{1,5})/g;
+  const tokens = expr.match(tokenPattern);
+
+  if (!tokens) throw "Invalid expression";
+
+  let pos = 0;
+
+  function peek() {
+    return tokens[pos];
+  }
+
+  function consume(t) {
+    if (tokens[pos] === t) {
+      pos++;
+      return true;
+    }
+    return false;
+  }
+
+  function expect(t) {
+    if (tokens[pos] === t) {
+      pos++;
+    } else {
+      throw `Expected ${t} but found ${tokens[pos]}`;
+    }
+  }
+
+  // Recursive descent parser with grammar:
+  // expression = term { ('+' | '-') term }
+  // term = factor { ('*' | '/') factor }
+  // factor = power { '^' power }
+  // power = primary { factorial }
+  // factorial = '!' | '!!' | '!!!' | '!!!!' | '!!!!!'
+  // primary = number | '(' expression ')'
+
+  function parseExpression() {
+    let value = parseTerm();
+    while (peek() === '+' || peek() === '-') {
+      const op = tokens[pos++];
+      let right = parseTerm();
+      if (op === '+') value += right;
+      else value -= right;
+    }
+    return value;
+  }
+
+  function parseTerm() {
+    let value = parseFactor();
+    while (peek() === '*' || peek() === '/') {
+      const op = tokens[pos++];
+      let right = parseFactor();
+      if (op === '*') value *= right;
+      else {
+        if (right === 0) throw "Division by zero";
+        value /= right;
+      }
+    }
+    return value;
+  }
+
+  function parseFactor() {
+    let value = parsePower();
+    while (peek() === '^') {
+      pos++; // consume '^'
+      let exponent = parsePower();
+      value = Math.pow(value, exponent);
+    }
+    return value;
+  }
+
+  function parsePower() {
+    let value = parsePrimary();
+
+    // Handle factorial postfix operators
+    while (peek() && /^!{1,5}$/.test(peek())) {
+      const factToken = tokens[pos++];
+      const n = value;
+      if (!Number.isInteger(n) || n < 0) throw "Invalid factorial argument";
+
+      switch (factToken.length) {
+        case 1:
+          value = factorial(n);
+          break;
+        case 2:
+          value = doubleFactorial(n);
+          break;
+        case 3:
+          value = tripleFactorial(n);
+          break;
+        case 4:
+          value = quadrupleFactorial(n);
+          break;
+        case 5:
+          value = quintupleFactorial(n);
+          break;
+        default:
+          throw "Unsupported factorial type";
+      }
+    }
+
+    return value;
+  }
+
+  function parsePrimary() {
+    const current = peek();
+    if (!current) throw "Unexpected end of expression";
+
+    if (current === '(') {
+      pos++;
+      const val = parseExpression();
+      expect(')');
+      return val;
+    }
+
+    // Number
+    if (/^\d+$/.test(current)) {
+      pos++;
+      return parseInt(current, 10);
+    }
+
+    // Unary minus support could be added here if needed
+
+    throw `Unexpected token: ${current}`;
+  }
+
+  const result = parseExpression();
+
+  if (pos !== tokens.length) {
+    throw "Unexpected input after expression end";
+  }
+
+  return result;
+}
+
 function evaluateExpression() {
   const expr = expressionBox.innerText.trim();
   if (expr.length === 0) {
@@ -232,47 +374,13 @@ function evaluateExpression() {
     return;
   }
   try {
-    let replaced = expr;
-
-    // Quintuple factorial e.g. 5!!!!! or (2+3)!!!!!
-    replaced = replaced.replace(/(\([^)]+\)|\d+)!!!!!/g, (_, val) => {
-      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
-      return quintupleFactorial(n);
-    });
-
-    // Quadruple factorial e.g. 6!!!! or (3+1)!!!!
-    replaced = replaced.replace(/(\([^)]+\)|\d+)!!!!/g, (_, val) => {
-      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
-      return quadrupleFactorial(n);
-    });
-
-    // Triple factorial e.g. 5!!! or (2+1)!!!
-    replaced = replaced.replace(/(\([^)]+\)|\d+)!!!/g, (_, val) => {
-      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
-      return tripleFactorial(n);
-    });
-
-    // Double factorial e.g. 4!! or (3+1)!!
-    replaced = replaced.replace(/(\([^)]+\)|\d+)!!/g, (_, val) => {
-      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
-      return doubleFactorial(n);
-    });
-
-    // Single factorial e.g. 3! or (4)!
-    replaced = replaced.replace(/(\([^)]+\)|\d+)!/g, (_, val) => {
-      let n = Number.isNaN(Number(val)) ? eval(val) : Number(val);
-      return factorial(n);
-    });
-
-    // Replace ^ with **
-    replaced = replaced.replace(/\^/g, "**");
-
-    let result = eval(replaced);
+    const result = evaluateExpressionSafe(expr);
     evaluationBox.innerText = result;
-  } catch {
+  } catch (e) {
     evaluationBox.innerText = "?";
   }
 }
+
 
 
 function buildButtons() {
