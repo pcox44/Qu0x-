@@ -535,17 +535,17 @@ function animateQu0x() {
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
-  // Launch confetti burst
-  confetti({
-    particleCount: 150,
-    spread: 80,
-    origin: { y: 0.6 }
-  });
+  // Multiple confetti bursts for bigger celebration
+  confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, scalar: 1 });
+  confetti({ particleCount: 100, spread: 100, origin: { y: 0.7 }, scalar: 0.8, colors: ['#ff0', '#f0f', '#0ff'] });
+  confetti({ particleCount: 120, spread: 60, origin: { y: 0.5 }, scalar: 1.2, shapes: ['circle', 'square'] });
+  confetti({ particleCount: 80, spread: 150, origin: { y: 0.4 }, scalar: 1, gravity: 0.3 });
 
   setTimeout(() => {
     qu0xAnimation.classList.add("hidden");
   }, 3000);
 }
+
 
 
 function renderGame(day) {
