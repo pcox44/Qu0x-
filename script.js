@@ -337,35 +337,29 @@ function evaluateExpressionSafe(expr) {
   }
 
   function parsePrimary() {
-    const current = peek();
-    if (!current) throw "Unexpected end of expression";
+  const current = peek();
+  if (!current) throw "Unexpected end of expression";
 
-    if (current === '(') {
-      pos++;
-      const val = parseExpression();
-      expect(')');
-      return val;
-    }
-
-    // Number
-    if (/^\d+$/.test(current)) {
-      pos++;
-      return parseInt(current, 10);
-    }
-
-    // Unary minus support could be added here if needed
-
-    throw `Unexpected token: ${current}`;
+  if (current === '(') {
+    pos++;
+    const val = parseExpression();
+    expect(')');
+    return val;
   }
 
-  const result = parseExpression();
-
-  if (pos !== tokens.length) {
-    throw "Unexpected input after expression end";
+  // Die number check
+  if (/^\d+$/.test(current)) {
+    const value = parseInt(current, 10);
+    if (!dice.includes(value)) {
+      throw `Invalid die value: ${value}`;
+    }
+    pos++;
+    return value;
   }
 
-  return result;
+  throw `Unexpected token: ${current}`;
 }
+
 
 function evaluateExpression() {
   const expr = expressionBox.innerText.trim();
