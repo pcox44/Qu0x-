@@ -288,3 +288,12 @@ body {
     box-sizing: border-box; /* Make sure padding and border don’t cause overflow */
   }
 }
+
+@media (max-width: 600px) {
+  .die {
+    width: 14vw;
+    height: 14vw;
+    font-size: 1.8em;
+    margin: 0 0.4vw;
+  }
+}
