@@ -128,45 +128,61 @@ function renderDice() {
 
   const isD6 = (document.getElementById("dieTypeDropdown")?.value || "6") === "6";
 
-  diceValues.forEach((val, idx) => {
+  if (isD6) {
+    // Animate D6 dice one at a time with easing flicker
+    rollDiceOneByOne();
+  } else {
+    // Static rendering for non-D6
+    diceValues.forEach((val, idx) => {
+      const die = document.createElement("div");
+      die.className = "die";
+      die.dataset.index = idx;
+      die.innerText = val;
+      styleDie(die, val);
+      die.addEventListener("click", () => {
+        if (!usedDice.includes(idx) && !isLocked(currentDay)) {
+          usedDice.push(idx);
+          die.classList.add("faded");
+          addToExpression(val.toString());
+        }
+      });
+      diceContainer.appendChild(die);
+    });
+  }
+}
+
+async function rollDiceOneByOne() {
+  const dieFaces = [1, 2, 3, 4, 5, 6];
+
+  for (let idx = 0; idx < diceValues.length; idx++) {
+    const finalVal = diceValues[idx];
     const die = document.createElement("div");
     die.className = "die";
     die.dataset.index = idx;
+    diceContainer.appendChild(die);
 
-    if (isD6) {
-      // Flicker animation for D6 only
-      die.classList.add("rolling");
-      let flickerCount = 0;
-      const flickerMax = 10;
-      const dieFaces = [1, 2, 3, 4, 5, 6];
-
-      const flickerInterval = setInterval(() => {
-        const randomVal = dieFaces[Math.floor(Math.random() * dieFaces.length)];
-        die.innerText = randomVal;
-        styleDie(die, randomVal);
-        flickerCount++;
-        if (flickerCount >= flickerMax) {
-          clearInterval(flickerInterval);
-          die.innerText = val;
-          styleDie(die, val);
-        }
-      }, 150);
-    } else {
-      // No animation for non-D6 dice
-      die.innerText = val;
-      styleDie(die, val);
+    let flickers = 12;
+    for (let i = 0; i < flickers; i++) {
+      const rollVal = dieFaces[Math.floor(Math.random() * 6)];
+      die.innerText = rollVal;
+      styleDie(die, rollVal);
+      await new Promise(r => setTimeout(r, 50 + i * 20)); // gradually slows down
     }
+
+    die.innerText = finalVal;
+    styleDie(die, finalVal);
+    die.dataset.value = finalVal;
 
     die.addEventListener("click", () => {
       if (!usedDice.includes(idx) && !isLocked(currentDay)) {
         usedDice.push(idx);
         die.classList.add("faded");
-        addToExpression(val.toString());
+        addToExpression(finalVal.toString());
       }
     });
 
-    diceContainer.appendChild(die);
-  });
+    await new Promise(r => setTimeout(r, 150)); // pause before next die rolls
+  }
 }
 
 
