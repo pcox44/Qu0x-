@@ -13,16 +13,36 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #333;
+  background: #222; /* slightly darker for contrast */
   color: white;
-  padding: 0.5em 1em;
+  padding: 0.75em 1.5em;
+  font-size: 1.15rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .nav-controls select,
 .nav-controls button {
-  font-size: 1rem;
-  margin-left: 0.25em;
+  font-size: 1.1rem;
+  margin-left: 0.5em;
+  padding: 0.3em 0.7em;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
+
+.nav-controls button:hover,
+.nav-controls select:hover,
+.nav-controls button:focus,
+.nav-controls select:focus {
+  background-color: #444;
+  outline: none;
+}
+
+.nav-controls select {
+  min-width: 120px;
+}
+
 
 .instructions {
   background: #fff8e1;
