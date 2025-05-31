@@ -150,7 +150,7 @@ function renderDice() {
           die.innerText = val;
           styleDie(die, val);
         }
-      }, 50);
+      }, 150);
     } else {
       // No animation for non-D6 dice
       die.innerText = val;
