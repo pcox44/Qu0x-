@@ -41,6 +41,14 @@ function getDayIndex(date) {
 }
 
 
+const celebrationEmojis = ['🎉', '🎊', '💥', '✨', '🔥', '🌟', '🎯', '🏆', '💫', '🧨'];
+
+function getRandomCelebrationEmojis() {
+  const e1 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+  const e2 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+  return `${e1}${e2}`;
+}
+
 // Example PRNG and hash
 function mulberry32(a) {
   return function () {
@@ -329,6 +337,8 @@ function submit() {
 }
 
 function animateQu0x() {
+  const qu0xAnimation = document.getElementById("qu0xAnimation");
+  qu0xAnimation.innerText = `${getRandomCelebrationEmojis()} Qu0x! ${getRandomCelebrationEmojis()}`;
   qu0xAnimation.classList.remove("hidden");
   setTimeout(() => {
     qu0xAnimation.classList.add("hidden");
