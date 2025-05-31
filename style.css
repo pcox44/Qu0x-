@@ -122,21 +122,18 @@ body {
 }
 
 .die {
-  width: 18vw; /* Responsive width based on viewport */
-  height: 18vw; /* Keep it square */
-  max-width: 70px;  /* Limit size for larger screens */
-  max-height: 70px;
-  font-size: 6vw; /* Scale font relative to viewport */
+  width: 70px;
+  height: 70px;
+  font-size: 2.5em;
   font-weight: bold;
   border: 4.2px solid black;
   border-radius: 8px;
+  margin: 0 5px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: opacity 0.3s ease;
-  box-sizing: border-box;
-  margin: 0.25em;
 }
 
 .die:hover:not(.faded) {
@@ -156,6 +153,16 @@ body {
   transform: none;
   cursor: default;
 }
+
+@media (max-width: 500px) {
+  .die {
+    width: 18vw;
+    height: 18vw;
+    font-size: 7vw;
+    margin: 0 2vw;
+  }
+}
+
 
 .expression-section {
   display: flex;
