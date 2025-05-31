@@ -536,29 +536,12 @@ function animateQu0x() {
   qu0xAnimation.classList.remove("hidden");
 
 
-// Over-the-top confetti celebration!
-const launchConfetti = () => {
-  const baseOriginY = 0.6;
-
-  const bursts = [
-    { delay: 0, particleCount: 100, spread: 60, startVelocity: 30, originY: baseOriginY },
-    { delay: 250, particleCount: 120, spread: 80, startVelocity: 45, originY: baseOriginY - 0.1 },
-    { delay: 500, particleCount: 150, spread: 100, startVelocity: 60, originY: baseOriginY - 0.2 },
-    { delay: 750, particleCount: 120, spread: 80, startVelocity: 40, originY: baseOriginY - 0.1 },
-    { delay: 1000, particleCount: 100, spread: 60, startVelocity: 30, originY: baseOriginY },
-  ];
-
-  bursts.forEach(({ delay, particleCount, spread, startVelocity, originY }) => {
-    setTimeout(() => {
-      confetti({
-        particleCount,
-        spread,
-        startVelocity,
-        origin: { y: originY }
-      });
-    }, delay);
+// Launch confetti burst
+  confetti({
+    particleCount: 150,
+    spread: 80,
+    origin: { y: 0.6 }
   });
-};
 
 
 
