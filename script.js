@@ -125,18 +125,37 @@ function generatePuzzle(day) {
 function renderDice() {
   diceContainer.innerHTML = "";
   usedDice = [];
+
+  const isD6 = (document.getElementById("dieTypeDropdown")?.value || "6") === "6";
+
   diceValues.forEach((val, idx) => {
     const die = document.createElement("div");
-    die.className = "die rolling"; // Add rolling animation
+    die.className = "die";
     die.dataset.index = idx;
-    die.dataset.value = val;
-    die.innerText = val;
-    styleDie(die, val);
 
-    // Remove animation class after it plays so it can be re-added later
-    die.addEventListener("animationend", () => {
-      die.classList.remove("rolling");
-    });
+    if (isD6) {
+      // Flicker animation for D6 only
+      die.classList.add("rolling");
+      let flickerCount = 0;
+      const flickerMax = 10;
+      const dieFaces = [1, 2, 3, 4, 5, 6];
+
+      const flickerInterval = setInterval(() => {
+        const randomVal = dieFaces[Math.floor(Math.random() * dieFaces.length)];
+        die.innerText = randomVal;
+        styleDie(die, randomVal);
+        flickerCount++;
+        if (flickerCount >= flickerMax) {
+          clearInterval(flickerInterval);
+          die.innerText = val;
+          styleDie(die, val);
+        }
+      }, 50);
+    } else {
+      // No animation for non-D6 dice
+      die.innerText = val;
+      styleDie(die, val);
+    }
 
     die.addEventListener("click", () => {
       if (!usedDice.includes(idx) && !isLocked(currentDay)) {
@@ -149,6 +168,7 @@ function renderDice() {
     diceContainer.appendChild(die);
   });
 }
+
 
 
 function styleDie(die, val) {
