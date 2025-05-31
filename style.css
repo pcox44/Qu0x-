@@ -2,8 +2,12 @@ body {
   font-family: Arial, sans-serif;
   text-align: center;
   margin: 0;
-  background: #f7f7f7;
+  padding: 1em; /* add padding so content isn't flush to edge */
+  background: linear-gradient(135deg, #f7f7f7 0%, #e3e3e3 100%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
 
 .top-bar {
   display: flex;
