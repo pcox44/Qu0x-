@@ -233,7 +233,7 @@ function evaluateExpressionSafe(expr) {
   // We handle factorials as postfix operators: !, !!, !!!, !!!!, !!!!!
   
   // Regex to match tokens: numbers (with decimals), operators, parentheses, factorial sequences
-  const tokenPattern = /(\d+|\^|\+|\-|\*|\/|\(|\)|!{1,5})/g;
+  const tokenPattern = /(\d|\^|\+|\-|\*|\/|\(|\)|!{1,5})/g;
   const tokens = expr.match(tokenPattern);
 
   if (!tokens) throw "Invalid expression";
@@ -350,7 +350,7 @@ function evaluateExpressionSafe(expr) {
     // Number
     if (/^\d+$/.test(current)) {
       pos++;
-      return parseInt(current, 10);
+      return Number(current);
     }
 
     // Unary minus support could be added here if needed
