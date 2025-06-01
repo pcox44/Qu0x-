@@ -399,45 +399,21 @@ body {
 }
 
 
-@keyframes rainbowGlow {
-  0% {
-    box-shadow: 0 0 8px 2px red;
-    border-color: red;
-  }
-  15% {
-    box-shadow: 0 0 8px 2px orange;
-    border-color: orange;
-  }
-  30% {
-    box-shadow: 0 0 8px 2px yellow;
-    border-color: yellow;
-  }
-  45% {
-    box-shadow: 0 0 8px 2px green;
-    border-color: green;
-  }
-  60% {
-    box-shadow: 0 0 8px 2px blue;
-    border-color: blue;
-  }
-  75% {
-    box-shadow: 0 0 8px 2px indigo;
-    border-color: indigo;
-  }
-  90% {
-    box-shadow: 0 0 8px 2px violet;
-    border-color: violet;
-  }
-  100% {
-    box-shadow: 0 0 8px 2px red;
-    border-color: red;
-  }
-}
-
 .rainbow-glow {
   animation: rainbowGlow 3s linear infinite;
-  transition: border-color 0.3s ease;
+  box-shadow: 0 0 10px 3px currentColor;
+  border-color: currentColor;
 }
+
+@keyframes rainbowGlow {
+  0% { color: red;   box-shadow: 0 0 10px 3px red;   border-color: red; }
+  20% { color: orange; box-shadow: 0 0 10px 3px orange; border-color: orange; }
+  40% { color: yellow; box-shadow: 0 0 10px 3px yellow; border-color: yellow; }
+  60% { color: green; box-shadow: 0 0 10px 3px green; border-color: green; }
+  80% { color: blue;  box-shadow: 0 0 10px 3px blue;  border-color: blue; }
+  100% { color: violet; box-shadow: 0 0 10px 3px violet; border-color: violet; }
+}
+
 
 
 
