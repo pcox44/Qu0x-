@@ -553,25 +553,12 @@ function submit() {
   renderGame(currentDay);
 }
 
-function setDiceRainbowGlow(on) {
-  const diceElements = document.querySelectorAll(".die");
-  diceElements.forEach(die => {
-    if (on) {
-      die.classList.add("rainbow-glow");
-    } else {
-      die.classList.remove("rainbow-glow");
-    }
-  });
-}
 
 function animateQu0x() {
   const emoji1 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
   const emoji2 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
-
-  // Turn on rainbow glow
-  setDiceRainbowGlow(true);
 
   const duration = 3000; // ms
   const intervalTime = 250;
@@ -580,8 +567,6 @@ function animateQu0x() {
   const interval = setInterval(() => {
     if (Date.now() > end) {
       clearInterval(interval);
-      // Turn off rainbow glow when animation ends
-      setDiceRainbowGlow(false);
       return;
     }
     confetti({
@@ -598,8 +583,6 @@ function animateQu0x() {
     qu0xAnimation.classList.add("hidden");
   }, duration);
 }
-
-
 
 
 
