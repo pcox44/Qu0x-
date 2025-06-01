@@ -570,7 +570,7 @@ function animateQu0x() {
   };
 
   // Select all dice elements (assumed class 'dice')
-  const diceElements = document.querySelectorAll('.dice');
+  const diceElements = document.querySelectorAll('.die');
 
   // Add glow effect to each die based on its face value
   diceElements.forEach(die => {
