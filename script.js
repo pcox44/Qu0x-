@@ -553,22 +553,9 @@ function submit() {
   renderGame(currentDay);
 }
 
-function animateQu0x(currentDay) {
-  function mulberry32(a) {
-    return function () {
-      a |= 0;
-      a = a + 0x6D2B79F5 | 0;
-      let t = Math.imul(a ^ a >>> 15, 1 | a);
-      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-      return ((t ^ t >>> 14) >>> 0) / 4294967296;
-    };
-  }
-
-  const seed = parseInt(currentDay.replace(/-/g, ''), 10);
-  const rand = mulberry32(seed);
-
-  const emoji1 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
-  const emoji2 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
+function animateQu0x() {
+  const emoji1 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+  const emoji2 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
@@ -577,9 +564,9 @@ function animateQu0x(currentDay) {
 
   for (let i = 0; i < numBalls; i++) {
     const discoBall = document.createElement("div");
-    discoBall.innerText = "🪩";
+    discoBall.innerText = "🪩"; // disco ball emoji
     discoBall.style.position = "fixed";
-    discoBall.style.top = "-50px";
+    discoBall.style.top = "-50px";  // start above screen
     discoBall.style.left = `${20 + i * 20}%`;
     discoBall.style.fontSize = "48px";
     discoBall.style.zIndex = 10000;
@@ -589,18 +576,21 @@ function animateQu0x(currentDay) {
     discoBalls.push(discoBall);
   }
 
+  // Drop down after a small delay
   setTimeout(() => {
     discoBalls.forEach(ball => {
-      ball.style.top = "100px";
+      ball.style.top = "100px"; // drop down
     });
   }, 50);
 
+  // After 2 seconds (drop duration), move them back up
   setTimeout(() => {
     discoBalls.forEach(ball => {
-      ball.style.top = "-50px";
+      ball.style.top = "-50px"; // go back up
     });
   }, 2050);
 
+  // Create flame emojis along the bottom
   const flames = [];
   const flameCount = 10;
   for (let i = 0; i < flameCount; i++) {
@@ -614,7 +604,7 @@ function animateQu0x(currentDay) {
     flames.push(flame);
   }
 
-  const duration = 4000;
+  const duration = 4000; // total ms for entire animation
   const intervalTime = 250;
   const end = Date.now() + duration;
 
@@ -635,13 +625,11 @@ function animateQu0x(currentDay) {
     });
   }, intervalTime);
 
-  // Hide the Qu0x! line only if day NOT locked.
-  if (!isLocked(currentDay)) {
-    setTimeout(() => {
-      qu0xAnimation.classList.add("hidden");
-    }, duration);
-  }
+  setTimeout(() => {
+    qu0xAnimation.classList.add("hidden");
+  }, duration);
 }
+
 
 
 function renderGame(day) {
