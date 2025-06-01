@@ -553,21 +553,26 @@ function submit() {
   renderGame(currentDay);
 }
 
+function setDiceRainbowGlow(on) {
+  const diceElements = document.querySelectorAll(".dice"); // Adjust selector to your dice class
+  diceElements.forEach(die => {
+    if (on) {
+      die.classList.add("rainbow-glow");
+    } else {
+      die.classList.remove("rainbow-glow");
+    }
+  });
+}
+
 function animateQu0x() {
   const emoji1 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
   const emoji2 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
-  // Select all dice elements (class 'die')
-  const diceElements = document.querySelectorAll('.die');
+  // Turn on rainbow glow
+  setDiceRainbowGlow(true);
 
-  // Add rainbow glow effect to all dice
-  diceElements.forEach(die => {
-    die.classList.add('glow');
-  });
-
-  // Confetti animation (same as before)
   const duration = 3000; // ms
   const intervalTime = 250;
   const end = Date.now() + duration;
@@ -575,8 +580,8 @@ function animateQu0x() {
   const interval = setInterval(() => {
     if (Date.now() > end) {
       clearInterval(interval);
-      // Remove glow class from dice when animation ends
-      diceElements.forEach(die => die.classList.remove('glow'));
+      // Turn off rainbow glow when animation ends
+      setDiceRainbowGlow(false);
       return;
     }
     confetti({
