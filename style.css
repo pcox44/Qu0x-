@@ -398,51 +398,42 @@ body {
   }
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes dropDown {
-  0% {
-    transform: translateY(-100vh) rotate(0deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh) rotate(360deg);
-    opacity: 0;
-  }
-}
-
-@keyframes floatUp {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-110vh) scale(1.2);
-    opacity: 0;
-  }
+.floating-emoji {
+  position: fixed;
+  pointer-events: none;
+  animation-name: floatUp;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
 }
 
 .dropping-emoji {
   position: fixed;
-  font-size: 3rem;
   pointer-events: none;
-  user-select: none;
-  animation: dropDown 3s ease-in forwards; /* spins + drops down */
-  left: 50%; /* center horizontally, adjust in JS for randomness */
-  transform-origin: center;
-  z-index: 1000;
+  animation-name: dropSpin;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
 }
 
-.floating-emoji {
-  position: fixed;
-  font-size: 2.5rem;
-  pointer-events: none;
-  user-select: none;
-  animation: floatUp 4s ease-in-out forwards; /* floats up */
-  z-index: 1000;
+@keyframes floatUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}
+
+@keyframes dropSpin {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
 }
 
 
