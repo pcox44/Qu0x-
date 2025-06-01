@@ -559,33 +559,46 @@ function animateQu0x() {
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
-  // Create disco ball element
-  const discoBall = document.createElement("div");
-  discoBall.innerText = "🪩"; // disco ball emoji, replace with image if preferred
-  discoBall.style.position = "fixed";
-  discoBall.style.top = "-50px";
-  discoBall.style.left = "50%";
-  discoBall.style.transform = "translateX(-50%)";
-  discoBall.style.fontSize = "48px";
-  discoBall.style.zIndex = 10000;
-  discoBall.style.transition = "top 2s ease-out";
-  discoBall.style.animation = "spin 2s linear infinite";
-  document.body.appendChild(discoBall);
+  const discoBalls = [];
+  const numBalls = 4;
 
-  // Trigger the drop after a small delay (to ensure element is in DOM)
+  for (let i = 0; i < numBalls; i++) {
+    const discoBall = document.createElement("div");
+    discoBall.innerText = "🪩"; // disco ball emoji
+    discoBall.style.position = "fixed";
+    discoBall.style.top = "-50px";  // start above screen
+    discoBall.style.left = `${20 + i * 20}%`;
+    discoBall.style.fontSize = "48px";
+    discoBall.style.zIndex = 10000;
+    discoBall.style.transition = "top 2s ease-out";
+    discoBall.style.animation = "spin 2s linear infinite";
+    document.body.appendChild(discoBall);
+    discoBalls.push(discoBall);
+  }
+
+  // Drop down after a small delay
   setTimeout(() => {
-    discoBall.style.top = "100px";  // drop to 100px from top
+    discoBalls.forEach(ball => {
+      ball.style.top = "100px"; // drop down
+    });
   }, 50);
 
-  const duration = 3000; // ms
+  // After 2 seconds (drop duration), move them back up
+  setTimeout(() => {
+    discoBalls.forEach(ball => {
+      ball.style.top = "-50px"; // go back up
+    });
+  }, 2050); // slightly after 2s to ensure transition done
+
+  const duration = 4000; // total ms for entire animation
   const intervalTime = 250;
   const end = Date.now() + duration;
 
   const interval = setInterval(() => {
     if (Date.now() > end) {
       clearInterval(interval);
-      // Remove disco ball after celebration
-      discoBall.remove();
+      // Remove all disco balls after celebration
+      discoBalls.forEach(ball => ball.remove());
       return;
     }
     confetti({
@@ -602,6 +615,7 @@ function animateQu0x() {
     qu0xAnimation.classList.add("hidden");
   }, duration);
 }
+
 
 
 
