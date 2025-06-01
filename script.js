@@ -556,7 +556,7 @@ function submit() {
 function animateQu0x() {
   const emoji1 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
   const emoji2 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
-  qu0xAnimation.innerText = ${emoji1} Qu0x! ${emoji2};
+  qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
   // Launch confetti bursts repeatedly for 3 seconds
@@ -583,7 +583,7 @@ function animateQu0x() {
   setTimeout(() => {
     qu0xAnimation.classList.add("hidden");
   }, duration);
-}"
+}
 
 
 
