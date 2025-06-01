@@ -554,11 +554,11 @@ function submit() {
   renderGame(currentDay);
 }
 
-function animateQu0x() {
-  const emoji1 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
-  const emoji2 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
-  qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
-  qu0xAnimation.classList.remove("hidden");
+function animateQu0x(seed) {
+  const emojis = getRandomCelebrationEmojis(seed); // deterministic emojis
+  // emojis is a string of 2 emojis, e.g. "🎉🎊"
+  const emoji1 = emojis[0];
+  const emoji2 = emojis[1];
 
   const discoBalls = [];
   const numBalls = 4;
