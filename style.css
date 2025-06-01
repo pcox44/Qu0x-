@@ -399,19 +399,19 @@ body {
 }
 
 @keyframes spin {
-  0% { transform: translateX(-50%) rotate(0deg); }
-  100% { transform: translateX(-50%) rotate(360deg); }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-
-.floating-emoji {
-  position: fixed;
-  font-size: 2.5rem;
-  pointer-events: none;
-  user-select: none;
-  animation-name: floatUp;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
+@keyframes dropDown {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
 }
 
 @keyframes floatUp {
@@ -425,26 +425,26 @@ body {
   }
 }
 
-@keyframes dropDown {
-  0% {
-    transform: translateY(-100vh) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh) scale(1);
-    opacity: 0;
-  }
-}
-
 .dropping-emoji {
   position: fixed;
   font-size: 3rem;
   pointer-events: none;
   user-select: none;
-  animation-name: dropDown;
-  animation-timing-function: ease-in;
-  animation-iteration-count: 1;
+  animation: dropDown 3s ease-in forwards; /* spins + drops down */
+  left: 50%; /* center horizontally, adjust in JS for randomness */
+  transform-origin: center;
+  z-index: 1000;
 }
+
+.floating-emoji {
+  position: fixed;
+  font-size: 2.5rem;
+  pointer-events: none;
+  user-select: none;
+  animation: floatUp 4s ease-in-out forwards; /* floats up */
+  z-index: 1000;
+}
+
 
 
 
