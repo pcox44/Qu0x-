@@ -553,12 +553,35 @@ function submit() {
   renderGame(currentDay);
 }
 
-function animateQu0x() {
-  const emoji1 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
-  const emoji2 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+// Hash function to convert string to int seed
+function hashStringToInt(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash << 5) - hash + str.charCodeAt(i);
+    hash |= 0; // Convert to 32-bit integer
+  }
+  return Math.abs(hash);
+}
+
+function animateQu0x(gameNumber) {
+  const seedStr = gameNumber !== undefined
+    ? `game-${gameNumber}`
+    : new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+
+  const seed = hashStringToInt(seedStr);
+  const rng = mulberry32(seed);
+
+  // Pick two deterministic emojis based on seeded RNG
+  const index1 = Math.floor(rng() * celebrationEmojis.length);
+  const index2 = Math.floor(rng() * celebrationEmojis.length);
+
+  const emoji1 = celebrationEmojis[index1];
+  const emoji2 = celebrationEmojis[index2];
+
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
+  // Create disco balls
   const discoBalls = [];
   const numBalls = 4;
 
@@ -576,43 +599,49 @@ function animateQu0x() {
     discoBalls.push(discoBall);
   }
 
-  // Drop down after a small delay
+  // Drop disco balls down after a short delay
   setTimeout(() => {
     discoBalls.forEach(ball => {
       ball.style.top = "100px"; // drop down
     });
   }, 50);
 
-  // After 2 seconds (drop duration), move them back up
+  // Move disco balls back up after 2 seconds
   setTimeout(() => {
     discoBalls.forEach(ball => {
       ball.style.top = "-50px"; // go back up
     });
   }, 2050);
 
-  // Create flame emojis along the bottom
+  // Create flames along the bottom
   const flames = [];
   const flameCount = 10;
   for (let i = 0; i < flameCount; i++) {
     const flame = document.createElement("div");
     flame.innerText = "🔥";
     flame.className = "flame-emoji";
+    flame.style.position = "fixed";
+    flame.style.bottom = "0"; // Ensure flames stick to bottom
     flame.style.left = `${(i * 10) + 5}%`;
+    flame.style.fontSize = "24px";
     flame.style.animationDuration = `${1 + Math.random()}s`;
     flame.style.animationDelay = `${Math.random()}s`;
+    flame.style.zIndex = 10000;
     document.body.appendChild(flame);
     flames.push(flame);
   }
 
-  const duration = 4000; // total ms for entire animation
+  const duration = 4000; // total animation time in ms
   const intervalTime = 250;
   const end = Date.now() + duration;
 
+  // Confetti interval
   const interval = setInterval(() => {
     if (Date.now() > end) {
       clearInterval(interval);
       discoBalls.forEach(ball => ball.remove());
       flames.forEach(flame => flame.remove());
+      qu0xAnimation.classList.add("hidden");
       return;
     }
     confetti({
@@ -624,10 +653,6 @@ function animateQu0x() {
       colors: ['#ff0', '#f0f', '#0ff', '#0f0', '#f00'],
     });
   }, intervalTime);
-
-  setTimeout(() => {
-    qu0xAnimation.classList.add("hidden");
-  }, duration);
 }
 
 
