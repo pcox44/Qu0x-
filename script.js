@@ -559,29 +559,15 @@ function animateQu0x() {
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
- const diceGlowColors = {
-    1: 'rgba(255, 0, 0, 0.8)',        // red
-    2: 'rgba(0, 0, 0, 0.8)',          // black on white -> black glow might be subtle, maybe use gray
-    3: 'rgba(0, 0, 255, 0.8)',        // blue
-    4: 'rgba(255, 255, 0, 0.8)',      // yellow
-    5: 'rgba(0, 128, 0, 0.8)',        // green
-    6: 'rgba(255, 255, 0, 0.8)',      // yellow on black
-  };
-
-  
-
-  // Select all dice elements (assumed class 'die')
+  // Select all dice elements (class 'die')
   const diceElements = document.querySelectorAll('.die');
 
-  // Add glow effect to each die based on its face value
+  // Add rainbow glow effect to all dice
   diceElements.forEach(die => {
-    const faceValue = parseInt(die.innerText, 10);
-    const glowColor = diceGlowColors[faceValue] || 'rgba(255, 255, 0, 0.8)';
-    die.style.setProperty('--glow-color', glowColor);
     die.classList.add('glow');
   });
 
-  // Confetti bursts repeatedly for 3 seconds
+  // Confetti animation (same as before)
   const duration = 3000; // ms
   const intervalTime = 250;
   const end = Date.now() + duration;
