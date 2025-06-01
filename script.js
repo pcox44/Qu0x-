@@ -554,39 +554,72 @@ function submit() {
 }
 
 
+function createGlowsticks(count = 6) {
+  const container = document.createDocumentFragment();
+  for (let i = 0; i < count; i++) {
+    const glowstick = document.createElement("div");
+    glowstick.className = "glowstick";
+    glowstick.style.left = `${(i + 1) * (100 / (count + 1))}vw`;
+    glowstick.style.animationDelay = `${i * 0.3}s`;
+    container.appendChild(glowstick);
+  }
+  document.body.appendChild(container);
+}
+
+function createBalloons(count = 8) {
+  for (let i = 0; i < count; i++) {
+    const balloon = document.createElement("div");
+    balloon.className = "balloon";
+    balloon.style.left = `${Math.random() * 90 + 5}vw`;
+    balloon.style.animationDuration = `${8 + Math.random() * 4}s`;
+    balloon.style.animationDelay = `${Math.random() * 3}s`;
+    document.body.appendChild(balloon);
+
+    balloon.addEventListener("animationend", () => {
+      balloon.remove();
+    });
+  }
+}
+
+function createDiscoLights() {
+  if (!document.querySelector(".disco-light")) {
+    const disco = document.createElement("div");
+    disco.className = "disco-light";
+    document.body.appendChild(disco);
+  }
+}
+
+function removeDiscoLights() {
+  const disco = document.querySelector(".disco-light");
+  if (disco) disco.remove();
+}
+
+function removeGlowsticks() {
+  document.querySelectorAll(".glowstick").forEach(el => el.remove());
+}
+
+
 function animateQu0x() {
   const emoji1 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
   const emoji2 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
-  // Create disco ball element
-  const discoBall = document.createElement("div");
-  discoBall.innerText = "🪩"; // disco ball emoji, replace with image if preferred
-  discoBall.style.position = "fixed";
-  discoBall.style.top = "-50px";
-  discoBall.style.left = "50%";
-  discoBall.style.transform = "translateX(-50%)";
-  discoBall.style.fontSize = "48px";
-  discoBall.style.zIndex = 10000;
-  discoBall.style.transition = "top 2s ease-out";
-  discoBall.style.animation = "spin 2s linear infinite";
-  document.body.appendChild(discoBall);
+  // Add effects
+  createGlowsticks();
+  createBalloons();
+  createDiscoLights();
 
-  // Trigger the drop after a small delay (to ensure element is in DOM)
-  setTimeout(() => {
-    discoBall.style.top = "100px";  // drop to 100px from top
-  }, 50);
-
-  const duration = 4000; // ms
+  const duration = 3000; // ms
   const intervalTime = 250;
   const end = Date.now() + duration;
 
   const interval = setInterval(() => {
     if (Date.now() > end) {
       clearInterval(interval);
-      // Remove disco ball after celebration
-      discoBall.remove();
+      // Remove effects
+      removeGlowsticks();
+      removeDiscoLights();
       return;
     }
     confetti({
@@ -603,6 +636,7 @@ function animateQu0x() {
     qu0xAnimation.classList.add("hidden");
   }, duration);
 }
+
 
 
 function renderGame(day) {
