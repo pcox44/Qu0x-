@@ -635,7 +635,7 @@ function animateQu0x(day) {
 
   setTimeout(() => {
     qu0xAnimation.classList.add("hidden");
-  }, duration);
+  }, 8000);
 }
 
 
