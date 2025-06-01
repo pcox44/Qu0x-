@@ -553,6 +553,13 @@ function submit() {
   renderGame(currentDay);
 }
 
+const emojiOptions = {
+  balloons: ["🎈", "🎉", "🎊"],
+  discoBalls: ["🪩"],
+  partyPoppers: ["🎉", "🎊"],
+};
+
+const celebrationEmojis = ["🎉", "🎊", "🪩", "🥳", "✨"];
 
 function createFloatingEmoji(type, count = 5) {
   for (let i = 0; i < count; i++) {
