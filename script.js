@@ -553,9 +553,14 @@ function submit() {
   renderGame(currentDay);
 }
 
-function animateQu0x() {
+function animateQu0x(day) {
+  // Step 1: Create seeded RNG based on day
+  const rand = mulberry32(day + 1);
+
+  // Step 2: Use seeded RNG to pick emojis deterministically
   const emoji1 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
   const emoji2 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
+
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
@@ -598,8 +603,11 @@ function animateQu0x() {
     flame.innerText = "🔥";
     flame.className = "flame-emoji";
     flame.style.left = `${(i * 10) + 5}%`;
-    flame.style.animationDuration = `${1 + Math.random()}s`;
-    flame.style.animationDelay = `${Math.random()}s`;
+
+    // You can optionally make flame animation also seeded per day:
+    flame.style.animationDuration = `${1 + rand()}s`;
+    flame.style.animationDelay = `${rand()}s`;
+
     document.body.appendChild(flame);
     flames.push(flame);
   }
@@ -629,6 +637,7 @@ function animateQu0x() {
     qu0xAnimation.classList.add("hidden");
   }, duration);
 }
+
 
 
 
