@@ -544,7 +544,7 @@ function submit() {
  if (score === 0) {
   lockedDays[currentDay] = { score, expression: expressionBox.innerText };
   localStorage.setItem("lockedDays", JSON.stringify(lockedDays));
-  animateQu0x();
+  animateQu0x(currentDay);
 
   // ✅ Show the Share button
   document.getElementById("shareBtn").classList.remove("hidden");
@@ -554,8 +554,8 @@ function submit() {
 }
 
 function animateQu0x() {
-  const emoji1 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
-  const emoji2 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+  const emoji1 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
+  const emoji2 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
