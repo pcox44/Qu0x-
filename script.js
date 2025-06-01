@@ -600,7 +600,7 @@ function animateQu0x() {
   createFloatingEmoji("discoBalls", 3);
   createFloatingEmoji("partyPoppers", 5);
 
-  const duration = 4000; // ms
+  const duration = 3000; // ms
   const intervalTime = 250;
   const end = Date.now() + duration;
 
