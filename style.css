@@ -398,6 +398,10 @@ body {
   }
 }
 
+@keyframes spin {
+  0% { transform: translateX(-50%) rotate(0deg); }
+  100% { transform: translateX(-50%) rotate(360deg); }
+}
 
 
 
