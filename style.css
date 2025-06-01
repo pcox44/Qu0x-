@@ -400,20 +400,33 @@ body {
 
 
 @keyframes rainbowGlow {
-  0%   { box-shadow: 0 0 10px 5px red; }
-  14%  { box-shadow: 0 0 10px 5px orange; }
-  28%  { box-shadow: 0 0 10px 5px yellow; }
-  42%  { box-shadow: 0 0 10px 5px green; }
-  56%  { box-shadow: 0 0 10px 5px blue; }
-  70%  { box-shadow: 0 0 10px 5px indigo; }
-  84%  { box-shadow: 0 0 10px 5px violet; }
-  100% { box-shadow: 0 0 10px 5px red; }
+  0% {
+    box-shadow: 0 0 10px 3px red;
+  }
+  16% {
+    box-shadow: 0 0 10px 3px orange;
+  }
+  33% {
+    box-shadow: 0 0 10px 3px yellow;
+  }
+  50% {
+    box-shadow: 0 0 10px 3px green;
+  }
+  66% {
+    box-shadow: 0 0 10px 3px blue;
+  }
+  83% {
+    box-shadow: 0 0 10px 3px indigo;
+  }
+  100% {
+    box-shadow: 0 0 10px 3px violet;
+  }
 }
 
-.die.glow {
+.rainbow-glow {
   animation: rainbowGlow 3s linear infinite;
-  filter: brightness(1.2);
 }
+
 
 
 
