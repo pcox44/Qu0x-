@@ -91,7 +91,11 @@ const celebrationEmojis = [
 ];
 
 
-
+function getRandomCelebrationEmojis() {
+  const e1 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+  const e2 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+  return `${e1}${e2}`;
+}
 
 // Example PRNG and hash
 function mulberry32(a) {
@@ -140,27 +144,6 @@ function mulberry32(seed) {
     t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
-}
-
-function getDailyCelebrationEmojis(dayIndex) {
-  const dateStr = getDateFromDayIndex(dayIndex);        // e.g., "2025-06-01"
-  const seed = hashString(dateStr);                     // Convert to seed
-  const rand = mulberry32(seed);                        // Create PRNG from seed
-
-  const e1 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
-  const e2 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
-  
-  return `${e1}${e2}`;
-}
-
-function getDailyCelebrationEmojis(dayIndex) {
-  const dateStr = getDateFromDayIndex(dayIndex);
-  const seed = hashString(dateStr);
-  const rand = mulberry32(seed);
-
-  const e1 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
-  const e2 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
-  return `${e1}${e2}`;
 }
 
 // Step 2: Modify generatePuzzle to use static for first 10 days, dynamic for others
@@ -571,19 +554,38 @@ function submit() {
 }
 
 function animateQu0x() {
-  const emoji1 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
-  const emoji2 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+  // Deterministic seed based on the date
+  const today = new Date();
+  const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+
+  // Mulberry32 PRNG
+  function mulberry32(a) {
+    return function () {
+      a |= 0;
+      a = a + 0x6D2B79F5 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  const rand = mulberry32(seed);
+
+  // Use seeded randomness to choose emojis
+  const emoji1 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
+  const emoji2 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
+  // Disco ball drop
   const discoBalls = [];
   const numBalls = 4;
 
   for (let i = 0; i < numBalls; i++) {
     const discoBall = document.createElement("div");
-    discoBall.innerText = "🪩"; // disco ball emoji
+    discoBall.innerText = "🪩";
     discoBall.style.position = "fixed";
-    discoBall.style.top = "-50px";  // start above screen
+    discoBall.style.top = "-50px";
     discoBall.style.left = `${20 + i * 20}%`;
     discoBall.style.fontSize = "48px";
     discoBall.style.zIndex = 10000;
@@ -593,21 +595,19 @@ function animateQu0x() {
     discoBalls.push(discoBall);
   }
 
-  // Drop down after a small delay
   setTimeout(() => {
     discoBalls.forEach(ball => {
-      ball.style.top = "100px"; // drop down
+      ball.style.top = "100px";
     });
   }, 50);
 
-  // After 2 seconds (drop duration), move them back up
   setTimeout(() => {
     discoBalls.forEach(ball => {
-      ball.style.top = "-50px"; // go back up
+      ball.style.top = "-50px";
     });
   }, 2050);
 
-  // Create flame emojis along the bottom
+  // Create flame emojis
   const flames = [];
   const flameCount = 10;
   for (let i = 0; i < flameCount; i++) {
@@ -615,13 +615,13 @@ function animateQu0x() {
     flame.innerText = "🔥";
     flame.className = "flame-emoji";
     flame.style.left = `${(i * 10) + 5}%`;
-    flame.style.animationDuration = `${1 + Math.random()}s`;
-    flame.style.animationDelay = `${Math.random()}s`;
+    flame.style.animationDuration = `${1 + rand()}s`;
+    flame.style.animationDelay = `${rand()}s`;
     document.body.appendChild(flame);
     flames.push(flame);
   }
 
-  const duration = 4000; // total ms for entire animation
+  const duration = 4000;
   const intervalTime = 250;
   const end = Date.now() + duration;
 
@@ -633,20 +633,18 @@ function animateQu0x() {
       return;
     }
     confetti({
-      particleCount: 50 + Math.floor(Math.random() * 50),
-      spread: 60 + Math.random() * 40,
-      origin: { x: Math.random(), y: Math.random() * 0.6 + 0.4 },
-      scalar: 0.8 + Math.random() * 0.7,
-      gravity: 0.3 + Math.random() * 0.4,
+      particleCount: 50 + Math.floor(rand() * 50),
+      spread: 60 + rand() * 40,
+      origin: { x: rand(), y: rand() * 0.6 + 0.4 },
+      scalar: 0.8 + rand() * 0.7,
+      gravity: 0.3 + rand() * 0.4,
       colors: ['#ff0', '#f0f', '#0ff', '#0f0', '#f00'],
     });
   }, intervalTime);
 
-  setTimeout(() => {
-    qu0xAnimation.classList.add("hidden");
-  }, duration);
+  // No longer hiding the Qu0x! line — it stays visible
+  // Removed: setTimeout(() => { qu0xAnimation.classList.add("hidden"); }, duration);
 }
-
 
 
 function renderGame(day) {
