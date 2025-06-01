@@ -1,8 +1,8 @@
 body {
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-align: center;
-  background-color: #fff9db; /* pale butter yellow */
-  background-image: radial-gradient(circle, #f5b700 1px, transparent 1px); /* warm gold dots */
+  background-color: #eae7dc; /* soft stone gray */
+  background-image: radial-gradient(circle, #6e6e6e 1px, transparent 1px); /* charcoal dots */
   background-size: 20px 20px;
   color: #2b2b2b;
 }
