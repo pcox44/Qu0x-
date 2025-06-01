@@ -564,9 +564,7 @@ function hashStringToInt(str) {
 }
 
 function animateQu0x(gameNumber) {
-  const seedStr = gameNumber !== undefined
-    ? `game-${gameNumber}`
-    : new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+  const seedStr = `game-${gameNumber}`;
 
   const seed = hashStringToInt(seedStr);
   const rng = mulberry32(seed);
@@ -753,11 +751,11 @@ function populateDropdown() {
   dropdown.value = currentDay;
 }
 
-// Add event listener to handle selection change
 dropdown.addEventListener("change", (e) => {
   const selectedDay = Number(e.target.value);
   if (selectedDay >= 0 && selectedDay <= maxDay) {
     renderGame(selectedDay);
+    animateQu0x(selectedDay);  // <-- add this line to trigger animation for viewed day
   }
 });
 
