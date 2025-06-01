@@ -643,7 +643,7 @@ function animateQu0x(day) {
     // Show the banner again 1 second after hiding
     setTimeout(() => {
       showQu0xBanner(day);
-    }, 1000); // 1 second later
+    }, 1); // 1 second later
 
   }, duration);
 }
