@@ -545,7 +545,7 @@ function submit() {
  if (score === 0) {
   lockedDays[currentDay] = { score, expression: expressionBox.innerText };
   localStorage.setItem("lockedDays", JSON.stringify(lockedDays));
-  animateQu0x();
+  animateQu0x(currentday);
 
   // ✅ Show the Share button
   document.getElementById("shareBtn").classList.remove("hidden");
