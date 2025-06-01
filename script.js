@@ -588,7 +588,21 @@ function animateQu0x() {
     discoBalls.forEach(ball => {
       ball.style.top = "-50px"; // go back up
     });
-  }, 2050); // slightly after 2s to ensure transition done
+  }, 2050);
+
+  // Create flame emojis along the bottom
+  const flames = [];
+  const flameCount = 10;
+  for (let i = 0; i < flameCount; i++) {
+    const flame = document.createElement("div");
+    flame.innerText = "🔥";
+    flame.className = "flame-emoji";
+    flame.style.left = `${(i * 10) + 5}%`;
+    flame.style.animationDuration = `${1 + Math.random()}s`;
+    flame.style.animationDelay = `${Math.random()}s`;
+    document.body.appendChild(flame);
+    flames.push(flame);
+  }
 
   const duration = 4000; // total ms for entire animation
   const intervalTime = 250;
@@ -597,8 +611,8 @@ function animateQu0x() {
   const interval = setInterval(() => {
     if (Date.now() > end) {
       clearInterval(interval);
-      // Remove all disco balls after celebration
       discoBalls.forEach(ball => ball.remove());
+      flames.forEach(flame => flame.remove());
       return;
     }
     confetti({
@@ -615,9 +629,6 @@ function animateQu0x() {
     qu0xAnimation.classList.add("hidden");
   }, duration);
 }
-
-
-
 
 
 
