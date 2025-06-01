@@ -91,11 +91,7 @@ const celebrationEmojis = [
 ];
 
 
-function getRandomCelebrationEmojis() {
-  const e1 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
-  const e2 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
-  return `${e1}${e2}`;
-}
+
 
 // Example PRNG and hash
 function mulberry32(a) {
@@ -144,6 +140,27 @@ function mulberry32(seed) {
     t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
+}
+
+function getDailyCelebrationEmojis(dayIndex) {
+  const dateStr = getDateFromDayIndex(dayIndex);        // e.g., "2025-06-01"
+  const seed = hashString(dateStr);                     // Convert to seed
+  const rand = mulberry32(seed);                        // Create PRNG from seed
+
+  const e1 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
+  const e2 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
+  
+  return `${e1}${e2}`;
+}
+
+function getDailyCelebrationEmojis(dayIndex) {
+  const dateStr = getDateFromDayIndex(dayIndex);
+  const seed = hashString(dateStr);
+  const rand = mulberry32(seed);
+
+  const e1 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
+  const e2 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
+  return `${e1}${e2}`;
 }
 
 // Step 2: Modify generatePuzzle to use static for first 10 days, dynamic for others
