@@ -554,41 +554,28 @@ function submit() {
 }
 
 
-const emojiOptions = {
-  balloons: ["🎈", "🎉", "🎊"],
-  discoBalls: ["🪩"],
-  partyPoppers: ["🎉", "🎊"],
-};
-
 function createFloatingEmoji(type, count = 5) {
   for (let i = 0; i < count; i++) {
     const emoji = document.createElement("div");
 
     if (type === "discoBalls") {
-      emoji.className = "dropping-emoji"; // Use drop down animation for disco balls
-    } else {
-      emoji.className = "floating-emoji"; // Use float up animation for others
-    }
-
-    const emojis = emojiOptions[type] || ["🎈"];
-    emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-
-    // Horizontal position (left)
-    emoji.style.left = `${Math.random() * 90 + 5}vw`;
-
-    if (type === "discoBalls") {
-      // Start above the screen for dropping
-      emoji.style.top = `-50px`;
+      emoji.className = "dropping-emoji"; // drop down + spin
+      emoji.style.top = `-50px`; // start above screen
       emoji.style.fontSize = `${40 + Math.random() * 20}px`;
       emoji.style.animationDuration = `${3 + Math.random() * 3}s`;
       emoji.style.animationDelay = `${Math.random() * 1}s`;
     } else {
-      // For floating emojis
-      emoji.style.bottom = `-50px`;
+      emoji.className = "floating-emoji"; // float up
+      emoji.style.top = `100vh`; // start below bottom of viewport
       emoji.style.fontSize = `${20 + Math.random() * 20}px`;
       emoji.style.animationDuration = `${6 + Math.random() * 4}s`;
       emoji.style.animationDelay = `${Math.random() * 3}s`;
     }
+
+    emoji.style.left = `${Math.random() * 90 + 5}vw`; // horizontal position
+
+    const emojis = emojiOptions[type] || ["🎈"];
+    emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
 
     document.body.appendChild(emoji);
 
@@ -597,6 +584,7 @@ function createFloatingEmoji(type, count = 5) {
     });
   }
 }
+
 
 
 
