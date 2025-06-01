@@ -554,7 +554,6 @@ function submit() {
 }
 
 function animateQu0x(currentDay) {
-  // Seeded PRNG using Mulberry32 based on the day string (e.g., "2025-06-01")
   function mulberry32(a) {
     return function () {
       a |= 0;
@@ -565,7 +564,6 @@ function animateQu0x(currentDay) {
     };
   }
 
-  // Convert "YYYY-MM-DD" to numeric seed
   const seed = parseInt(currentDay.replace(/-/g, ''), 10);
   const rand = mulberry32(seed);
 
@@ -579,9 +577,9 @@ function animateQu0x(currentDay) {
 
   for (let i = 0; i < numBalls; i++) {
     const discoBall = document.createElement("div");
-    discoBall.innerText = "🪩"; // disco ball emoji
+    discoBall.innerText = "🪩";
     discoBall.style.position = "fixed";
-    discoBall.style.top = "-50px";  // start above screen
+    discoBall.style.top = "-50px";
     discoBall.style.left = `${20 + i * 20}%`;
     discoBall.style.fontSize = "48px";
     discoBall.style.zIndex = 10000;
@@ -591,21 +589,18 @@ function animateQu0x(currentDay) {
     discoBalls.push(discoBall);
   }
 
-  // Drop down after a small delay
   setTimeout(() => {
     discoBalls.forEach(ball => {
-      ball.style.top = "100px"; // drop down
+      ball.style.top = "100px";
     });
   }, 50);
 
-  // After 2 seconds (drop duration), move them back up
   setTimeout(() => {
     discoBalls.forEach(ball => {
-      ball.style.top = "-50px"; // go back up
+      ball.style.top = "-50px";
     });
   }, 2050);
 
-  // Create flame emojis along the bottom
   const flames = [];
   const flameCount = 10;
   for (let i = 0; i < flameCount; i++) {
@@ -619,7 +614,7 @@ function animateQu0x(currentDay) {
     flames.push(flame);
   }
 
-  const duration = 4000; // total ms for entire animation
+  const duration = 4000;
   const intervalTime = 250;
   const end = Date.now() + duration;
 
@@ -640,7 +635,7 @@ function animateQu0x(currentDay) {
     });
   }, intervalTime);
 
-  // Hide the Qu0x! unless the day is locked
+  // Hide the Qu0x! line only if day NOT locked.
   if (!isLocked(currentDay)) {
     setTimeout(() => {
       qu0xAnimation.classList.add("hidden");
