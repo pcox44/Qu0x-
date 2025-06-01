@@ -164,7 +164,7 @@ function renderDice() {
   usedDice = [];
 
   if (isLocked(currentDay)) {
-    // Locked day — show dice statically, no n
+    // Locked day — show dice statically, no animation
     diceValues.forEach((val, idx) => {
       const die = document.createElement("div");
       die.className = "die faded";  // show locked/used visually
@@ -527,8 +527,8 @@ function submit() {
     return;
   }
   if (!Number.isInteger(Number(result))) {
-    alert("Submission must be an integer result.");
-    return;
+  alert("Submission must be an integer result.");
+  return;
   }
   if (usedDice.length !== 5) {
     alert("You must use all 5 dice.");
@@ -541,37 +541,24 @@ function submit() {
     localStorage.setItem("bestScores", JSON.stringify(bestScores));
   }
 
-  if (score === 0) {
-    lockedDays[currentDay] = { score, expression: expressionBox.innerText };
-    localStorage.setItem("lockedDays", JSON.stringify(lockedDays));
-    animateQu0x(currentDay);  // <-- Pass currentDay here
+ if (score === 0) {
+  lockedDays[currentDay] = { score, expression: expressionBox.innerText };
+  localStorage.setItem("lockedDays", JSON.stringify(lockedDays));
+  animateQu0x();
 
-    // ✅ Show the Share button
-    document.getElementById("shareBtn").classList.remove("hidden");
-  }
+  // ✅ Show the Share button
+  document.getElementById("shareBtn").classList.remove("hidden");
+}
 
   renderGame(currentDay);
 }
 
-
-// Hash function to convert string to int seed
-function hashStringToInt(str) {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    hash = (hash << 5) - hash + str.charCodeAt(i);
-    hash |= 0; // Convert to 32-bit integer
-  }
-  return Math.abs(hash);
-}
-
-function animateQu0x(day) {
-  // day is the game number solved (passed from submit)
-  const emojis = getEmojiPairForDay(day);
-  
-  qu0xAnimation.innerText = `${emojis[0]} Qu0x! ${emojis[1]}`;
+function animateQu0x() {
+  const emoji1 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+  const emoji2 = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+  qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
-  // Create disco balls (same as before)
   const discoBalls = [];
   const numBalls = 4;
 
@@ -589,33 +576,35 @@ function animateQu0x(day) {
     discoBalls.push(discoBall);
   }
 
+  // Drop down after a small delay
   setTimeout(() => {
-    discoBalls.forEach(ball => ball.style.top = "100px"); // drop down
+    discoBalls.forEach(ball => {
+      ball.style.top = "100px"; // drop down
+    });
   }, 50);
 
+  // After 2 seconds (drop duration), move them back up
   setTimeout(() => {
-    discoBalls.forEach(ball => ball.style.top = "-50px"); // go back up
+    discoBalls.forEach(ball => {
+      ball.style.top = "-50px"; // go back up
+    });
   }, 2050);
 
-  // Flames at bottom (same as before)
+  // Create flame emojis along the bottom
   const flames = [];
   const flameCount = 10;
   for (let i = 0; i < flameCount; i++) {
     const flame = document.createElement("div");
     flame.innerText = "🔥";
     flame.className = "flame-emoji";
-    flame.style.position = "fixed";
-    flame.style.bottom = "0";
     flame.style.left = `${(i * 10) + 5}%`;
-    flame.style.fontSize = "24px";
     flame.style.animationDuration = `${1 + Math.random()}s`;
     flame.style.animationDelay = `${Math.random()}s`;
-    flame.style.zIndex = 10000;
     document.body.appendChild(flame);
     flames.push(flame);
   }
 
-  const duration = 4000;
+  const duration = 4000; // total ms for entire animation
   const intervalTime = 250;
   const end = Date.now() + duration;
 
@@ -624,7 +613,6 @@ function animateQu0x(day) {
       clearInterval(interval);
       discoBalls.forEach(ball => ball.remove());
       flames.forEach(flame => flame.remove());
-      qu0xAnimation.classList.add("hidden");
       return;
     }
     confetti({
@@ -636,23 +624,11 @@ function animateQu0x(day) {
       colors: ['#ff0', '#f0f', '#0ff', '#0f0', '#f00'],
     });
   }, intervalTime);
+
+  setTimeout(() => {
+    qu0xAnimation.classList.add("hidden");
+  }, duration);
 }
-
-function getEmojiPairForDay(day) {
-  const seedStr = `game-${day}`;
-  const seed = hashStringToInt(seedStr); // corrected from hashString to hashStringToInt
-  const rng = mulberry32(seed);
-
-  const index1 = Math.floor(rng() * celebrationEmojis.length);
-
-  let index2 = Math.floor(rng() * celebrationEmojis.length);
-  if (index2 === index1) {
-    index2 = (index2 + 1) % celebrationEmojis.length;
-  }
-
-  return [celebrationEmojis[index1], celebrationEmojis[index2]];
-}
-
 
 
 
@@ -752,11 +728,11 @@ function populateDropdown() {
   dropdown.value = currentDay;
 }
 
+// Add event listener to handle selection change
 dropdown.addEventListener("change", (e) => {
   const selectedDay = Number(e.target.value);
   if (selectedDay >= 0 && selectedDay <= maxDay) {
     renderGame(selectedDay);
-    animateQu0x(selectedDay);  // <-- add this line to trigger animation for viewed day
   }
 });
 
