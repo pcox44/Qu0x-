@@ -527,8 +527,8 @@ function submit() {
     return;
   }
   if (!Number.isInteger(Number(result))) {
-  alert("Submission must be an integer result.");
-  return;
+    alert("Submission must be an integer result.");
+    return;
   }
   if (usedDice.length !== 5) {
     alert("You must use all 5 dice.");
@@ -541,17 +541,18 @@ function submit() {
     localStorage.setItem("bestScores", JSON.stringify(bestScores));
   }
 
- if (score === 0) {
-  lockedDays[currentDay] = { score, expression: expressionBox.innerText };
-  localStorage.setItem("lockedDays", JSON.stringify(lockedDays));
-  animateQu0x();
+  if (score === 0) {
+    lockedDays[currentDay] = { score, expression: expressionBox.innerText };
+    localStorage.setItem("lockedDays", JSON.stringify(lockedDays));
+    animateQu0x(currentDay);  // <-- Pass currentDay here
 
-  // ✅ Show the Share button
-  document.getElementById("shareBtn").classList.remove("hidden");
-}
+    // ✅ Show the Share button
+    document.getElementById("shareBtn").classList.remove("hidden");
+  }
 
   renderGame(currentDay);
 }
+
 
 // Hash function to convert string to int seed
 function hashStringToInt(str) {
@@ -564,7 +565,7 @@ function hashStringToInt(str) {
 }
 
 function animateQu0x(day) {
-  // day is a number (e.g. 16, 18, 0, etc.)
+  // day is the game number solved (passed from submit)
   const emojis = getEmojiPairForDay(day);
   
   qu0xAnimation.innerText = `${emojis[0]} Qu0x! ${emojis[1]}`;
@@ -637,10 +638,9 @@ function animateQu0x(day) {
   }, intervalTime);
 }
 
-// Helper to get consistent emoji pair for a day
 function getEmojiPairForDay(day) {
   const seedStr = `game-${day}`;
-  const seed = hashString(seedStr);
+  const seed = hashStringToInt(seedStr); // corrected from hashString to hashStringToInt
   const rng = mulberry32(seed);
 
   const index1 = Math.floor(rng() * celebrationEmojis.length);
@@ -652,6 +652,7 @@ function getEmojiPairForDay(day) {
 
   return [celebrationEmojis[index1], celebrationEmojis[index2]];
 }
+
 
 
 
