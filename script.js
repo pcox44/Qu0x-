@@ -638,6 +638,13 @@ function animateQu0x(day) {
   }, 8000);
 }
 
+function showQu0xBanner(day) {
+  const rand = mulberry32(day + 1);
+  const emoji1 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
+  const emoji2 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
+  qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
+  qu0xAnimation.classList.remove("hidden");
+}
 
 
 
@@ -676,7 +683,6 @@ function renderGame(day) {
     masterScoreBox.innerText = "N/A";
   }
 
-
   const locked = isLocked(day);
 
   expressionBox.style.pointerEvents = locked ? "none" : "auto";
@@ -699,15 +705,15 @@ function renderGame(day) {
   } else {
     shareBtn.classList.add("hidden");
   }
+
+  // Show or hide Qu0x banner
+  if (locked) {
+    showQu0xBanner(day);
+  } else {
+    qu0xAnimation.classList.add("hidden");
+  }
 }
 
-document.getElementById("prevDay").onclick = () => {
-  if (currentDay > 0) {
-    currentDay--;
-    renderGame(currentDay);
-    populateDropdown();
-  }
-};
 
 document.getElementById("nextDay").onclick = () => {
   if (currentDay < maxDay) {
