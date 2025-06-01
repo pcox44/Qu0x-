@@ -563,7 +563,7 @@ function hashStringToInt(str) {
   return Math.abs(hash);
 }
 
-function animateQu0x(currentday) {
+function animateQu0x(gameNumber) {
   const seedStr = gameNumber !== undefined
     ? `game-${gameNumber}`
     : new Date().toISOString().split('T')[0]; // YYYY-MM-DD
