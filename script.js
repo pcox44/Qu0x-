@@ -553,12 +553,8 @@ function submit() {
   renderGame(currentDay);
 }
 
-function animateQu0x() {
-  // Use today's date for seeding and locking check
-  const today = new Date();
-  const dayKey = today.toISOString().split('T')[0]; // e.g. "2025-06-01"
-
-  // Mulberry32 PRNG
+function animateQu0x(currentDay) {
+  // Seeded PRNG using Mulberry32 based on the day string (e.g., "2025-06-01")
   function mulberry32(a) {
     return function () {
       a |= 0;
@@ -569,28 +565,23 @@ function animateQu0x() {
     };
   }
 
-  const rand = mulberry32(
-    today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate()
-  );
+  // Convert "YYYY-MM-DD" to numeric seed
+  const seed = parseInt(currentDay.replace(/-/g, ''), 10);
+  const rand = mulberry32(seed);
 
-  // Use seeded emojis
   const emoji1 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
   const emoji2 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
-  // Check if the day is locked using your function
-  const locked = isLocked(dayKey);
-
-  // Disco balls
   const discoBalls = [];
   const numBalls = 4;
 
   for (let i = 0; i < numBalls; i++) {
     const discoBall = document.createElement("div");
-    discoBall.innerText = "🪩";
+    discoBall.innerText = "🪩"; // disco ball emoji
     discoBall.style.position = "fixed";
-    discoBall.style.top = "-50px";
+    discoBall.style.top = "-50px";  // start above screen
     discoBall.style.left = `${20 + i * 20}%`;
     discoBall.style.fontSize = "48px";
     discoBall.style.zIndex = 10000;
@@ -600,19 +591,21 @@ function animateQu0x() {
     discoBalls.push(discoBall);
   }
 
+  // Drop down after a small delay
   setTimeout(() => {
     discoBalls.forEach(ball => {
-      ball.style.top = "100px";
+      ball.style.top = "100px"; // drop down
     });
   }, 50);
 
+  // After 2 seconds (drop duration), move them back up
   setTimeout(() => {
     discoBalls.forEach(ball => {
-      ball.style.top = "-50px";
+      ball.style.top = "-50px"; // go back up
     });
   }, 2050);
 
-  // Flame emojis at bottom
+  // Create flame emojis along the bottom
   const flames = [];
   const flameCount = 10;
   for (let i = 0; i < flameCount; i++) {
@@ -620,13 +613,13 @@ function animateQu0x() {
     flame.innerText = "🔥";
     flame.className = "flame-emoji";
     flame.style.left = `${(i * 10) + 5}%`;
-    flame.style.animationDuration = `${1 + rand()}s`;
-    flame.style.animationDelay = `${rand()}s`;
+    flame.style.animationDuration = `${1 + Math.random()}s`;
+    flame.style.animationDelay = `${Math.random()}s`;
     document.body.appendChild(flame);
     flames.push(flame);
   }
 
-  const duration = 4000;
+  const duration = 4000; // total ms for entire animation
   const intervalTime = 250;
   const end = Date.now() + duration;
 
@@ -638,23 +631,22 @@ function animateQu0x() {
       return;
     }
     confetti({
-      particleCount: 50 + Math.floor(rand() * 50),
-      spread: 60 + rand() * 40,
-      origin: { x: rand(), y: rand() * 0.6 + 0.4 },
-      scalar: 0.8 + rand() * 0.7,
-      gravity: 0.3 + rand() * 0.4,
+      particleCount: 50 + Math.floor(Math.random() * 50),
+      spread: 60 + Math.random() * 40,
+      origin: { x: Math.random(), y: Math.random() * 0.6 + 0.4 },
+      scalar: 0.8 + Math.random() * 0.7,
+      gravity: 0.3 + Math.random() * 0.4,
       colors: ['#ff0', '#f0f', '#0ff', '#0f0', '#f00'],
     });
   }, intervalTime);
 
-  // Only hide Qu0x! if today is NOT locked
-  if (!locked) {
+  // Hide the Qu0x! unless the day is locked
+  if (!isLocked(currentDay)) {
     setTimeout(() => {
       qu0xAnimation.classList.add("hidden");
     }, duration);
   }
 }
-
 
 
 function renderGame(day) {
