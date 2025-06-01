@@ -560,13 +560,33 @@ function animateQu0x() {
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
-  const duration = 3000; // ms
+  // Create disco ball element
+  const discoBall = document.createElement("div");
+  discoBall.innerText = "🪩"; // disco ball emoji, replace with image if preferred
+  discoBall.style.position = "fixed";
+  discoBall.style.top = "-50px";
+  discoBall.style.left = "50%";
+  discoBall.style.transform = "translateX(-50%)";
+  discoBall.style.fontSize = "48px";
+  discoBall.style.zIndex = 10000;
+  discoBall.style.transition = "top 2s ease-out";
+  discoBall.style.animation = "spin 2s linear infinite";
+  document.body.appendChild(discoBall);
+
+  // Trigger the drop after a small delay (to ensure element is in DOM)
+  setTimeout(() => {
+    discoBall.style.top = "100px";  // drop to 100px from top
+  }, 50);
+
+  const duration = 4000; // ms
   const intervalTime = 250;
   const end = Date.now() + duration;
 
   const interval = setInterval(() => {
     if (Date.now() > end) {
       clearInterval(interval);
+      // Remove disco ball after celebration
+      discoBall.remove();
       return;
     }
     confetti({
@@ -583,7 +603,6 @@ function animateQu0x() {
     qu0xAnimation.classList.add("hidden");
   }, duration);
 }
-
 
 
 function renderGame(day) {
