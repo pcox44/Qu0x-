@@ -625,9 +625,9 @@ function animateQu0x() {
     });
   }, intervalTime);
 
-  setTimeout(() => {
-    qu0xAnimation.classList.add("hidden");
-  }, duration);
+  //setTimeout(() => {
+   // qu0xAnimation.classList.add("hidden");
+  //}, duration);
 }
 
 
