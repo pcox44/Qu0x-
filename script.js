@@ -559,17 +559,39 @@ function animateQu0x() {
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
-  // Launch confetti bursts repeatedly for 3 seconds
-  const duration = 3000; // total duration in ms
-  const intervalTime = 250; // time between bursts in ms
+  // Glow colors map (matching your dice colors)
+  const diceGlowColors = {
+    1: 'rgba(255, 0, 0, 0.8)',        // red
+    2: 'rgba(255, 255, 255, 0.8)',    // white
+    3: 'rgba(0, 0, 255, 0.8)',        // blue
+    4: 'rgba(255, 255, 0, 0.8)',      // yellow
+    5: 'rgba(0, 128, 0, 0.8)',        // green
+    6: 'rgba(255, 255, 0, 0.8)',      // yellow on black (use yellow glow)
+  };
+
+  // Select all dice elements (assumed class 'dice')
+  const diceElements = document.querySelectorAll('.dice');
+
+  // Add glow effect to each die based on its face value
+  diceElements.forEach(die => {
+    const faceValue = parseInt(die.textContent, 10);
+    const glowColor = diceGlowColors[faceValue] || 'rgba(255, 255, 0, 0.8)';
+    die.style.setProperty('--glow-color', glowColor);
+    die.classList.add('glow');
+  });
+
+  // Confetti bursts repeatedly for 3 seconds
+  const duration = 3000; // ms
+  const intervalTime = 250;
   const end = Date.now() + duration;
 
   const interval = setInterval(() => {
     if (Date.now() > end) {
       clearInterval(interval);
+      // Remove glow class from dice when animation ends
+      diceElements.forEach(die => die.classList.remove('glow'));
       return;
     }
-    // Burst with random parameters for variation
     confetti({
       particleCount: 50 + Math.floor(Math.random() * 50),
       spread: 60 + Math.random() * 40,
@@ -584,6 +606,7 @@ function animateQu0x() {
     qu0xAnimation.classList.add("hidden");
   }, duration);
 }
+
 
 
 
