@@ -553,9 +553,10 @@ function submit() {
   renderGame(currentDay);
 }
 
-function animateQu0x(currentDay) {
-  // Convert YYYY-MM-DD to a numeric seed
-  const seed = parseInt(currentDay.replace(/-/g, ''), 10);
+function animateQu0x() {
+  // Use today's date for seeding and locking check
+  const today = new Date();
+  const dayKey = today.toISOString().split('T')[0]; // e.g. "2025-06-01"
 
   // Mulberry32 PRNG
   function mulberry32(a) {
@@ -568,18 +569,18 @@ function animateQu0x(currentDay) {
     };
   }
 
-  const rand = mulberry32(seed);
+  const rand = mulberry32(
+    today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate()
+  );
 
-  // Seeded emojis
+  // Use seeded emojis
   const emoji1 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
   const emoji2 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
-
-  // Display Qu0x! with emojis
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
-  // Check if current day is locked
-  const locked = isLocked(currentDay);
+  // Check if the day is locked using your function
+  const locked = isLocked(dayKey);
 
   // Disco balls
   const discoBalls = [];
@@ -611,7 +612,7 @@ function animateQu0x(currentDay) {
     });
   }, 2050);
 
-  // Flame emojis
+  // Flame emojis at bottom
   const flames = [];
   const flameCount = 10;
   for (let i = 0; i < flameCount; i++) {
@@ -646,13 +647,14 @@ function animateQu0x(currentDay) {
     });
   }, intervalTime);
 
-  // Hide Qu0x! line only if the day is NOT locked
+  // Only hide Qu0x! if today is NOT locked
   if (!locked) {
     setTimeout(() => {
       qu0xAnimation.classList.add("hidden");
     }, duration);
   }
 }
+
 
 
 function renderGame(day) {
