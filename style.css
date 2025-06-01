@@ -403,7 +403,28 @@ body {
   100% { transform: translateX(-50%) rotate(360deg); }
 }
 
+.flame-emoji {
+  position: fixed;
+  bottom: 0;
+  font-size: 30px;
+  animation-name: flickerFloat;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  opacity: 0.8;
+  user-select: none;
+  pointer-events: none;
+}
 
+@keyframes flickerFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.1);
+    opacity: 1;
+  }
+}
 
 
 
