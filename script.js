@@ -554,49 +554,51 @@ function submit() {
 }
 
 
-function createGlowsticks(count = 6) {
-  const container = document.createDocumentFragment();
-  for (let i = 0; i < count; i++) {
-    const glowstick = document.createElement("div");
-    glowstick.className = "glowstick";
-    glowstick.style.left = `${(i + 1) * (100 / (count + 1))}vw`;
-    glowstick.style.animationDelay = `${i * 0.3}s`;
-    container.appendChild(glowstick);
-  }
-  document.body.appendChild(container);
-}
+const emojiOptions = {
+  balloons: ["🎈", "🎉", "🎊"],
+  discoBalls: ["🪩"],
+  partyPoppers: ["🎉", "🎊"],
+};
 
-function createBalloons(count = 8) {
+function createFloatingEmoji(type, count = 5) {
   for (let i = 0; i < count; i++) {
-    const balloon = document.createElement("div");
-    balloon.className = "balloon";
-    balloon.style.left = `${Math.random() * 90 + 5}vw`;
-    balloon.style.animationDuration = `${8 + Math.random() * 4}s`;
-    balloon.style.animationDelay = `${Math.random() * 3}s`;
-    document.body.appendChild(balloon);
+    const emoji = document.createElement("div");
 
-    balloon.addEventListener("animationend", () => {
-      balloon.remove();
+    if (type === "discoBalls") {
+      emoji.className = "dropping-emoji"; // Use drop down animation for disco balls
+    } else {
+      emoji.className = "floating-emoji"; // Use float up animation for others
+    }
+
+    const emojis = emojiOptions[type] || ["🎈"];
+    emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+
+    // Horizontal position (left)
+    emoji.style.left = `${Math.random() * 90 + 5}vw`;
+
+    if (type === "discoBalls") {
+      // Start above the screen for dropping
+      emoji.style.top = `-50px`;
+      emoji.style.fontSize = `${40 + Math.random() * 20}px`;
+      emoji.style.animationDuration = `${3 + Math.random() * 3}s`;
+      emoji.style.animationDelay = `${Math.random() * 1}s`;
+    } else {
+      // For floating emojis
+      emoji.style.bottom = `-50px`;
+      emoji.style.fontSize = `${20 + Math.random() * 20}px`;
+      emoji.style.animationDuration = `${6 + Math.random() * 4}s`;
+      emoji.style.animationDelay = `${Math.random() * 3}s`;
+    }
+
+    document.body.appendChild(emoji);
+
+    emoji.addEventListener("animationend", () => {
+      emoji.remove();
     });
   }
 }
 
-function createDiscoLights() {
-  if (!document.querySelector(".disco-light")) {
-    const disco = document.createElement("div");
-    disco.className = "disco-light";
-    document.body.appendChild(disco);
-  }
-}
 
-function removeDiscoLights() {
-  const disco = document.querySelector(".disco-light");
-  if (disco) disco.remove();
-}
-
-function removeGlowsticks() {
-  document.querySelectorAll(".glowstick").forEach(el => el.remove());
-}
 
 
 function animateQu0x() {
@@ -605,10 +607,10 @@ function animateQu0x() {
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
-  // Add effects
-  createGlowsticks();
-  createBalloons();
-  createDiscoLights();
+  // Create emoji floats
+  createFloatingEmoji("balloons", 8);
+  createFloatingEmoji("discoBalls", 3);
+  createFloatingEmoji("partyPoppers", 5);
 
   const duration = 3000; // ms
   const intervalTime = 250;
@@ -617,9 +619,6 @@ function animateQu0x() {
   const interval = setInterval(() => {
     if (Date.now() > end) {
       clearInterval(interval);
-      // Remove effects
-      removeGlowsticks();
-      removeDiscoLights();
       return;
     }
     confetti({
@@ -636,6 +635,7 @@ function animateQu0x() {
     qu0xAnimation.classList.add("hidden");
   }, duration);
 }
+
 
 
 
