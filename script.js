@@ -639,7 +639,13 @@ function animateQu0x(day) {
 
   setTimeout(() => {
     qu0xAnimation.classList.add("hidden");
-  }, 8000);
+
+    // Show the banner again 1 second after hiding
+    setTimeout(() => {
+      showQu0xBanner(day);
+    }, 1000); // 1 second later
+
+  }, duration);
 }
 
 function showQu0xBanner(day) {
