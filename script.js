@@ -554,7 +554,7 @@ function submit() {
 }
 
 function setDiceRainbowGlow(on) {
-  const diceElements = document.querySelectorAll(".dice"); // Adjust selector to your dice class
+  const diceElements = document.querySelectorAll(".die");
   diceElements.forEach(die => {
     if (on) {
       die.classList.add("rainbow-glow");
