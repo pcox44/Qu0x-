@@ -399,20 +399,6 @@ body {
 }
 
 
-.rainbow-glow {
-  animation: rainbowGlow 3s linear infinite;
-  box-shadow: 0 0 10px 3px currentColor;
-  border-color: currentColor;
-}
-
-@keyframes rainbowGlow {
-  0% { color: red;   box-shadow: 0 0 10px 3px red;   border-color: red; }
-  20% { color: orange; box-shadow: 0 0 10px 3px orange; border-color: orange; }
-  40% { color: yellow; box-shadow: 0 0 10px 3px yellow; border-color: yellow; }
-  60% { color: green; box-shadow: 0 0 10px 3px green; border-color: green; }
-  80% { color: blue;  box-shadow: 0 0 10px 3px blue;  border-color: blue; }
-  100% { color: violet; box-shadow: 0 0 10px 3px violet; border-color: violet; }
-}
 
 
 
