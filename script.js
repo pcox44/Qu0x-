@@ -554,9 +554,9 @@ function submit() {
 }
 
 function animateQu0x() {
-  // Deterministic seed based on the date
+  // Use today's date for seeding and locking check
   const today = new Date();
-  const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+  const dayKey = today.toISOString().split('T')[0]; // e.g. "2025-06-01"
 
   // Mulberry32 PRNG
   function mulberry32(a) {
@@ -569,15 +569,20 @@ function animateQu0x() {
     };
   }
 
-  const rand = mulberry32(seed);
+  const rand = mulberry32(
+    today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate()
+  );
 
-  // Use seeded randomness to choose emojis
+  // Use seeded emojis
   const emoji1 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
   const emoji2 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
   qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
-  // Disco ball drop
+  // Check if the day is locked using your function
+  const locked = isLocked(dayKey);
+
+  // Disco balls
   const discoBalls = [];
   const numBalls = 4;
 
@@ -607,7 +612,7 @@ function animateQu0x() {
     });
   }, 2050);
 
-  // Create flame emojis
+  // Flame emojis at bottom
   const flames = [];
   const flameCount = 10;
   for (let i = 0; i < flameCount; i++) {
@@ -642,9 +647,14 @@ function animateQu0x() {
     });
   }, intervalTime);
 
-  // No longer hiding the Qu0x! line — it stays visible
-  // Removed: setTimeout(() => { qu0xAnimation.classList.add("hidden"); }, duration);
+  // Only hide Qu0x! if today is NOT locked
+  if (!locked) {
+    setTimeout(() => {
+      qu0xAnimation.classList.add("hidden");
+    }, duration);
+  }
 }
+
 
 
 function renderGame(day) {
