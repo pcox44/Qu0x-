@@ -8,13 +8,28 @@
   <style>
   /* Added styles for the top bar layout */
   .top-bar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    padding: 0.5rem 1rem;
-    border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #ccc;
+
+  height: 120px; /* fixed height for desktop */
+}
+
+.logo {
+  height: 100%; /* fills top-bar's height */
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+/* Smaller header height on mobile */
+@media (max-width: 600px) {
+  .top-bar {
+    height: 60px;
   }
+}
 
   .top-bar h1 {
     margin: 0;
@@ -33,19 +48,6 @@
   .nav-controls {
     flex: 1;
     text-align: right;
-  }
-
-  .logo {
-    height: 120px; /* Default size for desktop */
-    object-fit: contain;
-    image-rendering: pixelated;
-  }
-
-  /* Make the logo smaller on mobile screens */
-  @media (max-width: 600px) {
-    .logo {
-      height: 60px;
-    }
   }
 
 </style>
