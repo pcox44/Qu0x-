@@ -430,5 +430,9 @@ body {
   image-rendering: pixelated;
 }
 
-
+.qu0x-logo-anim {
+  height: 40px; /* Adjust as needed for animation area */
+  vertical-align: middle;
+  image-rendering: pixelated;
+}
 
