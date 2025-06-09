@@ -443,7 +443,7 @@ body {
 }
 
 .qu0x-logo-anim {
-  height: 120px; /* Adjust as needed for animation area */
+  height: 180px; /* Adjust as needed for animation area */
   vertical-align: middle;
   image-rendering: pixelated;
 }
