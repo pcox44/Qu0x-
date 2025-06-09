@@ -742,29 +742,20 @@ document.getElementById("nextDay").onclick = () => {
 
 function populateDropdown() {
   dropdown.innerHTML = "";
-
-  const rangeSize = 10;
-  const halfRange = Math.floor(rangeSize / 2);
-  let start = Math.max(0, currentDay - halfRange);
-  let end = Math.min(maxDay, start + rangeSize - 1);
-
-  // Adjust start if we're near the end
-  if (end - start + 1 < rangeSize) {
-    start = Math.max(0, end - rangeSize + 1);
-  }
-
-  for (let i = start; i <= end; i++) {
+  for (let i = 0; i <= maxDay; i++) {
     const option = document.createElement("option");
     option.value = i;
-
+    
+    // Option text, you can customize with emojis or formatting
     option.text = `Game #${i + 1}`;
+    
+    // Mark locked games with a star emoji in option text
     if (lockedDays[i] && lockedDays[i].score === 0) {
       option.text = "⭐ " + option.text;
     }
 
     dropdown.appendChild(option);
   }
-
   // Set the dropdown value to the currentDay so UI matches the current game
   dropdown.value = currentDay;
 }
@@ -776,7 +767,6 @@ dropdown.addEventListener("change", (e) => {
     renderGame(selectedDay);
   }
 });
-
 
 submitBtn.addEventListener("click", submit);
 
