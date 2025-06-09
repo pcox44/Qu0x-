@@ -10,30 +10,26 @@
  .top-bar {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between; /* better spacing */
   gap: 1rem;
+  height: 60px;             /* desktop height */
+  padding: 0 1rem;
   border-bottom: 1px solid #ccc;
-
-  height: 60px;           /* smaller desktop height */
-  padding: 0 1rem;        /* horizontal padding only */
 }
 
 .logo {
-  height: 100%;           /* fill header bar height */
-  width: auto;            /* keep aspect ratio */
+  height: 100%;             /* fill the top-bar height exactly */
+  width: auto;              /* keep aspect ratio */
   object-fit: contain;
   image-rendering: pixelated;
-  margin: 0;              /* no extra margin */
+  margin: 0;
 }
 
-/* Responsive for mobile */
+/* Mobile: smaller top bar, same logo behavior */
 @media (max-width: 600px) {
   .top-bar {
-    height: 48px;         /* even smaller header height */
+    height: 48px;
     padding: 0 0.5rem;
-  }
-  .logo {
-    height: 100%;         /* still fill 100% height */
   }
 }
 
