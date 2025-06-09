@@ -424,6 +424,11 @@ body {
   }
 }
 
+.logo {
+  height: 48px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
 
 
 
