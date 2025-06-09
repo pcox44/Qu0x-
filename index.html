@@ -14,22 +14,25 @@
   gap: 1rem;
   padding: 0.5rem 1rem;
   border-bottom: 1px solid #ccc;
-
-  height: 120px; /* fixed height for desktop */
+  /* no fixed height */
 }
 
 .logo {
-  height: 100%; /* fills top-bar's height */
+  max-height: 4rem;  /* max height for desktop */
   object-fit: contain;
   image-rendering: pixelated;
+  /* optional: allow width to auto-scale */
+  height: auto;
+  width: auto;
 }
 
-/* Smaller header height on mobile */
+/* On smaller screens: increase logo max-height to fill header more */
 @media (max-width: 600px) {
-  .top-bar {
-    height: 60px;
+  .logo {
+    max-height: 6rem;  /* larger max height on mobile */
   }
 }
+
 
   .top-bar h1 {
     margin: 0;
