@@ -381,23 +381,29 @@ body {
 
 #shareBtn {
   font-size: 1.3em;
-  padding: 0.6em 1.8em;               /* wider and a bit taller */
-  background-color: #ff6600;         /* bright orange */
+  padding: 0.6em 1.8em;
+  background-color: #ff6600;
   color: white;
-  border: 2px solid #b34d00;         /* a darker orange border */
+  border: 2px solid black; /* strong black border */
   border-radius: 10px;
   cursor: pointer;
-  margin-top: 1em;
   font-weight: 700;
-  box-shadow: 0 4px 8px rgba(255, 102, 0, 0.4);  /* subtle glow */
-  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 1em;
+  box-shadow:
+    0 0 0 4px black,                    /* bold black outline */
+    0 4px 8px rgba(255, 102, 0, 0.4);   /* orange glow */
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 #shareBtn:hover {
-  background-color: #cc5200;          /* darker orange on hover */
-  border-color: #993d00;
-  box-shadow: 0 6px 12px rgba(204, 82, 0, 0.6); /* stronger glow on hover */
+  background-color: #cc5200;
+  box-shadow:
+    0 0 0 4px black,                     /* maintain black outline */
+    0 6px 12px rgba(204, 82, 0, 0.6);    /* stronger glow */
 }
+
 
 
 @media (max-width: 600px) {
