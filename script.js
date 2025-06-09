@@ -503,7 +503,7 @@ function buildButtons() {
         const idx = usedDice.findLast(i => diceValues[i].toString() === removed);
         if (idx !== undefined) {
           usedDice = usedDice.filter(i => i !== idx);
-          document.querySelector(.die[data-index="${idx}"]).classList.remove("faded");
+          document.querySelector(`.die[data-index="${idx}"]`).classList.remove("faded");
         }
       } else if (op === "Clear") {
         expressionBox.innerText = "";
