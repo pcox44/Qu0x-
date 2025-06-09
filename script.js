@@ -486,8 +486,9 @@ function evaluateExpression() {
 
 
 function buildButtons() {
-  const ops = ["+", "-", "*", "/", "^", "!", "(", ")", "Back", "Clear", "Submit"];
+  const ops = ["+", "-", "*", "/", "^", "!", "(", ")", "Back", "Clear"];
   buttonGrid.innerHTML = "";
+
 
   ops.forEach(op => {
     const btn = document.createElement("button");
@@ -495,11 +496,19 @@ function buildButtons() {
     btn.onclick = () => {
       if (isLocked(currentDay)) return;
       if (op === "Back") {
-        // existing back logic
+        let expr = expressionBox.innerText;
+        if (expr.length === 0) return;
+        const removed = expr[expr.length - 1];
+        expressionBox.innerText = expr.slice(0, -1);
+        const idx = usedDice.findLast(i => diceValues[i].toString() === removed);
+        if (idx !== undefined) {
+          usedDice = usedDice.filter(i => i !== idx);
+          document.querySelector(.die[data-index="${idx}"]).classList.remove("faded");
+        }
       } else if (op === "Clear") {
-        // existing clear logic
-      } else if (op === "Submit") {
-        submitExpression();  // Your submit logic function
+        expressionBox.innerText = "";
+        usedDice = [];
+        renderDice();
       } else {
         addToExpression(op);
       }
