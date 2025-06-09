@@ -273,7 +273,7 @@ body {
 #qu0xAnimation {
   font-size: 4.5em;
   color: #ff00ff;
-  animation: pop 3s ease-in-out;
+  animation: pop 3s forwards; /* just once and keep final frame */
   white-space: nowrap;
 }
 
