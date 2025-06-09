@@ -36,10 +36,18 @@
   }
 
   .logo {
-    height: 48px;
+    height: 120px; /* Default size for desktop */
     object-fit: contain;
     image-rendering: pixelated;
   }
+
+  /* Make the logo smaller on mobile screens */
+  @media (max-width: 600px) {
+    .logo {
+      height: 60px;
+    }
+  }
+
 </style>
 
 
