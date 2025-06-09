@@ -7,53 +7,55 @@
   <link rel="stylesheet" href="style.css"/>
   <style>
   /* Added styles for the top bar layout */
-  .top-bar {
+ .top-bar {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  padding: 0.5rem 1rem;
   border-bottom: 1px solid #ccc;
-  /* no fixed height */
+
+  height: 60px;           /* smaller desktop height */
+  padding: 0 1rem;        /* horizontal padding only */
 }
 
 .logo {
-  max-height: 4rem;  /* max height for desktop */
+  height: 100%;           /* fill header bar height */
+  width: auto;            /* keep aspect ratio */
   object-fit: contain;
   image-rendering: pixelated;
-  /* optional: allow width to auto-scale */
-  height: auto;
-  width: auto;
+  margin: 0;              /* no extra margin */
 }
 
-/* On smaller screens: increase logo max-height to fill header more */
+/* Responsive for mobile */
 @media (max-width: 600px) {
+  .top-bar {
+    height: 48px;         /* even smaller header height */
+    padding: 0 0.5rem;
+  }
   .logo {
-    max-height: 6rem;  /* larger max height on mobile */
+    height: 100%;         /* still fill 100% height */
   }
 }
 
+/* Keep the text areas flexed and aligned nicely */
+.top-bar h1 {
+  margin: 0;
+  flex: 1;
+  text-align: left;
+}
 
-  .top-bar h1 {
-    margin: 0;
-    flex: 1;
-    text-align: left;
-  }
+#gameNumberDate {
+  flex: 1;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.1em;
+  user-select: none;
+}
 
-  #gameNumberDate {
-    flex: 1;
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.2em;
-    user-select: none;
-  }
-
-  .nav-controls {
-    flex: 1;
-    text-align: right;
-  }
-
-</style>
+.nav-controls {
+  flex: 1;
+  text-align: right;
+}
 
 
   </style>
