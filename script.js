@@ -565,7 +565,7 @@ function animateQu0x(day) {
   const emoji1 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
   const emoji2 = celebrationEmojis[Math.floor(rand() * celebrationEmojis.length)];
 
-  qu0xAnimation.innerText = `${emoji1} Qu0x! ${emoji2}`;
+  qu0xAnimation.innerHTML = `${emoji1} <img src="qu0x-logo2.png" alt="Qu0x!" class="qu0x-logo-anim" /> ${emoji2}`;
   qu0xAnimation.classList.remove("hidden");
 
   const discoBalls = [];
