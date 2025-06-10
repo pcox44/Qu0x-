@@ -125,7 +125,9 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3),
+              0 0 10px rgba(255, 140, 0, 0.5); /* glowy orange edge */
 }
 
 .die.faded {
