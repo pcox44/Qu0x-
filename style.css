@@ -110,7 +110,7 @@ body {
 .dice-container {
   display: flex;
   justify-content: center;
-  margin: 1em 0;
+  margin: 0.6em 0;
 }
 
 .die {
@@ -449,9 +449,5 @@ body {
   image-rendering: pixelated;
 }
 
-.button-wrapper {
-  display: flex;
-  align-items: center; /* vertically align if heights differ */
-  gap: 1px; /* optional: space between button grid and submit */
-}
+
 
