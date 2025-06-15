@@ -253,15 +253,14 @@ body {
 }
 
 #qu0xAnimation {
-  font-size: 4.5em;                     /* same as your original */
+  font-size: 4.5em;
   color: #ff00ff;
   animation: pop 3s ease-in-out;
   white-space: nowrap;
-  display: inline-block;
+  display: inline-block;   /* <- prevents full-width stretching */
   line-height: 1;
-  margin: 0.2em auto;
+  margin: 0.3em auto;
   max-width: 100%;
-  overflow: hidden;
 }
 
 @keyframes pop {
