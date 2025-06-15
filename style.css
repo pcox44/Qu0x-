@@ -253,13 +253,13 @@ body {
 }
 
 #qu0xAnimation {
-  font-size: 4.5em;
+  font-size: clamp(1.2em, 2.5vw, 2em); /* 👈 Small and responsive */
   color: #ff00ff;
   animation: pop 3s ease-in-out;
   white-space: nowrap;
-  display: inline-block;   /* <- prevents full-width stretching */
+  display: inline-block;
   line-height: 1;
-  margin: 0.3em auto;
+  margin: 0.2em auto;
   max-width: 100%;
 }
 
