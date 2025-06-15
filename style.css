@@ -108,7 +108,7 @@ body {
 .die {
   width: min(70px, 18vw);
   height: min(70px, 18vw);
-  font-size: min(4.5em, 12vw);
+  font-size: min(2.5em, 7vw);
   font-weight: bold;
   border: 4.2px solid black;
   border-radius: 8px;
