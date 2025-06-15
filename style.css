@@ -108,7 +108,7 @@ body {
   flex: 1;
   max-width: 20vw;
   aspect-ratio: 1 / 1;
-  font-size: clamp(4em, 12vw, 7em); /* ⬅️ increased */
+  font-size: clamp(2em, 6vw, 3.5em); /* ⬅️ increased */
   font-weight: bold;
   border: 4.2px solid black;
   border-radius: 8px;
