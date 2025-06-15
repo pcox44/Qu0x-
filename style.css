@@ -263,6 +263,13 @@ body {
   max-width: 100%;
 }
 
+.qu0x-logo-anim {
+  height: 1.8em;       /* 👈 much smaller */
+  vertical-align: middle;
+  image-rendering: pixelated;
+  display: inline;
+}
+
 @keyframes pop {
   0%   { transform: scale(0); opacity: 0; }
   25%  { transform: scale(1.2); opacity: 1; }
