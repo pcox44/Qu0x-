@@ -253,11 +253,11 @@ body {
 }
 
 #qu0xAnimation {
-  font-size: clamp(2.2em, 5vw, 3.5em);
+  font-size: clamp(1.2em, 3vw, 2em);
   color: #ff00ff;
   animation: pop 3s ease-in-out;
   white-space: nowrap;
-  margin: 0.5em 0;
+  margin: 0.25em 0;
 }
 
 @keyframes pop {
