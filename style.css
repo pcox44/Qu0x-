@@ -251,16 +251,17 @@ body {
 }
 
 #qu0xAnimation {
-  font-size: 4.5em;
+  font-size: clamp(2.2em, 5vw, 3.5em);
   color: #ff00ff;
   animation: pop 3s ease-in-out;
   white-space: nowrap;
+  margin: 0.5em 0;
 }
 
 @keyframes pop {
-  0% { transform: scale(0); opacity: 0; }
-  25% { transform: scale(1.2); opacity: 1; }
-  50% { transform: scale(1); }
+  0%   { transform: scale(0); opacity: 0; }
+  25%  { transform: scale(1.1); opacity: 1; }
+  50%  { transform: scale(1); }
   100% { opacity: 0; }
 }
 
