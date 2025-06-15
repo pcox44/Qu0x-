@@ -108,7 +108,7 @@ body {
   flex: 1;
   max-width: 20vw;
   aspect-ratio: 1 / 1;
-  font-size: clamp(1.6em, 4.5vw, 2.5em);
+  font-size: clamp(2.2em, 6vw, 3.5em); /* ⬅️ increased */
   font-weight: bold;
   border: 4.2px solid black;
   border-radius: 8px;
@@ -116,10 +116,8 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: opacity 0.3s ease, box-shadow 0.3s ease;
-  box-shadow:
-    0 4px 8px rgba(0, 0, 0, 0.3),
-    0 0 10px rgba(255, 140, 0, 0.5);
+  transition: opacity 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 140, 0, 0.5);
 }
 
 .die.faded {
