@@ -3,63 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#333" />
   <title>Qu0x!</title>
   <link rel="stylesheet" href="style.css"/>
   <style>
-  /* Added styles for the top bar layout */
- .top-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* better spacing */
-  gap: 1rem;
-  height: 60px;             /* desktop height */
-  padding: 0 1rem;
-  border-bottom: 1px solid #ccc;
-}
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      height: 60px;
+      padding: 0 1rem;
+      border-bottom: 1px solid #ccc;
+      background: #333;
+    }
 
-.logo {
-  height: 100%;             /* fill the top-bar height exactly */
-  width: auto;              /* keep aspect ratio */
-  object-fit: contain;
-  image-rendering: pixelated;
-  margin: 0;
-}
+    .logo {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+      image-rendering: pixelated;
+      margin: 0;
+    }
 
-/* Mobile: smaller top bar, same logo behavior */
-@media (max-width: 600px) {
-  .top-bar {
-    height: 48px;
-    padding: 0 0.5rem;
-  }
-}
+    @media (max-width: 600px) {
+      .top-bar {
+        height: 48px;
+        padding: 0 0.5rem;
+        flex-wrap: wrap;
+      }
 
-/* Keep the text areas flexed and aligned nicely */
-.top-bar h1 {
-  margin: 0;
-  flex: 1;
-  text-align: left;
-}
+      .nav-controls {
+        width: 100%;
+        justify-content: center;
+        margin-top: 0.5rem;
+      }
 
-#gameNumberDate {
-  flex: 1;
-  text-align: center;
-  font-weight: bold;
-  font-size: 1.1em;
-  user-select: none;
-}
+      h1 {
+        font-size: 1.4em;
+      }
+    }
 
-.nav-controls {
-  flex: 1;
-  text-align: right;
-}
+    .top-bar h1 {
+      margin: 0;
+      flex: 1;
+      text-align: left;
+      color: white;
+    }
 
+    #gameNumberDate {
+      flex: 1;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.1em;
+      color: white;
+      user-select: none;
+    }
 
+    .nav-controls {
+      flex: 1;
+      text-align: right;
+    }
+
+    button {
+      padding: 0.6em 1.2em;
+      font-size: 1em;
+    }
+
+    footer {
+      margin-top: 2em;
+      font-size: 0.9em;
+      color: #888;
+    }
+
+    footer a {
+      color: #888;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
   <div class="top-bar">
+    <img src="logo.png" alt="Qu0x! Logo" class="logo" />
     <h1>Qu0x!</h1>
-  <div id="gameNumberDate"><!-- JS will populate this --></div>  
+    <div id="gameNumberDate"><!-- JS will populate this --></div>  
     <div class="nav-controls">
       <button id="prevDay">◀</button>
       <select id="gameDropdown"></select>
@@ -67,54 +98,55 @@
     </div>
   </div>
 
-<div class="instructions">
-  <ul>
-    <li>Use all <strong>5 dice</strong> once to hit the <strong>Target</strong>. <strong>Tap</strong> buttons to build your expression. <strong>Score</strong> = |Target − Result| </li>
-  </ul>
-</div>
+  <main>
+    <div class="instructions">
+      <ul>
+        <li>Use all <strong>5 dice</strong> once to hit the <strong>Target</strong>. <strong>Tap</strong> buttons to build your expression. <strong>Score</strong> = |Target − Result|</li>
+      </ul>
+    </div>
 
-  <div id="gameHeader">
-    <!-- Removed gameNumberDate from here -->
-    <div class="target-box" id="targetBox">Target: ???</div>
-  </div>
+    <div id="gameHeader">
+      <div class="target-box" id="targetBox">🎯 Target: <span id="targetValue">???</span></div>
+    </div>
 
-  <div id="qu0xAnimation" class="hidden">Qu0x!</div>
+    <div id="qu0xAnimation" class="hidden">Qu0x!</div>
 
-  <button id="shareBtn" class="hidden">Share Your Qu0x!</button>
-  
-  <div class="dice-container" id="diceContainer"></div>
+    <button id="shareBtn" class="hidden">Share Your Qu0x!</button>
 
-  <div class="expression-section">
-    <div id="expressionBox"></div>
-    <div id="equalsSign">=</div>
-    <div id="evaluationBox">?</div>
-  </div>
+    <div class="dice-container" id="diceContainer"></div>
 
-  <div class="buttons" id="buttonGrid"></div>
-  
+    <div class="expression-section">
+      <div id="expressionBox"></div>
+      <div id="equalsSign">=</div>
+      <div id="evaluationBox">?</div>
+    </div>
 
-  <div id="submitArea">
-    <button id="submitBtn" class="submit">Submit</button>
-  </div>
+    <div class="buttons" id="buttonGrid"></div>
 
+    <div id="submitArea">
+      <button id="submitBtn" class="submit">Submit</button>
+    </div>
 
-  
-  <div class="scoreboard-container">
-  <div class="scoreboard">
-    <p><strong>Daily Best Score:</strong> <span id="dailyBestScore">N/A</span></p>
-    <p><strong>Qu0x! Completion:</strong> <span id="completionRatio">0/0</span></p>
-    <p><strong>Qu0x! Master Score:</strong> <span id="masterScore">N/A</span></p>
-  </div>
-  </div>
+    <div class="scoreboard-container">
+      <div class="scoreboard">
+        <p><strong>Daily Best Score:</strong> <span id="dailyBestScore">N/A</span></p>
+        <p><strong>Qu0x! Completion:</strong> <span id="completionRatio">0/0</span></p>
+        <p><strong>Qu0x! Master Score:</strong> <span id="masterScore">N/A</span></p>
+      </div>
+    </div>
 
-   <div class="game-links">
-  <button onclick="window.open('https://pcox44.github.io/Qu0x2/', '_blank')">Play Qu0x!+</button>
-  <button onclick="window.open('https://pcox44.github.io/Qu0x100', '_blank')">Play Qu0x!100</button>
-  </div>
+    <div class="game-links">
+      <button onclick="window.open('https://pcox44.github.io/Qu0x2/', '_blank')">Play Qu0x!+</button>
+      <button onclick="window.open('https://pcox44.github.io/Qu0x100', '_blank')">Play Qu0x!100</button>
+    </div>
+  </main>
 
+  <footer>
+    Built with ❤️ by Patrick Cox • 
+    <a href="https://github.com/pcox44" target="_blank">GitHub</a>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
   <script src="script.js"></script>
 </body>
 </html>
