@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#333" />
   <title>Qu0x!</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
   <style>
     .top-bar {
       display: flex;
@@ -16,38 +16,14 @@
       padding: 0 1rem;
       border-bottom: 1px solid #ccc;
       background: #333;
-    }
-
-    .logo {
-      height: 100%;
-      width: auto;
-      object-fit: contain;
-      image-rendering: pixelated;
-      margin: 0;
-    }
-
-    @media (max-width: 600px) {
-      .top-bar {
-        height: 48px;
-        padding: 0 0.5rem;
-        flex-wrap: wrap;
-      }
-
-      .nav-controls {
-        width: 100%;
-        justify-content: center;
-        margin-top: 0.5rem;
-      }
-
-      h1 {
-        font-size: 1.4em;
-      }
+      flex-wrap: wrap;
     }
 
     .top-bar h1 {
       margin: 0;
       flex: 1;
       text-align: left;
+      font-size: 1.6em;
       color: white;
     }
 
@@ -63,11 +39,37 @@
     .nav-controls {
       flex: 1;
       text-align: right;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5em;
     }
 
-    button {
-      padding: 0.6em 1.2em;
+    button,
+    select {
+      padding: 0.6em 1em;
       font-size: 1em;
+    }
+
+    @media (max-width: 600px) {
+      .top-bar {
+        height: auto;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.5rem;
+      }
+
+      .top-bar h1,
+      #gameNumberDate {
+        text-align: center;
+        flex: none;
+        margin: 0.2em 0;
+      }
+
+      .nav-controls {
+        justify-content: center;
+        flex: none;
+        margin-bottom: 0.5em;
+      }
     }
 
     footer {
@@ -88,9 +90,8 @@
 </head>
 <body>
   <div class="top-bar">
-    <img src="logo.png" alt="Qu0x! Logo" class="logo" />
     <h1>Qu0x!</h1>
-    <div id="gameNumberDate"><!-- JS will populate this --></div>  
+    <div id="gameNumberDate"><!-- JS will populate this --></div>
     <div class="nav-controls">
       <button id="prevDay">◀</button>
       <select id="gameDropdown"></select>
@@ -105,9 +106,7 @@
       </ul>
     </div>
 
-    <div id="gameHeader">
-      <div class="target-box" id="targetBox">🎯 Target: <span id="targetValue">???</span></div>
-    </div>
+    <div class="target-box" id="targetBox">🎯 Target: <span id="targetValue">???</span></div>
 
     <div id="qu0xAnimation" class="hidden">Qu0x!</div>
 
