@@ -108,7 +108,7 @@ body {
 .die {
   width: min(70px, 18vw);
   height: min(70px, 18vw);
-  font-size: min(2.5em, 6vw);
+  font-size: min(4.5em, 12vw);
   font-weight: bold;
   border: 4.2px solid black;
   border-radius: 8px;
@@ -253,11 +253,10 @@ body {
 }
 
 #qu0xAnimation {
-  font-size: clamp(1.2em, 3vw, 2em);
+  font-size: 4.5em;
   color: #ff00ff;
   animation: pop 3s ease-in-out;
   white-space: nowrap;
-  margin: 0.25em 0;
 }
 
 @keyframes pop {
