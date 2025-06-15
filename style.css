@@ -1,3 +1,4 @@
+
 /* === GLOBAL STYLES === */
 body {
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -123,16 +124,20 @@ details.instructions li {
 /* === DICE === */
 .dice-container {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  margin: 0.6em 0;
+  align-items: center;
   gap: 0.5em;
+  margin: 0.6em 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 0 0.5em;
 }
 
 .die {
-  width: clamp(50px, 16vw, 70px);
-  height: clamp(50px, 16vw, 70px);
-  font-size: clamp(1.8em, 6vw, 2.5em);
+  flex: 1;
+  max-width: 20vw;
+  aspect-ratio: 1 / 1;
+  font-size: clamp(1.6em, 4.5vw, 2.5em);
   font-weight: bold;
   border: 4.2px solid black;
   border-radius: 8px;
@@ -140,7 +145,7 @@ details.instructions li {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: opacity 0.3s, box-shadow 0.3s, transform 0.2s;
+  transition: opacity 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 140, 0, 0.5);
 }
 
@@ -158,214 +163,11 @@ details.instructions li {
   box-shadow: 0 2px 4px rgba(0,0,0,0.4), 0 0 6px rgba(255,140,0,0.6);
 }
 
-/* === EXPRESSION DISPLAY === */
-.expression-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-bottom: 0.7em;
-  font-size: 1.5em;
-  gap: 0.5em;
-}
-
-#expressionBox,
-#evaluationBox {
-  padding: 0.4em 1em;
-  background: white;
-  border: 2px solid #000;
-  min-height: 1.2em;
-  box-sizing: border-box;
-}
-
-#expressionBox {
-  min-width: 240px;
-  box-shadow: 0 0 6px rgba(102, 0, 204, 0.2);
-}
-
-#evaluationBox {
-  min-width: 80px;
-}
-
-#equalsSign {
-  padding: 0 0.5em;
-  font-weight: bold;
-}
-
-/* === BUTTON GRID === */
-#buttonGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-  gap: 0.5em;
-  margin: 1em auto;
-  max-width: 95vw;
-  padding: 0 1em;
-}
-
-#buttonGrid button {
-  padding: 0.6em;
-  font-size: 1.2em;
-  font-weight: 600;
-  border-radius: 8px;
-  border: 2px solid #333;
-  background: linear-gradient(to bottom, #f2f2f2, #ddd);
-  color: #222;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
-}
-
-#buttonGrid button:hover {
-  background: linear-gradient(to bottom, #e0e0e0, #cfcfcf);
-  transform: translateY(-1px);
-}
-
-#buttonGrid button:active {
-  background: linear-gradient(to bottom, #ccc, #aaa);
-  transform: translateY(1px);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-/* === SUBMIT === */
-.submit {
-  font-size: 1.4em;
-  padding: 0.7em 1.5em;
-  background: linear-gradient(135deg, #00c853, #1de9b6);
-  color: white;
-  border: 3px solid #00695c;
-  border-radius: 10px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 201, 83, 0.6);
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.submit:hover {
-  background: linear-gradient(135deg, #00bfa5, #00e676);
-  transform: scale(1.05);
-}
-
-.submit:active {
-  transform: scale(0.98);
-}
-
-/* === QU0X! ANIMATION === */
-#qu0xAnimation {
-  font-size: 4.5em;
-  color: #ff00ff;
-  animation: pop 3s ease-in-out;
-  white-space: nowrap;
-}
-
-@keyframes pop {
-  0% { transform: scale(0); opacity: 0; }
-  25% { transform: scale(1.2); opacity: 1; }
-  50% { transform: scale(1); }
-  100% { opacity: 0; }
-}
-
-/* === SCOREBOARD === */
-.scoreboard-container {
-  text-align: center;
-  margin: 1em 0;
-}
-
-.scoreboard {
-  display: inline-block;
-  background: #2e2e2e;
-  border: 2px solid #000;
-  border-radius: 12px;
-  padding: 0.4em 20px;
-  font-size: 1.05em;
-  color: #ddd;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-.scoreboard p {
-  margin: 0.3em 0;
-  display: flex;
-  justify-content: space-between;
-  font-weight: 600;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 0.2em;
-  gap: 1.5em;
-}
-
-.scoreboard p:last-child {
-  border-bottom: none;
-}
-
-.scoreboard strong {
-  color: #e0b0ff;
-}
-
-.scoreboard span {
-  color: #fff;
-}
-
-/* === GAME LINKS === */
-.game-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin: 1.2em 0;
-}
-
-.game-links button {
-  padding: 10px 20px;
-  font-size: 1.05em;
-  font-weight: bold;
-  color: white;
-  border: 2px solid black;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.15s ease, background-color 0.3s ease;
-}
-
-.game-links button:hover {
-  transform: scale(1.05);
-}
-
-.game-links button:nth-child(1) {
-  background-color: purple;
-}
-
-.game-links button:nth-child(2) {
-  background-color: hotpink;
-}
-
-.game-links button:nth-child(3) {
-  background-color: maroon;
-}
-
-/* === SHARE BUTTON === */
-#shareBtn {
-  font-size: 1.3em;
-  padding: 0.6em 1.8em;
-  background-color: #ff6600;
-  color: white;
-  border: 1.3px solid black;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 700;
-  margin-top: 1em;
-  box-shadow: 0 0 0 4px black, 0 4px 8px rgba(255, 102, 0, 0.4);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-#shareBtn:hover {
-  background-color: #cc5200;
-  box-shadow: 0 0 0 4px black, 0 6px 12px rgba(204, 82, 0, 0.6);
-}
-
-/* === MISC === */
-.hidden {
-  display: none;
-}
-
-@media (max-width: 480px) {
-  .scoreboard {
-    font-size: 1em;
-    padding: 0.4em 15px;
-  }
+/* === QU0X LOGO COLLAPSE FIX === */
+#qu0xAnimation.hidden,
+.qu0x-logo-anim.hidden {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
