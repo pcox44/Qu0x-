@@ -619,3 +619,58 @@ body.theme-etch select:hover {
   background: #eee;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body.theme-gameboy {
+  background-color: #c4d7b2; /* iconic greenish background */
+  color: #2b2b2b;
+  font-family: 'Press Start 2P', monospace;
+  text-shadow: 0 0 1px #3a3a3a;
+}
+
+body.theme-gameboy .die {
+  background-color: #9db68c;
+  border: 2px solid #3a3a3a;
+  color: #1a1a1a;
+  box-shadow: inset 0 0 3px #555;
+}
+
+body.theme-gameboy .target-box,
+body.theme-gameboy .scoreboard,
+body.theme-gameboy #expressionBox,
+body.theme-gameboy #evaluationBox {
+  background-color: #e0f0cc;
+  color: #1a1a1a;
+  border: 2px solid #2f2f2f;
+  box-shadow: inset 0 0 4px #444;
+}
+
+body.theme-gameboy #buttonGrid button,
+body.theme-gameboy .submit,
+body.theme-gameboy #shareBtn {
+  background: #a1c38f;
+  color: #000;
+  border: 2px solid #333;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+body.theme-gameboy #buttonGrid button:hover,
+body.theme-gameboy .submit:hover,
+body.theme-gameboy #shareBtn:hover {
+  background: #b5d89c;
+  transform: scale(1.03);
+}
+
+body.theme-gameboy .nav-controls button,
+body.theme-gameboy select {
+  background: #d0e6b8;
+  color: #000;
+  border: 2px solid #333;
+}
+
+body.theme-gameboy .nav-controls button:hover,
+body.theme-gameboy select:hover {
+  background: #e1f6c4;
+}
+
