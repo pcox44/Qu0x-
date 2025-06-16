@@ -567,3 +567,55 @@ body.theme-terminal #buttonGrid button:hover {
   background-color: #004400;
 }
 
+body.theme-etch {
+  background: #c00; /* Etch-a-Sketch red */
+  color: black;
+  font-family: 'Verdana', sans-serif;
+}
+
+body.theme-etch .die {
+  background-color: #eee;
+  color: black;
+  border: 3px solid #555;
+  box-shadow: inset 0 0 3px #999, 2px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-etch .target-box,
+body.theme-etch .scoreboard,
+body.theme-etch #expressionBox,
+body.theme-etch #evaluationBox {
+  background-color: #f8f8f8;
+  color: #000;
+  border: 3px solid #888;
+  box-shadow: inset 0 0 3px #aaa, 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+body.theme-etch #buttonGrid button,
+body.theme-etch .submit,
+body.theme-etch #shareBtn {
+  background: #fff;
+  color: #000;
+  border: 2px solid #333;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+body.theme-etch #buttonGrid button:hover,
+body.theme-etch .submit:hover,
+body.theme-etch #shareBtn:hover {
+  background: #eee;
+  transform: scale(1.03);
+}
+
+body.theme-etch .nav-controls button,
+body.theme-etch select {
+  background: #fff;
+  color: black;
+  border: 2px solid #333;
+}
+
+body.theme-etch .nav-controls button:hover,
+body.theme-etch select:hover {
+  background: #eee;
+}
+
