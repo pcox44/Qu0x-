@@ -409,9 +409,28 @@ body {
 
 body.theme-retro {
   background: #000;
-  color: #0ff;
-  font-family: 'Courier New', Courier, monospace;
+  color: #00ffcc;
+  font-family: 'Press Start 2P', monospace;
+  text-shadow: 0 0 2px #00ffff, 0 0 4px #00ffff;
 }
+
+body.theme-retro .die {
+  background-color: #111;
+  border-color: #0ff;
+  color: #0ff;
+  box-shadow: 0 0 12px #0ff;
+}
+
+body.theme-retro .target-box,
+body.theme-retro .scoreboard,
+body.theme-retro #expressionBox,
+body.theme-retro #evaluationBox {
+  background-color: #111;
+  color: #0ff;
+  border-color: #0ff;
+  box-shadow: 0 0 8px #0ff;
+}
+
 
 body.theme-dark {
   background: #121212;
@@ -419,12 +438,30 @@ body.theme-dark {
 }
 
 body.theme-graph {
-  background-color: #fff;
-  background-image: url('https://www.transparenttextures.com/patterns/graph-paper.png');
-  background-size: 100px 100px;
-  color: #333;
+  background-color: #ffffff;
+  background-image: linear-gradient(to right, #ccc 1px, transparent 1px),
+                    linear-gradient(to bottom, #ccc 1px, transparent 1px);
+  background-size: 20px 20px;
+  color: #222;
+  font-family: 'Segoe UI', sans-serif;
 }
 
+body.theme-graph .die {
+  background-color: #fff;
+  border-color: #888;
+  color: #000;
+  box-shadow: none;
+}
+
+body.theme-graph .target-box,
+body.theme-graph .scoreboard,
+body.theme-graph #expressionBox,
+body.theme-graph #evaluationBox {
+  background-color: #fdfdfd;
+  color: #111;
+  border-color: #888;
+  box-shadow: 0 0 4px rgba(0,0,0,0.1);
+}
 /* Optional: adjust dice contrast in dark/retro themes */
 body.theme-retro .die,
 body.theme-dark .die {
