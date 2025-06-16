@@ -908,3 +908,7 @@ body.theme-western select:hover {
 body.theme-western footer {
   color: #4b2e19;
 }
+
+body.theme-western .scoreboard span {
+  color: #000;
+}
