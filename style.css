@@ -770,20 +770,25 @@ body.theme-comic .target-box {
   color: #000;
   border: 3px solid #000;
   box-shadow: 3px 3px 0 #000;
-  font-weight: bold;
+  font-family: 'Bangers', 'Comic Sans MS', cursive;
+  text-shadow: none;
 }
+
 
 body.theme-gameboy .target-box {
   background-color: #e0f0cc;
   color: #1a1a1a;
   border: 2px solid #2f2f2f;
   box-shadow: inset 0 0 4px #444;
+  font-family: 'Press Start 2P', monospace;
+  text-shadow: none;
 }
 
 body.theme-fantasy .target-box {
-  background-color: #fff8e7;
+  background-color: #fdf5e6;
   color: #3b2d1f;
   border: 3px solid #5a4a2f;
   box-shadow: inset 0 0 6px #d2b48c, 0 0 10px rgba(0, 0, 0, 0.1);
-  font-weight: bold;
+  font-family: 'Uncial Antiqua', serif;
+  text-shadow: none;
 }
