@@ -856,7 +856,7 @@ body.theme-gameboy #expressionBox,
 body.theme-gameboy #evaluationBox,
 body.theme-gameboy .target-box,
 body.theme-gameboy .scoreboard {
-  font-size: 0.9em; /* Optional: slightly larger for readability */
+  font-size: 1.4em; /* Optional: slightly larger for readability */
 }
 
 
