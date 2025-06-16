@@ -791,3 +791,22 @@ document.getElementById("shareBtn").addEventListener("click", () => {
     alert("Copied your Qu0x! expression to clipboard!");
   });
 });
+
+const themeSelector = document.getElementById('themeSelector');
+
+function applyTheme(theme) {
+  document.body.className = ''; // remove all existing classes
+  if (theme !== 'default') {
+    document.body.classList.add(`theme-${theme}`);
+  }
+  localStorage.setItem('qu0xTheme', theme);
+}
+
+themeSelector.addEventListener('change', (e) => {
+  applyTheme(e.target.value);
+});
+
+// On load: restore saved theme
+const savedTheme = localStorage.getItem('qu0xTheme') || 'default';
+themeSelector.value = savedTheme;
+applyTheme(savedTheme);
