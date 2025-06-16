@@ -613,7 +613,7 @@ body.theme-lego #shareBtn:hover {
 
 body.theme-lego .scoreboard {
   background-color: #ffffff;
-  color: #222;
+  color: #000;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
@@ -671,3 +671,6 @@ body.theme-gameboy select:hover {
   background: #e1f6c4;
 }
 
+body.theme-gameboy .scoreboard span {
+  color: #000;
+}
