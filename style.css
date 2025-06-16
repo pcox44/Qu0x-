@@ -432,11 +432,34 @@ body.theme-retro #evaluationBox {
 }
 
 
-body.theme-dark #expressionBox,
-body.theme-dark #evaluationBox {
-  background-color: #1e1e1e;
-  color: #ffffff;
-  border: 2px solid #888;
+body.theme-dark {
+  background-color: #000 !important; /* Fully black background */
+  color: #e0e0e0;
+  background-image: none !important;
+}
+
+body.theme-dark .top-bar {
+  background-color: #111;
+  color: #fff;
+}
+
+body.theme-dark .instructions {
+  background-color: #111;
+  border-color: #333;
+  color: #ddd;
+}
+
+body.theme-dark summary {
+  background-color: #1a1a1a;
+  color: #fff;
+}
+
+body.theme-dark details[open] summary {
+  background-color: #111;
+}
+
+body.theme-dark footer {
+  color: #aaa;
 }
 
 body.theme-dark .target-box {
@@ -444,6 +467,13 @@ body.theme-dark .target-box {
   border-color: #ff66b2;
   color: white;
   text-shadow: 1px 1px 2px black;
+}
+
+body.theme-dark #expressionBox,
+body.theme-dark #evaluationBox {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border: 2px solid #888;
 }
 
 body.theme-dark .die {
