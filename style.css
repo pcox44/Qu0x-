@@ -432,9 +432,45 @@ body.theme-retro #evaluationBox {
 }
 
 
-body.theme-dark {
-  background: #121212;
+body.theme-dark #expressionBox,
+body.theme-dark #evaluationBox {
+  background-color: #1e1e1e;
+  color: #ffffff;
+  border: 2px solid #888;
+}
+
+body.theme-dark .target-box {
+  background: linear-gradient(145deg, #ff66b2, #ff007f);
+  border-color: #ff66b2;
+  color: white;
+  text-shadow: 1px 1px 2px black;
+}
+
+body.theme-dark .die {
+  background-color: #222;
+  color: #fff;
+  border: 2px solid #888;
+  box-shadow: 0 0 6px #888;
+}
+
+body.theme-dark .scoreboard {
+  background-color: #1a1a1a;
   color: #e0e0e0;
+  border-color: #444;
+}
+
+body.theme-dark #buttonGrid button,
+body.theme-dark .submit,
+body.theme-dark #shareBtn {
+  background: #333;
+  color: #fff;
+  border-color: #666;
+}
+
+body.theme-dark #buttonGrid button:hover,
+body.theme-dark .submit:hover,
+body.theme-dark #shareBtn:hover {
+  background: #444;
 }
 
 body.theme-terminal {
