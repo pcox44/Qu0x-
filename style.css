@@ -844,22 +844,7 @@ body.theme-terminal .nav-controls select:hover {
   background-color: #004400;
 }
 
-body.theme-gameboy {
-  background-color: #c4d7b2;
-  color: #2b2b2b;
-  font-family: 'Press Start 2P', monospace;
-  text-shadow: 0 0 1px #3a3a3a;
-  font-size: 0.75em; /* 👈 Smaller overall font size */
-}
 
-body.theme-gameboy #expressionBox,
-body.theme-gameboy #evaluationBox,
-body.theme-gameboy .target-box,
-body.theme-gameboy .scoreboard {
-  font-size: 1.2em; /* Optional: slightly larger for readability */
-}
 
-body.theme-gameboy .target-box {
-  font-size: 2em; /* Optional: slightly larger for readability */
-}
+
 
