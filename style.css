@@ -409,26 +409,52 @@ body {
 
 body.theme-retro {
   background: #000;
-  color: #00ffcc;
+  color: #ffff00; /* Pac-Man yellow */
   font-family: 'Press Start 2P', monospace;
-  text-shadow: 0 0 2px #00ffff, 0 0 4px #00ffff;
+  text-shadow: 0 0 2px #ffff00, 0 0 6px #ff0;
+}
+
+body.theme-retro .top-bar {
+  background-color: #000;
+  color: #ffff00;
+  border-bottom: 2px dashed #ff0;
+}
+
+body.theme-retro .instructions,
+body.theme-retro .scoreboard,
+body.theme-retro .target-box {
+  background-color: #000;
+  color: #ff0;
+  border: 2px solid #ff0;
+  box-shadow: 0 0 10px #ff0;
 }
 
 body.theme-retro .die {
   background-color: #111;
-  border-color: #0ff;
-  color: #0ff;
-  box-shadow: 0 0 12px #0ff;
+  border: 2px solid #00ffff;
+  color: #00ffff;
+  box-shadow: 0 0 10px #00ffff;
 }
 
-body.theme-retro .target-box,
-body.theme-retro .scoreboard,
+body.theme-retro .submit,
+body.theme-retro #shareBtn,
+body.theme-retro #buttonGrid button {
+  background-color: #000;
+  color: #ff69b4; /* Ms. Pac-Man pink */
+  border: 2px solid #ff69b4;
+  box-shadow: 0 0 6px #ff69b4;
+}
+
 body.theme-retro #expressionBox,
 body.theme-retro #evaluationBox {
   background-color: #111;
   color: #0ff;
-  border-color: #0ff;
-  box-shadow: 0 0 8px #0ff;
+  border: 2px solid #0ff;
+  box-shadow: 0 0 6px #0ff;
+}
+
+body.theme-retro footer {
+  color: #ff0;
 }
 
 
