@@ -616,6 +616,10 @@ body.theme-lego .scoreboard {
   color: #000;
 }
 
+body.theme-lego .scoreboard span {
+  color: #000;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 body.theme-gameboy {
