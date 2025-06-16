@@ -793,22 +793,23 @@ document.getElementById("shareBtn").addEventListener("click", () => {
 });
 
 
-const themeSelector = document.getElementById('themeSelector');
+document.addEventListener("DOMContentLoaded", () => {
+  const themeSelector = document.getElementById('themeSelector');
+  if (!themeSelector) return;
 
-function applyTheme(theme) {
-  document.body.className = ''; // remove all existing classes
-  if (theme !== 'default') {
-    document.body.classList.add(`theme-${theme}`);
+  function applyTheme(theme) {
+    document.body.className = '';
+    if (theme !== 'default') {
+      document.body.classList.add(`theme-${theme}`);
+    }
+    localStorage.setItem('qu0xTheme', theme);
   }
-  localStorage.setItem('qu0xTheme', theme);
-}
 
-themeSelector.addEventListener('change', (e) => {
-  applyTheme(e.target.value);
+  themeSelector.addEventListener('change', (e) => {
+    applyTheme(e.target.value);
+  });
+
+  const savedTheme = localStorage.getItem('qu0xTheme') || 'default';
+  themeSelector.value = savedTheme;
+  applyTheme(savedTheme);
 });
-
-// On load: restore saved theme
-const savedTheme = localStorage.getItem('qu0xTheme') || 'default';
-themeSelector.value = savedTheme;
-applyTheme(savedTheme);
-
