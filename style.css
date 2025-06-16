@@ -430,3 +430,20 @@ body.theme-retro .die,
 body.theme-dark .die {
   box-shadow: 0 0 6px cyan;
 }
+
+#themeSelector {
+  font-size: 1em;
+  padding: 0.4em 0.6em;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+}
+
+body.theme-dark #themeSelector,
+body.theme-retro #themeSelector {
+  background-color: #222;
+  color: #eee;
+  border-color: #666;
+}
