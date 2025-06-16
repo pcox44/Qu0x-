@@ -843,3 +843,68 @@ body.theme-terminal .nav-controls button:hover,
 body.theme-terminal .nav-controls select:hover {
   background-color: #004400;
 }
+
+body.theme-western {
+  background-color: #f2e5c4;
+  background-image: url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+  color: #4b2e19;
+  font-family: 'Special Elite', 'Cinzel Decorative', serif;
+}
+
+body.theme-western .top-bar {
+  background-color: #7b5e3b;
+  color: #fffbe6;
+  border-bottom: 3px solid #3e2a1b;
+}
+
+body.theme-western .die {
+  background-color: #d2b48c;
+  border: 3px solid #4b2e19;
+  color: #2b1b0f;
+  box-shadow: inset 0 0 4px #a67c52, 2px 2px 0 #3e2a1b;
+  font-weight: bold;
+}
+
+body.theme-western .target-box,
+body.theme-western .scoreboard,
+body.theme-western #expressionBox,
+body.theme-western #evaluationBox {
+  background-color: #fff5dd;
+  color: #2b1b0f;
+  border: 3px solid #4b2e19;
+  box-shadow: inset 0 0 4px #bb9966;
+}
+
+body.theme-western #buttonGrid button,
+body.theme-western .submit,
+body.theme-western #shareBtn {
+  background: linear-gradient(to bottom, #a67c52, #8b5e3c);
+  color: #fffbe6;
+  font-weight: bold;
+  border: 2px solid #4b2e19;
+  box-shadow: 2px 2px 0 #3e2a1b;
+  text-shadow: 1px 1px #000;
+}
+
+body.theme-western #buttonGrid button:hover,
+body.theme-western .submit:hover,
+body.theme-western #shareBtn:hover {
+  background: linear-gradient(to bottom, #bb9966, #a67c52);
+  transform: translateY(-2px);
+}
+
+body.theme-western .nav-controls button,
+body.theme-western select {
+  background: #e0c097;
+  color: #2b1b0f;
+  border: 2px solid #4b2e19;
+}
+
+body.theme-western .nav-controls button:hover,
+body.theme-western select:hover {
+  background: #f2d1aa;
+}
+
+body.theme-western footer {
+  color: #4b2e19;
+}
