@@ -567,57 +567,53 @@ body.theme-terminal #buttonGrid button:hover {
   background-color: #004400;
 }
 
-body.theme-lego {
-  background-color: #d9d9d9;
-  color: #222;
-  font-family: 'Fredoka', 'Baloo 2', sans-serif;
+body.theme-comic {
+  background: #fffcf2;
+  color: #111;
+  font-family: 'Bangers', 'Comic Sans MS', cursive;
 }
 
-body.theme-lego .die {
-  border: 4px solid black;
+body.theme-comic .die {
+  border: 4px solid #000;
   font-weight: bold;
-  box-shadow: inset 0 0 0 4px #fff, 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 3px 3px 0 #000;
 }
 
-body.theme-lego .die:nth-child(1) { background-color: #ff0000; color: white; } /* red */
-body.theme-lego .die:nth-child(2) { background-color: #ffdd00; color: black; } /* yellow */
-body.theme-lego .die:nth-child(3) { background-color: #0074d9; color: white; } /* blue */
-body.theme-lego .die:nth-child(4) { background-color: #2ecc40; color: white; } /* green */
-body.theme-lego .die:nth-child(5) { background-color: #ff851b; color: black; } /* orange */
+body.theme-comic .die:nth-child(1) { background-color: #ff4136; color: white; } /* red */
+body.theme-comic .die:nth-child(2) { background-color: #2ecc40; color: white; } /* green */
+body.theme-comic .die:nth-child(3) { background-color: #0074d9; color: white; } /* blue */
+body.theme-comic .die:nth-child(4) { background-color: #ffdc00; color: black; } /* yellow */
+body.theme-comic .die:nth-child(5) { background-color: #b10dc9; color: white; } /* purple */
 
-body.theme-lego .target-box,
-body.theme-lego .scoreboard,
-body.theme-lego #expressionBox,
-body.theme-lego #evaluationBox {
+body.theme-comic .target-box,
+body.theme-comic .scoreboard,
+body.theme-comic #expressionBox,
+body.theme-comic #evaluationBox {
   background-color: #ffffff;
-  border: 3px solid #555;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+  border: 3px solid #000;
+  box-shadow: 3px 3px 0 #000;
+  color: #000;
 }
 
-body.theme-lego #buttonGrid button,
-body.theme-lego .submit,
-body.theme-lego #shareBtn {
-  background: linear-gradient(to bottom, #fdd835, #fbc02d);
-  color: #222;
+body.theme-comic .scoreboard {
+  color: #000;
+}
+
+body.theme-comic #buttonGrid button,
+body.theme-comic .submit,
+body.theme-comic #shareBtn {
+  background: #f39c12;
+  color: black;
   font-weight: bold;
-  border: 2px solid #666;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  border: 2px solid black;
+  box-shadow: 2px 2px 0 #000;
 }
 
-body.theme-lego #buttonGrid button:hover,
-body.theme-lego .submit:hover,
-body.theme-lego #shareBtn:hover {
-  background: linear-gradient(to bottom, #fff176, #fdd835);
+body.theme-comic #buttonGrid button:hover,
+body.theme-comic .submit:hover,
+body.theme-comic #shareBtn:hover {
+  background: #ffc107;
   transform: translateY(-2px);
-}
-
-body.theme-lego .scoreboard {
-  background-color: #ffffff;
-  color: #000;
-}
-
-body.theme-lego .scoreboard span {
-  color: #000;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
