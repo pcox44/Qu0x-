@@ -83,10 +83,7 @@ body {
   border-radius: 12px;
   border: 4px solid #ff007f;
   background: linear-gradient(145deg, #ff66b2, #ff007f);
-  box-shadow:
-    0 0 0 4px black,
-    0 4px 12px rgba(0, 0, 0, 0.3),
-    inset 0 -4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 4px black, 0 4px 12px rgba(0, 0, 0, 0.3), inset 0 -4px 8px rgba(0, 0, 0, 0.2);
   margin: 0.2em auto;
   display: inline-block;
   min-width: 140px;
@@ -99,27 +96,27 @@ body {
   justify-content: center;
   align-items: center;
   flex-wrap: nowrap;
-  gap: 6px;
+  gap: 4px;
   margin: 0.6em 0;
   width: 100%;
   max-width: 100vw;
+  overflow-x: auto;
 }
 
 .die {
   width: min(70px, 18vw);
   height: min(70px, 18vw);
-  font-size: min(2.5em, 7vw);
+  font-size: 2.5em;
   font-weight: bold;
   border: 4.2px solid black;
   border-radius: 8px;
-  margin: 0 2px;
+  margin: 0 1px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: opacity 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3),
-              0 0 10px rgba(255, 140, 0, 0.5);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 0 0 10px rgba(255, 140, 0, 0.5);
 }
 
 .die.faded {
@@ -162,30 +159,10 @@ body {
 }
 
 .hidden {
-  display: none;
-}
-
-#deluxeExpressionBox, #deluxeEvaluationBox {
-  border: 1px solid black;
-  padding: 6px;
-  font-size: 1.2em;
-  min-height: 30px;
-  margin: 5px 0;
-}
-
-#deluxeSubmitBtn {
-  margin-top: 5px;
-  padding: 8px 12px;
-  font-weight: bold;
-  background-color: purple;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-#deluxeSubmitBtn:disabled {
-  background-color: #aaa;
-  cursor: not-allowed;
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 #buttonGrid {
@@ -214,12 +191,6 @@ body {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
-#buttonGrid button:active {
-  background: linear-gradient(to bottom, #ccc, #aaa);
-  transform: translateY(1px);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
 #submitArea {
   margin: 1em;
 }
@@ -243,17 +214,8 @@ body {
   transform: scale(1.05);
 }
 
-.submit:active {
-  transform: scale(0.98);
-  box-shadow: 0 2px 6px rgba(33, 136, 56, 0.8);
-}
-
-.scoreboard p {
-  margin: 0.5em;
-}
-
 #qu0xAnimation {
-  font-size: 1.4em;  /* Base size – controls default emoji scale */
+  font-size: 1.2em;
   white-space: nowrap;
   text-align: center;
   animation: pop 3s ease-in-out;
@@ -261,45 +223,33 @@ body {
 }
 
 .qu0x-logo-anim {
-  height: 7.8em;       /* 👈 much smaller */
+  height: 1.5em;
   vertical-align: middle;
   image-rendering: pixelated;
   display: inline;
 }
 
+.emoji {
+  font-size: 2em;
+  vertical-align: middle;
+}
+
 @keyframes pop {
-  0%   { transform: scale(0); opacity: 0; }
-  25%  { transform: scale(1.2); opacity: 1; }
-  50%  { transform: scale(1); }
+  0% { transform: scale(0); opacity: 0; }
+  25% { transform: scale(1.2); opacity: 1; }
+  50% { transform: scale(1); }
   100% { opacity: 0; transform: scale(1); }
 }
 
-#qu0xAnimation.hidden,
-.qu0x-logo-anim.hidden {
-  display: none !important;
-  height: 0 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-.scoreboard-container {
-  width: 100%;
-  text-align: center;
-  margin: 1em 0;
-}
-
 .scoreboard {
-  display: inline-block;
   background: #2e2e2e;
-  border: 2px solid #000;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-  padding: 0.4em 20px;
-  font-size: 1.05em;
   color: #ddd;
-  user-select: none;
-  max-width: max-content;
-  margin: 0 auto;
+  border-radius: 12px;
+  padding: 0.5em 1em;
+  margin: 1em auto;
+  display: inline-block;
+  border: 2px solid black;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .scoreboard p {
@@ -307,10 +257,8 @@ body {
   display: flex;
   justify-content: space-between;
   font-weight: 600;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 0.2em;
-  min-width: max-content;
   gap: 1.5em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .scoreboard p:last-child {
@@ -323,76 +271,5 @@ body {
 }
 
 .scoreboard span {
-  font-weight: 700;
   color: #fff;
-}
-
-@media (max-width: 480px) {
-  .scoreboard {
-    font-size: 1em;
-    padding: 0.4em 15px;
-  }
-}
-
-.game-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin: 1.2em 0;
-}
-
-.game-links button {
-  padding: 10px 20px;
-  font-size: 1.05em;
-  font-weight: bold;
-  color: white;
-  border: 2px solid black;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.15s ease, background-color 0.3s ease;
-}
-
-.game-links button:hover {
-  transform: scale(1.05);
-}
-
-.game-links button:nth-child(1) {
-  background-color: purple;
-}
-
-.game-links button:nth-child(2) {
-  background-color: hotpink;
-}
-
-.game-links button:nth-child(3) {
-  background-color: maroon;
-}
-
-#shareBtn {
-  font-size: 1.3em;
-  padding: 0.6em 1.8em;
-  background-color: #ff6600;
-  color: white;
-  border: 1.3px solid black;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 700;
-  margin-top: 1em;
-  box-shadow:
-    0 0 0 4px black,
-    0 4px 8px rgba(255, 102, 0, 0.4);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-#shareBtn:hover {
-  background-color: #cc5200;
-  box-shadow:
-    0 0 0 4px black,
-    0 6px 12px rgba(204, 82, 0, 0.6);
-}
-
-.emoji {
-  font-size: 6em; /* or whatever size you like */
-  vertical-align: middle;
 }
