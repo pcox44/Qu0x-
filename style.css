@@ -765,6 +765,13 @@ body.theme-terminal .target-box {
   text-shadow: 0 0 2px #00ff00;
 }
 
+body.theme-gameboy .target-box,
+body.theme-comic .target-box,
+body.theme-fantasy .target-box {
+  background: unset !important;
+  background-color: inherit !important;
+}
+
 body.theme-comic .target-box {
   background-color: #fff;
   color: #000;
