@@ -396,3 +396,13 @@ body {
   font-size: 6em; /* or whatever size you like */
   vertical-align: middle;
 }
+
+@media (max-width: 600px) {
+  #qu0xAnimation {
+    font-size: 2.8em; /* Smaller emoji on mobile */
+  }
+
+  .qu0x-logo-anim {
+    height: 2.8em; /* Match the emoji size */
+  }
+}
