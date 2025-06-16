@@ -406,3 +406,27 @@ body {
     height: 2.8em; /* Match the emoji size */
   }
 }
+
+body.theme-retro {
+  background: #000;
+  color: #0ff;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+body.theme-dark {
+  background: #121212;
+  color: #e0e0e0;
+}
+
+body.theme-graph {
+  background-color: #fff;
+  background-image: url('https://www.transparenttextures.com/patterns/graph-paper.png');
+  background-size: 100px 100px;
+  color: #333;
+}
+
+/* Optional: adjust dice contrast in dark/retro themes */
+body.theme-retro .die,
+body.theme-dark .die {
+  box-shadow: 0 0 6px cyan;
+}
