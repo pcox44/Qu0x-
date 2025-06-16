@@ -792,6 +792,7 @@ document.getElementById("shareBtn").addEventListener("click", () => {
   });
 });
 
+
 const themeSelector = document.getElementById('themeSelector');
 
 function applyTheme(theme) {
@@ -810,3 +811,19 @@ themeSelector.addEventListener('change', (e) => {
 const savedTheme = localStorage.getItem('qu0xTheme') || 'default';
 themeSelector.value = savedTheme;
 applyTheme(savedTheme);
+
+document.getElementById('themeSelector').addEventListener('change', function () {
+  document.body.className = 'theme-' + this.value;
+});
+
+// Load theme on page load
+const savedTheme = localStorage.getItem('theme') || 'default';
+document.body.className = 'theme-' + savedTheme;
+document.getElementById('themeSelector').value = savedTheme;
+
+// Save when changed
+document.getElementById('themeSelector').addEventListener('change', function () {
+  const theme = this.value;
+  document.body.className = 'theme-' + theme;
+  localStorage.setItem('theme', theme);
+});
