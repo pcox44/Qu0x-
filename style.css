@@ -733,7 +733,6 @@ body.theme-fantasy .scoreboard {
   color: #3b2d1f;
 }
 
-body.theme-fantasy .scoreboard {
-  background-color: #f9f1dc;
-  color: #000; /* 👈 ensures text is black */
+body.theme-fantasy .scoreboard span {
+  color: #000;
 }
