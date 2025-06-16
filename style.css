@@ -618,6 +618,9 @@ body.theme-comic #shareBtn:hover {
   transform: translateY(-2px);
 }
 
+body.theme-comic .scoreboard span {
+  color: #000;
+}
 
 body.theme-gameboy {
   background-color: #c4d7b2; /* iconic greenish background */
