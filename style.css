@@ -806,3 +806,40 @@ body.theme-fantasy .target-box {
   font-size: 0.95rem;
   padding: 0.4em 0.6em;
 }
+
+body.theme-dark .nav-controls button,
+body.theme-dark .nav-controls select {
+  background-color: #222;
+  color: #fff;
+  border: 2px solid #555;
+}
+
+body.theme-comic .nav-controls button,
+body.theme-comic .nav-controls select {
+  background: #f39c12;
+  color: #111;
+  font-weight: bold;
+  border: 2px solid black;
+  box-shadow: 2px 2px 0 #000;
+  font-family: 'Bangers', 'Comic Sans MS', cursive;
+}
+
+body.theme-comic .nav-controls button:hover,
+body.theme-comic .nav-controls select:hover {
+  background: #ffc107;
+  transform: translateY(-2px);
+}
+
+body.theme-terminal .nav-controls button,
+body.theme-terminal .nav-controls select {
+  background-color: #003300;
+  color: #00ff00;
+  border: 2px solid #00ff00;
+  font-family: 'Courier New', Courier, monospace;
+  text-shadow: 0 0 2px #00ff00;
+}
+
+body.theme-terminal .nav-controls button:hover,
+body.theme-terminal .nav-controls select:hover {
+  background-color: #004400;
+}
