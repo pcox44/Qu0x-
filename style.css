@@ -902,10 +902,8 @@ body.theme-fantasy .instructions {
 
 body.theme-terminal {
   background-color: #000000;
-  background-image: url('https://media.giphy.com/media/3o7TKMt1VVNkHV2PaE/giphy.gif');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-image: linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px);
+  background-size: 100% 2px;
   color: #00ff00;
   font-family: 'Courier New', Courier, monospace;
   text-shadow: 0 0 4px #00ff00;
