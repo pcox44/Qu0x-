@@ -900,4 +900,14 @@ body.theme-fantasy .instructions {
   color: #3b2d1f;
 }
 
+body.theme-terminal {
+  background-color: #000000;
+  background-image: url('https://media.giphy.com/media/3o7TKMt1VVNkHV2PaE/giphy.gif');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: #00ff00;
+  font-family: 'Courier New', Courier, monospace;
+  text-shadow: 0 0 4px #00ff00;
+}
 
