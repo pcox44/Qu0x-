@@ -799,3 +799,10 @@ body.theme-fantasy .target-box {
   font-family: 'Uncial Antiqua', serif;
   text-shadow: none;
 }
+
+#themeSelector {
+  max-width: 160px;
+  width: auto;
+  font-size: 0.95rem;
+  padding: 0.4em 0.6em;
+}
