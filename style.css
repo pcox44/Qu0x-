@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap');
 
 body {
   font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -795,14 +796,21 @@ body.theme-gameboy .target-box {
 }
 
 body.theme-fantasy .target-box {
-  background-color: #2f261d;
-  color: #f5e6c5;
-  border: 2px solid #c19b4a;
-  box-shadow: 0 0 10px #c19b4a88;
+  background: radial-gradient(circle, #3a2e1f 0%, #241b13 100%);
+  color: #ffe9a9;
+  border: 3px solid #c89b3c;
+  box-shadow:
+    0 0 12px #c89b3c,
+    0 0 20px #c89b3c80 inset,
+    0 0 5px #000 inset;
   font-family: 'Cinzel Decorative', serif;
-  font-size: 1.2em;
+  font-size: 1.4em;
+  text-align: center;
   padding: 0.4em 0.8em;
-  text-shadow: 1px 1px 2px #000;
+  border-radius: 10px;
+  text-shadow: 1px 1px 3px #000;
+  display: inline-block;
+  margin: 0.5em auto;
 }
 
 #themeSelector {
@@ -849,7 +857,43 @@ body.theme-terminal .nav-controls select:hover {
   background-color: #004400;
 }
 
+body.theme-fantasy #buttonGrid button,
+body.theme-fantasy .submit,
+body.theme-fantasy #shareBtn {
+  background: linear-gradient(to bottom, #3e2e16, #261c0f);
+  color: #ffe9a9;
+  font-weight: bold;
+  border: 2px solid #c89b3c;
+  box-shadow: 0 0 10px #c89b3c, inset 0 0 6px #c89b3c80;
+  text-shadow: 1px 1px 3px black;
+  font-family: 'Cinzel Decorative', serif;
+}
 
+body.theme-fantasy #buttonGrid button:hover,
+body.theme-fantasy .submit:hover,
+body.theme-fantasy #shareBtn:hover {
+  background: linear-gradient(to bottom, #5a3c1d, #3c2c15);
+  transform: scale(1.05);
+  box-shadow: 0 0 14px #f9d857, 0 0 6px #c89b3c inset;
+}
 
+body.theme-fantasy .die {
+  background: radial-gradient(#402b1a, #1f130b);
+  border: 3px solid #c89b3c;
+  color: #ffe9a9;
+  font-weight: bold;
+  box-shadow: 0 0 10px #c89b3c;
+  font-family: 'Cinzel Decorative', serif;
+  text-shadow: 1px 1px 2px black;
+}
+
+body.theme-fantasy .instructions {
+  background: url('https://www.transparenttextures.com/patterns/paper-fibers.png'), #f4ecd8;
+  border: 3px solid #5a4a2f;
+  font-family: 'Cinzel Decorative', serif;
+  padding: 1em;
+  box-shadow: inset 0 0 10px #d2b48c;
+  color: #3b2d1f;
+}
 
 
