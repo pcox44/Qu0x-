@@ -264,7 +264,7 @@ body {
 }
 
 .qu0x-logo-anim {
-  height: 5.8em;       /* 👈 much smaller */
+  height: 7.8em;       /* 👈 much smaller */
   vertical-align: middle;
   image-rendering: pixelated;
   display: inline;
@@ -396,6 +396,6 @@ body {
 }
 
 .emoji {
-  font-size: 3em; /* or whatever size you like */
+  font-size: 6em; /* or whatever size you like */
   vertical-align: middle;
 }
