@@ -253,7 +253,7 @@ body {
 }
 
 #qu0xAnimation {
-  font-size: 1.4em;  /* Base size – controls default emoji scale */
+  font-size: 4.4em;  /* Base size – controls default emoji scale */
   white-space: nowrap;
   text-align: center;
   animation: pop 3s ease-in-out;
