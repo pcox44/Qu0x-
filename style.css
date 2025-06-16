@@ -678,3 +678,57 @@ body.theme-gameboy select:hover {
 body.theme-gameboy .scoreboard span {
   color: #000;
 }
+
+body.theme-fantasy {
+  background: url('https://www.transparenttextures.com/patterns/old-map.png');
+  background-color: #f4ecd8;
+  color: #3b2d1f;
+  font-family: 'Uncial Antiqua', serif;
+}
+
+body.theme-fantasy .die {
+  background-color: #e0c28d;
+  border: 3px solid #4b3b27;
+  color: #3b2d1f;
+  font-weight: bold;
+  box-shadow: inset 0 0 6px #c7a86f, 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+body.theme-fantasy .target-box,
+body.theme-fantasy .scoreboard,
+body.theme-fantasy #expressionBox,
+body.theme-fantasy #evaluationBox {
+  background-color: #fff8e7;
+  border: 3px solid #5a4a2f;
+  color: #3b2d1f;
+  box-shadow: inset 0 0 6px #d2b48c, 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+body.theme-fantasy #buttonGrid button,
+body.theme-fantasy .submit,
+body.theme-fantasy #shareBtn {
+  background: linear-gradient(to bottom, #a37c48, #8c6338);
+  color: #fff6e0;
+  font-weight: bold;
+  border: 2px solid #3e2d1c;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+}
+
+body.theme-fantasy #buttonGrid button:hover,
+body.theme-fantasy .submit:hover,
+body.theme-fantasy #shareBtn:hover {
+  background: linear-gradient(to bottom, #bf9456, #a1703b);
+  transform: scale(1.05);
+}
+
+body.theme-fantasy .nav-controls button,
+body.theme-fantasy select {
+  background-color: #e0c28d;
+  color: #3b2d1f;
+  border: 2px solid #4b3b27;
+}
+
+body.theme-fantasy .scoreboard {
+  background-color: #f9f1dc;
+  color: #3b2d1f;
+}
