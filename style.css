@@ -927,8 +927,8 @@ body.theme-terminal #shareBtn:hover {
 
 
 body.theme-comic {
-  background-color: #fff200; /* Bright comic yellow */
-  background-image: radial-gradient(#ff2a2a 8%, transparent 9%);
-  background-size: 14px 14px;
+  background-color: #fff0c4; /* Slight off-white paper tone */
+  background-image: radial-gradient(#d60000 11%, transparent 12%);
+  background-size: 6px 6px;
   background-repeat: repeat;
 }
