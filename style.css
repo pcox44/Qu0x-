@@ -927,8 +927,10 @@ body.theme-terminal #shareBtn:hover {
 
 
 body.theme-comic {
-  background-color: #fff0c4; /* Slight off-white paper tone */
-  background-image: radial-gradient(#d60000 11%, transparent 12%);
+  background-color: #fff0c4;
+  background-image:
+    radial-gradient(#d60000 11%, transparent 12%),
+    radial-gradient(#d60000 11%, transparent 12%);
   background-size: 6px 6px;
-  background-repeat: repeat;
+  background-position: 0 0, 3px 3px; /* creates a staggered grid */
 }
