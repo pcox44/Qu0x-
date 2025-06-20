@@ -912,21 +912,17 @@ body.theme-terminal {
 body.theme-terminal #buttonGrid button,
 body.theme-terminal .submit,
 body.theme-terminal #shareBtn {
-  background-color: #000000 !important;
-  color: #00ff00 !important;
-  border: 2px solid #00ff00 !important;
-  font-family: 'Courier New', Courier, monospace !important;
-  text-shadow: 0 0 3px #00ff00;
-  box-shadow: 0 0 6px #00ff00;
+  background: #333;
+  color: #00ff00;
+  border: 2px solid #00ff00
+  border-color: #666;
+  font-family: 'Courier New', Courier, monospace
 }
 
 body.theme-terminal #buttonGrid button:hover,
 body.theme-terminal .submit:hover,
 body.theme-terminal #shareBtn:hover {
-  background-color: #001a00 !important;
-  transform: scale(1.05);
-  box-shadow: 0 0 10px #00ff00;
+  background: #444;
 }
-
 
 
