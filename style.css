@@ -913,7 +913,7 @@ body.theme-terminal #buttonGrid button,
 body.theme-terminal .submit,
 body.theme-terminal #shareBtn {
   background-color: #003300;
-  color: #00ff00;
+  color: #000;
   border: 2px solid #00ff00;
   font-family: 'Courier New', Courier, monospace;
   text-shadow: 0 0 2px #00ff00;
