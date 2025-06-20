@@ -912,17 +912,17 @@ body.theme-terminal {
 body.theme-terminal #buttonGrid button,
 body.theme-terminal .submit,
 body.theme-terminal #shareBtn {
-  background: #333;
+  background: #000;
   color: #00ff00;
   border: 2px solid #00ff00
-  border-color: #666;
+  border-color: #00ff00;
   font-family: 'Courier New', Courier, monospace
 }
 
 body.theme-terminal #buttonGrid button:hover,
 body.theme-terminal .submit:hover,
 body.theme-terminal #shareBtn:hover {
-  background: #444;
+  background: #000;
 }
 
 
