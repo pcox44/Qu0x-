@@ -489,6 +489,7 @@ function buildButtons() {
   const ops = ["+", "-", "*", "/", "^", "!", "(", ")", "Back", "Clear"];
   buttonGrid.innerHTML = "";
 
+
   ops.forEach(op => {
     const btn = document.createElement("button");
     btn.innerText = op;
@@ -515,13 +516,6 @@ function buildButtons() {
     };
     buttonGrid.appendChild(btn);
   });
-
-  // Add Submit button at the end of the grid
-  const submitBtn = document.createElement("button");
-  submitBtn.id = "submitBtn";
-  submitBtn.textContent = "Submit";
-  submitBtn.onclick = submit;
-  buttonGrid.appendChild(submitBtn);
 }
 
 function isLocked(day) {
