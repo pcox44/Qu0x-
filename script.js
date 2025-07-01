@@ -837,3 +837,82 @@ document.getElementById("menuSettings").onclick = (e) => {
   }
 };
 
+// ========== DROPDOWN MENU LOGIC ==========
+
+// 📘 Modal: Instructions
+const instructionModal = document.getElementById("instructionModal");
+const instructionLink = document.getElementById("menuInstructions");
+const closeModal = instructionModal?.querySelector(".close-modal");
+
+instructionLink?.addEventListener("click", (e) => {
+  e.preventDefault();
+  instructionModal.classList.remove("hidden");
+});
+
+closeModal?.addEventListener("click", () => {
+  instructionModal.classList.add("hidden");
+});
+
+window.addEventListener("click", (e) => {
+  if (e.target === instructionModal) {
+    instructionModal.classList.add("hidden");
+  }
+});
+
+// 🗃️ Archive List
+const archiveList = document.getElementById("archiveList");
+
+function populateArchiveList() {
+  if (!archiveList) return;
+  archiveList.innerHTML = "";
+  for (let i = 0; i <= maxDay; i++) {
+    const btn = document.createElement("button");
+    btn.innerText = (lockedDays[i]?.score === 0 ? "⭐ " : "") + `Game #${i + 1}`;
+    btn.onclick = () => {
+      renderGame(i);
+    };
+    archiveList.appendChild(btn);
+  }
+}
+
+// ⚙️ Theme Settings
+const themeOptions = document.getElementById("themeOptions");
+
+function populateThemeOptions() {
+  const themes = [
+    { value: "default", label: "🎲 Default" },
+    { value: "dark", label: "🌙 Dark" },
+    { value: "gameboy", label: "🕹️ GameBoy" },
+    { value: "terminal", label: "💾 Terminal" },
+    { value: "comic", label: "💥 Comic" },
+    { value: "fantasy", label: "🐉 Fantasy" }
+  ];
+
+  themeOptions.innerHTML = "";
+  themes.forEach(({ value, label }) => {
+    const btn = document.createElement("button");
+    btn.innerText = label;
+    btn.onclick = () => {
+      applyTheme(value);
+    };
+    themeOptions.appendChild(btn);
+  });
+}
+
+function applyTheme(theme) {
+  document.body.className = "";
+  if (theme !== "default") {
+    document.body.classList.add(`theme-${theme}`);
+  }
+  localStorage.setItem("qu0xTheme", theme);
+}
+
+// ========== INIT CALLS ==========
+document.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("qu0xTheme") || "default";
+  applyTheme(savedTheme);
+  populateArchiveList();
+  populateThemeOptions();
+});
+
+
