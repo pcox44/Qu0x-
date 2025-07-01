@@ -813,3 +813,27 @@ document.addEventListener("DOMContentLoaded", () => {
   themeSelector.value = savedTheme;
   applyTheme(savedTheme);
 });
+
+document.getElementById("menuArchive").onclick = (e) => {
+  e.preventDefault();
+  document.getElementById("gameDropdown").focus(); // or trigger a modal if you make one
+};
+
+document.getElementById("menuInstructions").onclick = (e) => {
+  e.preventDefault();
+  const instructions = document.querySelector(".instructions");
+  if (instructions) {
+    instructions.open = true;
+    instructions.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+};
+
+document.getElementById("menuSettings").onclick = (e) => {
+  e.preventDefault();
+  const themeSelector = document.getElementById("themeSelector");
+  if (themeSelector) {
+    themeSelector.scrollIntoView({ behavior: "smooth", block: "center" });
+    themeSelector.focus();
+  }
+};
+
