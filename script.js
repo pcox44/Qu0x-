@@ -765,17 +765,6 @@ function populateDropdown() {
   dropdown.value = currentDay;
 }
 
-// Add event listener to handle selection change
-const dropdown = document.getElementById("gameDropdown");
-
-if (dropdown) {
-  dropdown.addEventListener("change", (e) => {
-    const selectedDay = Number(e.target.value);
-    if (selectedDay >= 0 && selectedDay <= maxDay) {
-      renderGame(selectedDay);
-    }
-  });
-}
 
 submitBtn.addEventListener("click", submit);
 
