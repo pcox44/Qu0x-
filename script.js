@@ -867,3 +867,19 @@ document.addEventListener("DOMContentLoaded", () => {
   populateArchiveList();
   populateThemeOptions();
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const dropBtn = document.querySelector(".dropbtn");
+  const dropContent = document.querySelector(".dropdown-content");
+
+  if (dropBtn && dropContent) {
+    dropBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropContent.classList.toggle("show");
+    });
+
+    document.addEventListener("click", () => {
+      dropContent.classList.remove("show");
+    });
+  }
+});
