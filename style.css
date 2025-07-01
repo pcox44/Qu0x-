@@ -939,3 +939,61 @@ body.theme-comic {
   font-weight: bold;
   border: 2px solid #063;
 }
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: #333;
+  color: white;
+  padding: 0.5em 1em;
+  font-size: 1em;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+  z-index: 1000;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 0.7em 1em;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+body.theme-dark .dropbtn {
+  background-color: #111;
+  color: #fff;
+}
+body.theme-dark .dropdown-content {
+  background-color: #222;
+}
+body.theme-dark .dropdown-content a {
+  color: #fff;
+}
+body.theme-dark .dropdown-content a:hover {
+  background-color: #444;
+}
+
+/* Add similar theming for comic, fantasy, etc. as desired */
+
