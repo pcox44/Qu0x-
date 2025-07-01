@@ -99,47 +99,33 @@
 <body>
   <div class="top-bar">
     <h1>Qu0x!</h1>
-    <div id="gameNumberDate"><!-- JS will populate this --></div>
     <div class="nav-controls">
-      <button id="prevDay">◀</button>
-      <select id="gameDropdown"></select>
-      <button id="nextDay">▶</button>
-      <select id="themeSelector" title="Select Theme">
-        <option value="default">🎲Default</option>
-        <option value="dark">🌙Dark</option>
-        <option value="gameboy">🕹️GameBoy</option>
-        <option value="terminal">💾Terminal</option>
-        <option value="comic">💥Comic</option>
-        <option value="fantasy">🐉Fantasy</option>
-      </select>
+      <div class="dropdown">
+        <button class="dropbtn">☰ Menu</button>
+        <div class="dropdown-content">
+          <div class="dropdown-section">
+            <span class="dropdown-heading">🗃️ Game Archive</span>
+            <div id="archiveList"></div>
+          </div>
+          <div class="dropdown-section">
+            <span class="dropdown-heading">📘 Instructions</span>
+            <a href="#" id="menuInstructions">How to Play</a>
+          </div>
+          <div class="dropdown-section">
+            <span class="dropdown-heading">⚙️ Settings</span>
+            <div id="themeOptions"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-
-  <div class="dropdown">
-  <button class="dropbtn">☰ Menu</button>
-  <div class="dropdown-content">
-    <a href="#" id="menuArchive">🗃️ Game Archive</a>
-    <a href="#" id="menuInstructions">📘 Instructions</a>
-    <a href="#" id="menuSettings">⚙️ Settings</a>
-  </div>
-</div>
-  
   <main>
-    <details class="instructions">
-  <summary>📘 How to Play</summary>
-  <ul>
-    <li>Use all <strong>5 dice</strong> once to hit the <strong>Target</strong>.</li>
-    <li><strong>Tap</strong> buttons to build your expression.</li>
-    <li><strong>Score</strong> = |Target − Result|</li>
-  </ul>
-</details>
-
     <div class="target-box" id="targetBox">🎯 Target: <span id="targetValue">???</span></div>
 
-  <div style="text-align:center;">
-    <div id="qu0xAnimation" class="hidden">Qu0x!</div>
-  </div>
+    <div style="text-align:center;">
+      <div id="qu0xAnimation" class="hidden">Qu0x!</div>
+    </div>
 
     <button id="shareBtn" class="hidden">Share Your Qu0x!</button>
 
@@ -157,7 +143,6 @@
       <button id="submitBtn" class="submit">Submit</button>
     </div>
 
-
     <div class="scoreboard-container">
       <div class="scoreboard">
         <p><strong>Daily Best Score:</strong> <span id="dailyBestScore">N/A</span></p>
@@ -170,6 +155,20 @@
       <button onclick="window.open('https://pcox44.github.io/Qu0x100', '_blank')">Play Qu0x!100</button>
     </div>
   </main>
+
+  <!-- 📘 Modal for Instructions -->
+  <div id="instructionModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>📘 How to Play</h2>
+      <ul>
+        <li>Use all <strong>5 dice</strong> once to hit the <strong>Target</strong>.</li>
+        <li><strong>Tap</strong> buttons to build your expression.</li>
+        <li><strong>Score</strong> = |Target − Result|</li>
+        <li>Submit to see your score. A perfect score = Qu0x!</li>
+      </ul>
+    </div>
+  </div>
 
   <footer>
     Built by Patrick Cox • 
