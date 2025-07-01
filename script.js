@@ -727,21 +727,23 @@ function renderGame(day) {
   }
 }
 
-document.getElementById("prevDay").onclick = () => {
-  if (currentDay > 0) {
+const prevBtn = document.getElementById("prevDay");
+if (prevBtn) {
+  prevBtn.onclick = () => {
     currentDay--;
     renderGame(currentDay);
-    populateDropdown();
-  }
-};
+    populateArchiveList();
+  };
+}
 
-document.getElementById("nextDay").onclick = () => {
-  if (currentDay < maxDay) {
-    currentDay++;
+const nextBtn = document.getElementById("nextDay");
+if (nextBtn) {
+  nextBtn.onclick = () => {
+    currentDay--;
     renderGame(currentDay);
-    populateDropdown();
-  }
-};
+    populateArchiveList();
+  };
+}
 
 function populateDropdown() {
   dropdown.innerHTML = "";
