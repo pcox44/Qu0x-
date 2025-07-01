@@ -8,9 +8,7 @@ const dropdown = document.getElementById("gameDropdown");
 const dailyBestScoreBox = document.getElementById("dailyBestScore");
 const completionRatioBox = document.getElementById("completionRatio");
 const masterScoreBox = document.getElementById("masterScore");
-const gameNumberDate = document.getElementById("gameNumberDate");
 const qu0xAnimation = document.getElementById("qu0xAnimation");
-gameNumberDate.style.display = "none";
 
 let diceRolledOnce = false;
 let currentDate = new Date();
