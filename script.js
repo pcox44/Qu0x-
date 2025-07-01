@@ -814,19 +814,25 @@ document.addEventListener("DOMContentLoaded", () => {
   applyTheme(savedTheme);
 });
 
-// 📘 Instructions Modal
 const instructionModal = document.getElementById("instructionModal");
 const instructionLink = document.getElementById("menuInstructions");
 const closeModal = instructionModal?.querySelector(".close-modal");
 
 instructionLink?.addEventListener("click", (e) => {
   e.preventDefault();
-  instructionModal.classList.remove("hidden");
+  instructionModal?.classList.remove("hidden");
 });
 
 closeModal?.addEventListener("click", () => {
-  instructionModal.classList.add("hidden");
+  instructionModal?.classList.add("hidden");
 });
+
+window.addEventListener("click", (e) => {
+  if (e.target === instructionModal) {
+    instructionModal?.classList.add("hidden");
+  }
+});
+
 
 window.addEventListener("click", (e) => {
   if (e.target === instructionModal) {
