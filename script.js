@@ -745,32 +745,11 @@ if (nextBtn) {
   };
 }
 
-function populateDropdown() {
-  dropdown.innerHTML = "";
-  for (let i = 0; i <= maxDay; i++) {
-    const option = document.createElement("option");
-    option.value = i;
-    
-    // Option text, you can customize with emojis or formatting
-    option.text = `Game #${i + 1}`;
-    
-    // Mark locked games with a star emoji in option text
-    if (lockedDays[i] && lockedDays[i].score === 0) {
-      option.text = "⭐ " + option.text;
-    }
-
-    dropdown.appendChild(option);
-  }
-  // Set the dropdown value to the currentDay so UI matches the current game
-  dropdown.value = currentDay;
-}
-
 
 submitBtn.addEventListener("click", submit);
 
 // Initialize buttons, dropdown, and render current game on page load
 buildButtons();
-populateDropdown();
 renderGame(currentDay);
 
 document.getElementById("shareBtn").addEventListener("click", () => {
