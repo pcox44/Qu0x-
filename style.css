@@ -1059,3 +1059,7 @@ body.theme-comic {
     max-width: 95vw;
   }
 }
+
+.dropdown-content.show {
+  display: block !important;
+}
