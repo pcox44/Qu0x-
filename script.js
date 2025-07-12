@@ -24,6 +24,16 @@ let bestScores = JSON.parse(localStorage.getItem("HbestScores") || "{}");
 let juiceLevels = JSON.parse(localStorage.getItem("QjuiceLevels") || "{}");
 let lastValidJuiceFill = 0;
 
+function updateMonthlyScoreLabel() {
+  const now = new Date();
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  const label = document.getElementById("monthlyScoreLabel");
+  label.innerText = `Qu0x! ${monthNames[now.getMonth()]} ${now.getFullYear()} Score:`;
+}
+
 const colorBoxes = {
   "1": "🟥", // red box for 1
   "2": "⬜", // white box for 2
