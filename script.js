@@ -8,7 +8,9 @@ const dropdown = document.getElementById("gameDropdown");
 const dailyBestScoreBox = document.getElementById("dailyBestScore");
 const completionRatioBox = document.getElementById("completionRatio");
 const masterScoreBox = document.getElementById("masterScore");
+const gameNumberDate = document.getElementById("gameNumberDate");
 const qu0xAnimation = document.getElementById("qu0xAnimation");
+gameNumberDate.style.display = "none";
 
 let diceRolledOnce = false;
 let currentDate = new Date();
@@ -19,6 +21,8 @@ let diceValues = [];
 let target = null;
 let lockedDays = JSON.parse(localStorage.getItem("lockedDays") || "{}");
 let bestScores = JSON.parse(localStorage.getItem("bestScores") || "{}");
+let juiceLevels = JSON.parse(localStorage.getItem("QjuiceLevels") || "{}");
+let lastValidJuiceFill = 0;
 
 const colorBoxes = {
   "1": "🟥", // red box for 1
@@ -469,24 +473,43 @@ function evaluateExpressionSafe(expr) {
 
 function evaluateExpression() {
   const expr = expressionBox.innerText.trim();
+  const juiceBar = document.getElementById("juiceMeter");
+
   if (expr.length === 0) {
     evaluationBox.innerText = "?";
-    return;
+    return; // Do not reset juice unless Clear is hit
   }
+
   try {
     const result = evaluateExpressionSafe(expr);
     evaluationBox.innerText = result;
+
+    if (!isNaN(result) && typeof target === "number") {
+      const score = Math.abs(Number(result) - target);
+      const proximity = 1 - (score / Math.max(target, 1));
+      const fill = Math.round(100 * Math.max(0, proximity));
+      juiceBar.style.width = fill + "%";
+      lastValidJuiceFill = fill;
+
+      // 🔄 Save juice level for this day
+      juiceLevels[currentDay] = fill;
+      localStorage.setItem("QjuiceLevels", JSON.stringify(juiceLevels));
+    } else {
+      // Don't change juice bar if result is invalid
+      juiceBar.style.width = lastValidJuiceFill + "%";
+    }
   } catch (e) {
     evaluationBox.innerText = "?";
+    juiceBar.style.width = lastValidJuiceFill + "%";
   }
 }
 
 
 
-function buildButtons() {
-  const ops = ["+", "-", "*", "/", "^", "!", "(", ")", "Back", "Clear"];
-  buttonGrid.innerHTML = "";
 
+function buildButtons() {
+  const ops = ["+", "-", "*", "/", "(", ")", "Back", "Clear"];
+  buttonGrid.innerHTML = "";
 
   ops.forEach(op => {
     const btn = document.createElement("button");
@@ -497,16 +520,18 @@ function buildButtons() {
         let expr = expressionBox.innerText;
         if (expr.length === 0) return;
         const removed = expr[expr.length - 1];
-        expressionBox.innerText = expr.slice(0, -1);
         const idx = usedDice.findLast(i => diceValues[i].toString() === removed);
         if (idx !== undefined) {
           usedDice = usedDice.filter(i => i !== idx);
           document.querySelector(`.die[data-index="${idx}"]`).classList.remove("faded");
         }
+        expressionBox.innerText = expr.slice(0, -1);
       } else if (op === "Clear") {
         expressionBox.innerText = "";
         usedDice = [];
         renderDice();
+        document.getElementById("juiceMeter").style.width = "0%";
+        lastValidJuiceFill = 0;
       } else {
         addToExpression(op);
       }
@@ -514,7 +539,15 @@ function buildButtons() {
     };
     buttonGrid.appendChild(btn);
   });
+
+  const submitBtn = document.createElement("button");
+  submitBtn.id = "submitBtn";
+  submitBtn.classList.add("submit", "grid-span-2");
+  submitBtn.innerText = "Submit";
+  submitBtn.onclick = submit;
+  buttonGrid.appendChild(submitBtn);
 }
+
 
 function isLocked(day) {
   return lockedDays[day]?.score === 0;
@@ -555,6 +588,50 @@ function submit() {
   renderGame(currentDay);
 }
 
+function spawnRainbowTrail(day, duration = 10000, baseY = 200) {
+  const trailContainer = document.createElement("div");
+  trailContainer.style.position = "fixed";
+  trailContainer.style.top = "0";
+  trailContainer.style.left = "0";
+  trailContainer.style.width = "100%";
+  trailContainer.style.height = "100%";
+  trailContainer.style.pointerEvents = "none";
+  document.body.appendChild(trailContainer);
+
+  const emojis = ["🌈", "✨", "🌀", "💫", "🌟", "⭐", "🎉", "🎊", "🔥"];
+  const rand = mulberry32(day + 42); // consistent per day
+  const chosenEmoji = emojis[Math.floor(rand() * emojis.length)];
+
+  let x = -30;
+  const interval = 20; // ms between frames (lower = smoother)
+  const speed = 2.4;   // slower horizontal movement
+  let frame = 0;
+
+  const waveInterval = setInterval(() => {
+    x += speed;
+    const emoji = document.createElement("div");
+    emoji.innerText = chosenEmoji;
+    emoji.style.position = "absolute";
+    emoji.style.left = `${x}px`;
+    emoji.style.top = `${baseY + 40 * Math.sin(x / 35)}px`;
+    emoji.style.fontSize = "32px";
+    emoji.style.opacity = "1";
+    emoji.style.transition = "opacity 1.5s ease-out";
+    trailContainer.appendChild(emoji);
+
+    setTimeout(() => (emoji.style.opacity = "0"), 100);
+    setTimeout(() => emoji.remove(), 2000);
+
+    if (x > window.innerWidth + 60 || frame * interval > duration) {
+      clearInterval(waveInterval);
+      setTimeout(() => trailContainer.remove(), 2000);
+    }
+
+    frame++;
+  }, interval);
+}
+
+
 function animateQu0x(day) {
   // Step 1: Create seeded RNG based on day
   const rand = mulberry32(day + 1);
@@ -569,7 +646,10 @@ function animateQu0x(day) {
   <span class="emoji">${emoji2}</span>
   `;
   qu0xAnimation.classList.remove("hidden");
-
+  spawnRainbowTrail(day, 3500, 280);
+  spawnRainbowTrail(day, 3500, 330);
+  spawnRainbowTrail(day, 3500, 380);
+  spawnRainbowTrail(day, 3500, 430);
   const discoBalls = [];
   const numBalls = 4;
 
@@ -711,12 +791,13 @@ function renderGame(day) {
     }
   });
 
-  // Hide or show Share button
-  const shareBtn = document.getElementById("shareBtn");
-  if (locked && lockedDays[day]?.expression) {
-    shareBtn.classList.remove("hidden");
+  const juice = juiceLevels[day];
+  if (lockedDays[day] && lockedDays[day].expression) {
+  // Already submitted — restore juice fill from stored value
+  document.getElementById("juiceMeter").style.width = juice !== undefined ? `${juice}%` : "100%";
   } else {
-    shareBtn.classList.add("hidden");
+  // Not submitted — reset juice meter to 0
+    document.getElementById("juiceMeter").style.width = "0%";
   }
 
   // Show or hide Qu0x banner
@@ -725,31 +806,64 @@ function renderGame(day) {
   } else {
     qu0xAnimation.classList.add("hidden");
   }
+  // Show or hide Share button based on whether the day was solved
+  const shareBtn = document.getElementById("shareBtn");
+  if (lockedDays[day]?.score === 0) {
+    shareBtn.classList.remove("hidden");
+  } else {
+    shareBtn.classList.add("hidden");
+  }
 }
 
-const prevBtn = document.getElementById("prevDay");
-if (prevBtn) {
-  prevBtn.onclick = () => {
+document.getElementById("prevDay").onclick = () => {
+  if (currentDay > 0) {
     currentDay--;
     renderGame(currentDay);
-    populateArchiveList();
-  };
-}
+    populateDropdown();
+  }
+};
 
-const nextBtn = document.getElementById("nextDay");
-if (nextBtn) {
-  nextBtn.onclick = () => {
-    currentDay--;
+document.getElementById("nextDay").onclick = () => {
+  if (currentDay < maxDay) {
+    currentDay++;
     renderGame(currentDay);
-    populateArchiveList();
-  };
+    populateDropdown();
+  }
+};
+
+function populateDropdown() {
+  dropdown.innerHTML = "";
+  for (let i = 0; i <= maxDay; i++) {
+    const option = document.createElement("option");
+    option.value = i;
+    
+    // Option text, you can customize with emojis or formatting
+    option.text = `Game #${i + 1}`;
+    
+    // Mark locked games with a star emoji in option text
+    if (lockedDays[i] && lockedDays[i].score === 0) {
+      option.text = "⭐ " + option.text;
+    }
+
+    dropdown.appendChild(option);
+  }
+  // Set the dropdown value to the currentDay so UI matches the current game
+  dropdown.value = currentDay;
 }
 
+// Add event listener to handle selection change
+dropdown.addEventListener("change", (e) => {
+  const selectedDay = Number(e.target.value);
+  if (selectedDay >= 0 && selectedDay <= maxDay) {
+    renderGame(selectedDay);
+  }
+});
 
 submitBtn.addEventListener("click", submit);
 
 // Initialize buttons, dropdown, and render current game on page load
 buildButtons();
+populateDropdown();
 renderGame(currentDay);
 
 document.getElementById("shareBtn").addEventListener("click", () => {
@@ -784,102 +898,4 @@ document.addEventListener("DOMContentLoaded", () => {
   const savedTheme = localStorage.getItem('qu0xTheme') || 'default';
   themeSelector.value = savedTheme;
   applyTheme(savedTheme);
-});
-
-const instructionModal = document.getElementById("instructionModal");
-const instructionLink = document.getElementById("menuInstructions");
-const closeModal = instructionModal?.querySelector(".close-modal");
-
-instructionLink?.addEventListener("click", (e) => {
-  e.preventDefault();
-  instructionModal?.classList.remove("hidden");
-});
-
-closeModal?.addEventListener("click", () => {
-  instructionModal?.classList.add("hidden");
-});
-
-window.addEventListener("click", (e) => {
-  if (e.target === instructionModal) {
-    instructionModal?.classList.add("hidden");
-  }
-});
-
-
-window.addEventListener("click", (e) => {
-  if (e.target === instructionModal) {
-    instructionModal.classList.add("hidden");
-  }
-});
-
-// 🗃️ Game Archive
-const archiveList = document.getElementById("archiveList");
-
-function populateArchiveList() {
-  if (!archiveList) return;
-  archiveList.innerHTML = "";
-  for (let i = 0; i <= maxDay; i++) {
-    const btn = document.createElement("button");
-    btn.innerText = (lockedDays[i]?.score === 0 ? "⭐ " : "") + `Game #${i + 1}`;
-    btn.onclick = () => {
-      renderGame(i);
-    };
-    archiveList.appendChild(btn);
-  }
-}
-
-// ⚙️ Theme Settings
-const themeOptions = document.getElementById("themeOptions");
-
-function populateThemeOptions() {
-  const themes = [
-    { value: "default", label: "Default" },
-    { value: "dark", label: "Dark" },
-    { value: "gameboy", label: "GameBoy" },
-    { value: "terminal", label: "Terminal" },
-    { value: "comic", label: "Comic" },
-    { value: "fantasy", label: "Fantasy" }
-  ];
-
-  themeOptions.innerHTML = "";
-  themes.forEach(({ value, label }) => {
-    const btn = document.createElement("button");
-    btn.innerText = label;
-    btn.onclick = () => {
-      applyTheme(value);
-    };
-    themeOptions.appendChild(btn);
-  });
-}
-
-function applyTheme(theme) {
-  document.body.className = "";
-  if (theme !== "default") {
-    document.body.classList.add(`theme-${theme}`);
-  }
-  localStorage.setItem("qu0xTheme", theme);
-}
-
-// ⏳ Initialize on load
-document.addEventListener("DOMContentLoaded", () => {
-  const savedTheme = localStorage.getItem("qu0xTheme") || "default";
-  applyTheme(savedTheme);
-  populateArchiveList();
-  populateThemeOptions();
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const dropBtn = document.querySelector(".dropbtn");
-  const dropContent = document.querySelector(".dropdown-content");
-
-  if (dropBtn && dropContent) {
-    dropBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      dropContent.classList.toggle("show");
-    });
-
-    document.addEventListener("click", () => {
-      dropContent.classList.remove("show");
-    });
-  }
 });
