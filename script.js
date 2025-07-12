@@ -8,6 +8,7 @@ const dropdown = document.getElementById("gameDropdown");
 const dailyBestScoreBox = document.getElementById("dailyBestScore");
 const completionRatioBox = document.getElementById("completionRatio");
 const masterScoreBox = document.getElementById("masterScore");
+const monthlyScoreBox = document.getElementById("monthlyScore");
 const gameNumberDate = document.getElementById("gameNumberDate");
 const qu0xAnimation = document.getElementById("qu0xAnimation");
 gameNumberDate.style.display = "none";
@@ -774,12 +775,9 @@ function updateMonthlyScore(bestScoresMap) {
     }
   }
 
-  const masterScoreBox = document.getElementById("masterScore");
-  masterScoreBox.innerText = allSoFarScored ? monthlyScore : "N/A";
+  const monthlyScoreBox = document.getElementById("monthlyScore");
+  monthlyScoreBox.innerText = allSoFarScored ? monthlyScore : "N/A";
 }
-
-const HbestScores = JSON.parse(localStorage.getItem("HbestScores") || "{}");
-updateMonthlyScore(HbestScores);
 
 function renderGame(day) {
   currentDay = day;
