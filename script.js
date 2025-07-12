@@ -753,26 +753,29 @@ function updateMonthlyScore(bestScoresMap) {
   const now = new Date();
   const currentMonth = now.getMonth();
   const currentYear = now.getFullYear();
+  const today = new Date();
 
   let monthlyScore = 0;
-  let allDaysScored = true;
+  let allSoFarScored = true;
 
   for (let day = 0; day <= maxDay; day++) {
     const date = new Date("2025-05-15T00:00:00");
     date.setDate(date.getDate() + day);
-    const isThisMonth = date.getMonth() === currentMonth && date.getFullYear() === currentYear;
 
-    if (isThisMonth) {
+    const isThisMonth = date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+    const isBeforeOrToday = date <= today;
+
+    if (isThisMonth && isBeforeOrToday) {
       if (bestScoresMap[day] !== undefined) {
         monthlyScore += bestScoresMap[day];
       } else {
-        allDaysScored = false;
+        allSoFarScored = false;
       }
     }
   }
 
   const masterScoreBox = document.getElementById("masterScore");
-  masterScoreBox.innerText = allDaysScored ? monthlyScore : "N/A";
+  masterScoreBox.innerText = allSoFarScored ? monthlyScore : "N/A";
 }
 
 const HbestScores = JSON.parse(localStorage.getItem("HbestScores") || "{}");
