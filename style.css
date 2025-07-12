@@ -92,6 +92,13 @@ body {
   user-select: none;
 }
 
+.target-box:hover {
+  transform: scale(1.03);          /* Slight pop on hover */
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.25),
+    inset 0 2px 6px rgba(255, 255, 255, 0.5);
+}
+
 .dice-container {
   display: flex;
   justify-content: center;
@@ -142,20 +149,32 @@ body {
   padding: 0.4em 1.2em;
   background: white;
   border: 2px solid #000;
+  box-sizing: border-box;
+  min-height: 2.2em;
   min-width: 240px;
-  min-height: 1.2em;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #evaluationBox {
-  padding: 0.4em 0.5em;
+  padding: 0.4em 1.2em;
   background: white;
   border: 2px solid #000;
+  box-sizing: border-box;
+  min-height: 2.2em;
   min-width: 80px;
-  min-height: 1.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+
 #equalsSign {
-  padding: 0 0.5em;
+  padding: 0 0.1em;
   font-weight: bold;
 }
 
@@ -189,9 +208,14 @@ body {
 #buttonGrid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 0.5em;
-  margin: 1em auto;
-  max-width: 500px;
+  gap: 10px;
+  max-width: 600px;
+  margin: 0.5em auto;
+  justify-content: center;
+}
+
+#submitBtn.grid-span-2 {
+  grid-column: 5 / 7; /* spans column 5 and 6 */
 }
 
 #buttonGrid button {
@@ -219,7 +243,7 @@ body {
 }
 
 #submitArea {
-  margin: 1em;
+  margin: 0.7em;
 }
 
 .submit {
@@ -247,7 +271,7 @@ body {
 }
 
 .scoreboard p {
-  margin: 0.5em;
+  margin: 0.3em;
 }
 
 #qu0xAnimation {
@@ -283,7 +307,7 @@ body {
 .scoreboard-container {
   width: 100%;
   text-align: center;
-  margin: 1em 0;
+  margin: 0.2em 0 0.2em 0; /* top: 0.5em, bottom: 0.2em */
 }
 
 .scoreboard {
@@ -337,7 +361,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   gap: 12px;
-  margin: 1.2em 0;
+  margin: 0.6em 0;
 }
 
 .game-links button {
@@ -349,6 +373,16 @@ body {
   border-radius: 10px;
   cursor: pointer;
   transition: transform 0.15s ease, background-color 0.3s ease;
+}
+
+@media (max-width: 600px) {
+  .game-links {
+    margin-bottom: 0.2em;
+  }
+
+  .game-links button {
+    margin-bottom: 0.2em;
+  }
 }
 
 .game-links button:hover {
@@ -935,131 +969,78 @@ body.theme-comic {
   background-position: 0 0, 3px 3px; /* creates a staggered grid */
 }
 
-
-  font-weight: bold;
-  border: 2px solid #063;
-}
-
-/* === DROPDOWN MENU === */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropbtn {
-  background-color: #333;
-  color: white;
-  padding: 0.5em 1em;
-  font-size: 1em;
-  border: none;
-  cursor: pointer;
-  border-radius: 6px;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  top: 100%;
-  background-color: white;
-  min-width: 220px;
-  box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-  z-index: 1000;
-  border-radius: 8px;
-  overflow: hidden;
-  padding: 0.5em 0;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown-section {
-  padding: 0.2em 1em;
-}
-
-.dropdown-heading {
-  font-weight: bold;
-  display: block;
-  margin: 0.6em 0 0.3em;
-  font-size: 0.95em;
-  color: #666;
-  text-transform: uppercase;
-}
-
-.dropdown-content a,
-.dropdown-content button {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 0.6em 1em;
-  font-size: 1em;
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: #222;
-}
-
-.dropdown-content a:hover,
-.dropdown-content button:hover {
-  background-color: #f5f5f5;
-}
-
-/* === MODAL === */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.6);
+.expression-section {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2000;
-}
-
-.modal-content {
-  background: #fff;
-  padding: 2em;
-  max-width: 400px;
-  width: 90%;
-  border-radius: 12px;
-  position: relative;
-  text-align: left;
-  font-size: 1.1em;
-  line-height: 1.5;
-}
-
-.close-modal {
-  position: absolute;
-  top: 0.6em;
-  right: 0.8em;
-  font-size: 1.5em;
-  cursor: pointer;
-  color: #888;
-}
-
-.close-modal:hover {
-  color: #000;
-}
-
-.hidden {
-  display: none;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 @media (max-width: 600px) {
-  .dropdown-content {
-    right: 0;
-    left: auto;
-    min-width: 90vw;
-  }
-
-  .modal-content {
-    max-width: 95vw;
+  .expression-section {
+    width: 100%;
+    padding: 0 12px;
+    box-sizing: border-box;
   }
 }
 
-.dropdown-content.show {
-  display: block !important;
+@keyframes spin {
+  0% { transform: translateX(-50%) rotate(0deg); }
+  100% { transform: translateX(-50%) rotate(360deg); }
+}
+
+.flame-emoji {
+  position: fixed;
+  bottom: 0;
+  font-size: 30px;
+  animation-name: flickerFloat;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  opacity: 0.8;
+  user-select: none;
+  pointer-events: none;
+}
+
+@keyframes flickerFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.1);
+    opacity: 1;
+  }
+}
+
+#juiceMeterContainer {
+  width: 40%;
+  height: 20px;
+  margin: 0.7em auto 0.5em;
+  background: #222;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #000;
+  box-shadow: inset 0 0 6px #000;
+}
+
+@media (max-width: 600px) {
+  #juiceMeterContainer {
+    width: 75%;
+  }
+}
+
+#juiceMeter {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(to right, #ff4d4d, #ffd633, #33cc33);
+  transition: width 0.3s ease;
+}
+
+#buttonGrid .submit {
+  background: linear-gradient(135deg, #28a745, #1e7e34) !important;
+  color: white !important;
+  border: 3px solid #155724 !important;
+  box-shadow: 0 4px 10px rgba(40, 167, 69, 0.6) !important;
 }
