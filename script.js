@@ -904,7 +904,7 @@ buildButtons();
 populateDropdown();
 renderGame(currentDay);
 updateMonthlyScoreLabel();
-updateMonthlyScore(HbestScores); // or bestScores depending on mode
+updateMonthlyScore(HbestScores);
 
 document.getElementById("shareBtn").addEventListener("click", () => {
   const gameNumber = currentDay + 1;  // game number = day index + 1
