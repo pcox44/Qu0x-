@@ -19,8 +19,8 @@ let maxDay = getDayIndex(new Date());
 let usedDice = [];
 let diceValues = [];
 let target = null;
-let lockedDays = JSON.parse(localStorage.getItem("QlockedDays") || "{}");
-let bestScores = JSON.parse(localStorage.getItem("QbestScores") || "{}");
+let lockedDays = JSON.parse(localStorage.getItem("HlockedDays") || "{}");
+let bestScores = JSON.parse(localStorage.getItem("HbestScores") || "{}");
 let juiceLevels = JSON.parse(localStorage.getItem("QjuiceLevels") || "{}");
 let lastValidJuiceFill = 0;
 
@@ -573,12 +573,12 @@ function submit() {
   const score = Math.abs(Number(result) - target);
   if (!(currentDay in bestScores) || score < bestScores[currentDay]) {
     bestScores[currentDay] = score;
-    localStorage.setItem("QbestScores", JSON.stringify(bestScores));
+    localStorage.setItem("HbestScores", JSON.stringify(bestScores));
   }
 
  if (score === 0) {
   lockedDays[currentDay] = { score, expression: expressionBox.innerText };
-  localStorage.setItem("QlockedDays", JSON.stringify(lockedDays));
+  localStorage.setItem("HlockedDays", JSON.stringify(lockedDays));
   animateQu0x(currentDay);
 
   // ✅ Show the Share button
