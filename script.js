@@ -805,14 +805,17 @@ function renderGame(day) {
   const completedDays = Object.values(bestScores).filter(score => score === 0).length;
   completionRatioBox.innerText = `${completedDays}/${maxDay + 1}`;
 
-  const totalScore = Object.values(bestScores).reduce((a, b) => a + b, 0);
   const totalGames = maxDay + 1;
+  let totalScore = 0;
 
-  if (Object.keys(bestScores).length === totalGames) {
-    masterScoreBox.innerText = `${totalScore}`;
-  } else {
-    masterScoreBox.innerText = "N/A";
+  for (let i = 0; i < totalGames; i++) {
+    if (bestScores[i] !== undefined) {
+      totalScore += 100 - bestScores[i];
+    }
   }
+
+  masterScoreBox.innerText = `${totalScore}`;
+
 
   const locked = isLocked(day);
 
