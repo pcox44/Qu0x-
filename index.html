@@ -9,42 +9,138 @@
   <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      height: 60px;
+      padding: 0 1rem;
+      border-bottom: 1px solid #ccc;
+      background: #333;
+      flex-wrap: wrap;
+    }
+
+    .top-bar h1 {
+      margin: 0;
+      flex: 1;
+      text-align: left;
+      font-size: 1.6em;
+      color: white;
+    }
+
+    #gameNumberDate {
+      flex: 1;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.1em;
+      color: white;
+      user-select: none;
+    }
+
+    .nav-controls {
+      flex: 1;
+      text-align: right;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5em;
+    }
+
+    button,
+    select {
+      padding: 0.6em 1em;
+      font-size: 1em;
+    }
+
+    @media (max-width: 600px) {
+      .top-bar {
+        height: auto;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.5rem;
+      }
+
+      .top-bar h1,
+      #gameNumberDate {
+        text-align: center;
+        flex: none;
+        margin: 0.2em 0;
+      }
+
+
+      
+      
+      .nav-controls {
+        justify-content: center;
+        flex: none;
+        margin-bottom: 0.5em;
+      }
+    }
+
+    footer {
+      margin-top: 2em;
+      font-size: 0.9em;
+      color: #888;
+    }
+
+    footer a {
+      color: #888;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-  <!-- ✅ TOP BAR -->
   <div class="top-bar">
     <h1>Qu0x!</h1>
+    <div id="gameNumberDate"><!-- JS will populate this --></div>
     <div class="nav-controls">
-      <div class="dropdown">
-        <button class="dropbtn">☰ Menu</button>
-        <div class="dropdown-content">
-          <div class="dropdown-section">
-            <span class="dropdown-heading">Game Archive</span>
-            <div id="archiveList"></div>
-          </div>
-          <div class="dropdown-section">
-            <span class="dropdown-heading">Instructions</span>
-            <a href="#" id="menuInstructions">How to Play</a>
-          </div>
-          <div class="dropdown-section">
-            <span class="dropdown-heading">Settings</span>
-            <div id="themeOptions"></div>
-          </div>
-        </div>
-      </div>
+      <button id="prevDay">◀</button>
+      <select id="gameDropdown"></select>
+      <button id="nextDay">▶</button>
+      <select id="themeSelector" title="Select Theme">
+        <option value="default">Default</option>
+        <option value="dark">Dark</option>
+        <option value="gameboy">GameBoy</option>
+        <option value="terminal">Terminal</option>
+        <option value="comic">Comic</option>
+        <option value="fantasy">Fantasy</option>
+      </select>
     </div>
   </div>
 
-  <!-- ✅ MAIN GAME CONTENT -->
-  <main>
+  
+<main>
+  <details class="instructions">
+    <summary>📘 How to Play</summary>
+    <ul>
+      <li>Your goal is to build a math expression using <strong>all 5 dice</strong> exactly once to match the <strong>Target</strong> number.</li>
+      <li>You can use standard operations: <strong>+, −, ×, ÷, ^ (exponent), and ! (factorial)</strong>.</li>
+      <li>Tap dice and operators to build your expression in the input box.</li>
+      <li>Your <strong>Score</strong> is the absolute difference: <code>|Target − Result|</code>.</li>
+      <li>A perfect match gives you a score of <strong>0</strong> — that’s a <strong>Qu0x!</strong></li>
+    </ul>
+  </details>
+
     <div class="target-box" id="targetBox">🎯 Target: <span id="targetValue">???</span></div>
 
-    <div style="text-align:center;">
-      <div id="qu0xAnimation" class="hidden">Qu0x!</div>
-    </div>
+  <div style="text-align:center;">
+    <div id="qu0xAnimation" class="hidden">Qu0x!</div>
+  </div>
 
+    <div id="juiceMeterContainer" hidden>
+      <div id="juiceMeter"></div>
+    </div>
+    
     <button id="shareBtn" class="hidden">Share Your Qu0x!</button>
+
+    
 
     <div class="dice-container" id="diceContainer"></div>
 
@@ -54,11 +150,11 @@
       <div id="evaluationBox">?</div>
     </div>
 
-    <div class="buttons" id="buttonGrid"></div>
-
-    <div id="submitArea">
-      <button id="submitBtn" class="submit">Submit</button>
+    <div id="buttonGrid">
+    <!-- operator buttons are dynamically added here -->
+      <button id="submitBtn" class="submit grid-span-2">Submit</button>
     </div>
+
 
     <div class="scoreboard-container">
       <div class="scoreboard">
@@ -73,27 +169,11 @@
     </div>
   </main>
 
-  <!-- ✅ INSTRUCTION MODAL -->
-  <div id="instructionModal" class="modal hidden">
-    <div class="modal-content">
-      <span class="close-modal">&times;</span>
-      <h2>📘 How to Play</h2>
-      <ul>
-        <li>Use all <strong>5 dice</strong> once to hit the <strong>Target</strong>.</li>
-        <li><strong>Tap</strong> buttons to build your expression.</li>
-        <li><strong>Score</strong> = |Target − Result|</li>
-        <li>A perfect score (0) means you Qu0x!</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- ✅ FOOTER -->
   <footer>
     Built by Patrick Cox • 
     <a href="https://github.com/pcox44" target="_blank">GitHub</a>
   </footer>
 
-  <!-- ✅ SCRIPTS -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="script.js"></script>
 </body>
